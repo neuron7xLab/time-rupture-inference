@@ -35,20 +35,49 @@ class CausalBound:
         }
 
 
+def _parse_bool(value: Any, key: str) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        norm = value.strip().lower()
+        if norm in {"true", "1", "yes", "y", "on"}:
+            return True
+        if norm in {"false", "0", "no", "n", "off"}:
+            return False
+    raise ValueError(f"{key} must be boolean-compatible, got {value!r}")
+
+
 def derive(cfg: dict[str, Any]) -> CausalBound:
     n = int(cfg["n_steps"])
     period = int(cfg["period"])
     delta = float(cfg["delta"])
     sigma = float(cfg["sigma"])
+
+    if n <= 0:
+        raise ValueError("n_steps must be > 0")
+    if period <= 0:
+        raise ValueError("period must be > 0")
+    if not math.isfinite(sigma) or sigma <= 0.0:
+        raise ValueError("sigma must be finite and > 0")
+    if not math.isfinite(delta) or delta < 0.0:
+        raise ValueError("delta must be finite and >= 0")
+
     t = sum(1 for k in range(n) if k % period == 3)
+    if t <= 0:
+        raise ValueError("configuration yields zero trigger events; causal bound is undefined")
     # Unavoidable wrong-sign triggers for ANY causal oracle:
     #  * cold prior: wrong with prob 0.5 — EXCLUDED if the trigger
     #    channel is warm-scored (pre-first-trigger step dropped);
     #  * each hidden context flip: exactly 1 forced wrong until observed.
     # Backward compatible: configs without these keys -> v8.3 (1.5).
     flips = float(cfg.get("hidden_flips", 1))
-    warm = bool(cfg.get("warm_scored", False))
-    forced = flips + (0.0 if warm else 0.5)
+    if not math.isfinite(flips):
+        raise ValueError("hidden_flips must be finite")
+    warm = _parse_bool(cfg.get("warm_scored", False), "warm_scored")
+    forced_raw = flips + (0.0 if warm else 0.5)
+    # At most one forced wrong-sign event can occur per trigger event.
+    # Clamp for adversarial/invalid configs with too-many hidden flips.
+    forced = min(float(t), max(0.0, forced_raw))
     floor = sigma * math.sqrt(2.0 / math.pi)        # E|N(0,sigma)|
     wrong_err = 2.0 * delta                          # predict -sign*delta
     hist_min = ((t - forced) * floor + forced * wrong_err) / t

@@ -10,6 +10,7 @@ diagnostic must not run (RED_PRECHECK).
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Any
 
 
@@ -44,6 +45,19 @@ def derive(cfg: dict[str, Any]) -> FrequencyDerivation:
     min_total = int(cfg["min_trigger_count_total"])
     min_alias = float(cfg["min_aliasing_rate"])
     min_sodf = float(cfg["min_same_obs_diff_future_rate"])
+
+    if n <= 0:
+        raise ValueError("n_steps must be > 0")
+    if period <= 0:
+        raise ValueError("period must be > 0")
+    if seeds <= 0:
+        raise ValueError("seed_count must be > 0")
+    if min_total < 0:
+        raise ValueError("min_trigger_count_total must be >= 0")
+    if not math.isfinite(min_alias) or not (0.0 <= min_alias <= 1.0):
+        raise ValueError("min_aliasing_rate must be finite and in [0, 1]")
+    if not math.isfinite(min_sodf) or not (0.0 <= min_sodf <= 1.0):
+        raise ValueError("min_same_obs_diff_future_rate must be finite and in [0, 1]")
 
     # deterministic schedule: trigger at every k with k % period == 3
     per_seed = sum(1 for k in range(n) if k % period == 3)

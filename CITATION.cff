@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it."
+title: "time-rupture-inference: a falsification-first proof that a learned temporal model survives a hidden regime rupture"
+version: 0.1.0
+date-released: 2026-05-18
+license: MIT
+repository-code: "https://github.com/neuron7xLab/time-rupture-inference"
+authors:
+  - name: "neuron7xLab"
+keywords:
+  - temporal inference
+  - change-point detection
+  - falsification-first
+  - online learning

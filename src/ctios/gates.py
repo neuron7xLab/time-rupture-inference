@@ -35,17 +35,17 @@ def evaluate_gate(
     min_deltas: int,
 ) -> GateResult:
     L = agg["learned_full"]
-    I = agg["injected"]
+    inj = agg["injected"]
     best_naive = min(
         v["post_shift_mae"]
         for k, v in agg.items()
         if k.startswith(("moving_average", "last_interval", "exp_smoothing"))
     )
     c: dict[str, bool] = {}
-    c["learned_beats_injected_post_mae"] = L["post_shift_mae"] < I["post_shift_mae"]
+    c["learned_beats_injected_post_mae"] = L["post_shift_mae"] < inj["post_shift_mae"]
     c["learned_beats_best_naive_post_mae"] = L["post_shift_mae"] < best_naive
     c["learned_beats_injected_aue"] = (
-        L["area_under_post_shift_error"] < I["area_under_post_shift_error"]
+        L["area_under_post_shift_error"] < inj["area_under_post_shift_error"]
     )
     c["adaptation_under_threshold"] = L["adaptation_time"] < prereg["adaptation_time_max"]
     c["detection_delay_bounded"] = L["detection_delay"] < prereg["detection_delay_max"]

@@ -9,7 +9,7 @@ from ctios.env import Environment
 def _post_mae(agent, seed, tau1=17.0, t_star=300):
     env = Environment(10.0, tau1, t_star, 1.0, 600, seed)
     errs = []
-    for k in range(600):
+    for _k in range(600):
         p = agent.predict()
         o = env.step()
         errs.append(abs(o.observed_interval - p))

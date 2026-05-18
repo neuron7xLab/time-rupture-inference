@@ -1,0 +1,33 @@
+name: gate
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  proof-of-life:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history: gate verifies prereg-before-run
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q numpy matplotlib pyyaml pytest ruff
+      - name: lint
+        run: ruff check src tests
+      - name: tests
+        run: PYTHONPATH=src pytest tests -q
+      - name: fail-closed gate (30 seeds × 3 shifts)
+        run: PYTHONPATH=src python -m ctios.runner --mode full
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence
+          path: |
+            evidence/
+            plots/

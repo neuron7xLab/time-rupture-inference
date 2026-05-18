@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "time-rupture-inference"
+version = "0.1.0"
+description = "Falsification-first proof that a learned temporal model survives a hidden regime rupture."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "neuron7xLab" }]
+keywords = ["temporal-inference", "change-point", "falsification", "online-learning"]
+dependencies = ["numpy>=1.26", "matplotlib>=3.8", "pyyaml>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.urls]
+Repository = "https://github.com/neuron7xLab/time-rupture-inference"
+
+[project.scripts]
+tri-gate = "ctios.runner:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

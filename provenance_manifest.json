@@ -47,7 +47,7 @@
     {
       "license": "MIT",
       "path": "configs/v7_experiment.yaml",
-      "sha256": "7d54b8a1d26c1d2488b5775e861faa9e1cc73db4444bfe43ebc33e6f93ffdd15",
+      "sha256": "8140303811fbe0323453a6c1502967e129373ee2e13900fadad569cedb5e999a",
       "spdx_header": "n/a"
     },
     {
@@ -113,7 +113,13 @@
     {
       "license": "MIT",
       "path": "scripts/run_v7_cpu.py",
-      "sha256": "283039b07b003a94ce37f81e3328bbdbad5ca258c20e749bab0dc3ec69a9ec2e",
+      "sha256": "32484a9de31b019cfc46f9e178a2c919e4a9c1bd2ee3342e429734d0b3056358",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/v7_verdict.py",
+      "sha256": "0ca32ebf7b71e49794cf8bc6662e38ad233fd83e8c6a73c3dfa07a55b8e5c8f6",
       "spdx_header": true
     },
     {

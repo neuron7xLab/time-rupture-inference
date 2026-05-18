@@ -8,9 +8,9 @@ environment_mode: multi_regime_partial_observability
 
 models:
   - heuristic_v4         # frozen v4 LearnedAgent (reference, not the claim)
-  - gru_small            # learned recurrent (numpy, CPU)
+  - esn_small            # learned recurrent (numpy, CPU)
   - linear_ssm_small     # learned linear state-space (numpy, CPU)
-  - baseline_mlp_or_rnn  # from-scratch conventional baseline
+  - ar_baseline  # from-scratch conventional baseline
 
 metrics:
   - post_shift_mae

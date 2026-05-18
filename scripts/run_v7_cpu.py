@@ -2,11 +2,13 @@
 """CTI-OS v7 CPU-only batch runner (readiness harness, numpy-only).
 
 This wires the v7 contract: a harder multi-regime, partially-observable
-environment + pluggable models + the full artifact ledger. The small
-recurrent models here are CPU/numpy reservoir-readout learners (no deep
-framework, deterministic) — sufficient to prove the *harness* is sound.
-The heavier trained GRU/SSM science run is a later, pre-registered step;
-this script must NOT be read as the v7 scientific verdict.
+environment + the pre-registered model set + the full artifact ledger.
+The learned candidates are CPU/numpy reservoir-readout recurrent
+learners (echo-state-style `esn_small`, learned linear state-space
+`linear_ssm_small`) with online-learned readouts — deterministic, no
+deep framework. Names match the corrected pre-registration; the v7
+scientific verdict (`scripts/v7_verdict.py`) is scoped exactly to THESE
+models, not to a trained-GRU which is a separate future lineage.
 """
 
 from __future__ import annotations
@@ -108,11 +110,11 @@ def _heuristic_v4() -> Any:
 def _make(model: str, seed: int) -> Any:
     if model == "heuristic_v4":
         return _heuristic_v4()
-    if model == "gru_small":
+    if model == "esn_small":
         return _Reservoir(dim=16, seed=seed, leak=0.5, ridge=1e-2)
     if model == "linear_ssm_small":
         return _Reservoir(dim=8, seed=seed + 7, leak=0.2, ridge=1e-1)
-    if model == "baseline_mlp_or_rnn":
+    if model == "ar_baseline":
         return _ARBaseline(k=4)
     raise ValueError(f"unknown model {model!r}")
 

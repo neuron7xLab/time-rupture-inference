@@ -11,13 +11,13 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "90a601f078465d14761ac699a36a03a0370f52b4de21f40df4f3d2adb3b5fda0",
+      "sha256": "c1d1786b8c539628f3608c8e8fd538a68daa039d2b12f6b412dbdbb67181cd53",
       "spdx_header": "n/a"
     },
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "b8e3563c9c60768bfbbfb8ea4349bef0971ebcb2134f76e053595f1cc07af4bb",
+      "sha256": "6a9cd25b077696f74d3c3d821ed25acc2864a06cea3bbc2bc8aaa68e08c7d077",
       "spdx_header": "n/a"
     },
     {
@@ -220,6 +220,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/adversarial_probes.py",
+      "sha256": "f0f3de994e43011e3c9e7a51effff8a6445f4fb5102f43665275cf41433fbee6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/agent.py",
       "sha256": "92b9a55fb6d9cfb6701571bb9fd11a22aba31480d34117e4177f95eeb58284f7",
       "spdx_header": true
@@ -240,6 +246,12 @@
       "license": "MIT",
       "path": "src/ctios/automation.py",
       "sha256": "aca7672111e44a876c0413e82b4f3960f2aae5dd9ad56765d547d93bc29de742",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/benchmark_families.py",
+      "sha256": "300c7e98e7ba49aa137ebfb06364fcaf9bf5e63b5ef92ba2baf3672d1dcd18ae",
       "spdx_header": true
     },
     {
@@ -298,6 +310,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/falsifier_stress.py",
+      "sha256": "3203d0cba7298f3a870456dabb8d8437e6f931bf20d2621fbea43f06645ba8ed",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/falsify.py",
       "sha256": "9ab131159a985bf32fd84d07786e86536c26aec1cdabf0eb786c4c22c6709547",
       "spdx_header": true
@@ -341,7 +359,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/platform_demo.py",
-      "sha256": "9bde06f6890bb0d006ccfb6af2e0997c75a2ea2851d6c4a7c2fd8e537182c243",
+      "sha256": "5e10aa30616d796553d55ca750cc6bdc36de9115d54cf19b0c57544210bbde73",
       "spdx_header": true
     },
     {

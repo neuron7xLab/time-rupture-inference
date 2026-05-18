@@ -9,7 +9,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 export PYTHONPATH=src
 
-SPEC="examples/indi_redacted_cognitive_time.yaml"
+SPEC="examples/indi_redacted_temporal_hypothesis.yaml"
 OUT="runs/platform_demo"
 
 g() { printf '\n=== %s ===\n' "$1"; }

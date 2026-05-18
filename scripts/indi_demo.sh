@@ -54,7 +54,7 @@ INDI-DEMO :: ALL HARD GATES PASSED — package verified
 
 Read next:
   docs/INDI_README.md                        (start here)
-  examples/indi_redacted_cognitive_time.yaml (redacted skeleton)
+  examples/indi_redacted_temporal_hypothesis.yaml (redacted skeleton)
   docs/PRIVATE_RND_PROTOCOL.md               (IP boundary)
 
 Three questions (the only thing asked):

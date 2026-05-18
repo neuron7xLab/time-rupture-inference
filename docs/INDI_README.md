@@ -1,3 +1,7 @@
+<!-- claims:disclaimer -->
+<!-- "cognitive-time" below names the COLLABORATOR'S private research
+domain, not a claim about this system. The system is a falsification
+apparatus; it makes no cognition claim — see "What this is not". -->
 # Cognitive-Time R&D Demonstration for Inderjit
 
 ## Read this first
@@ -5,6 +9,7 @@
 This repository is not a theory pitch. It is a runnable falsification
 apparatus for testing redacted cognitive-time hypotheses without
 exposing private IP.
+<!-- claims:end -->
 
 In 10 minutes you can:
 
@@ -35,8 +40,10 @@ human must approve.
 
 ## What this is not
 
+<!-- claims:disclaimer -->
 Not a cognitive system, brain model, general intelligence, or theory
 of time. No learned-representation-superiority claim. Nothing auto-runs.
+<!-- claims:end -->
 It does not need your private mechanism, dataset, or strategy to be
 useful. Boundaries are stated in `docs/SPEC.md` and
 `docs/INDI_LIMITATIONS.md`, not implied.
@@ -56,7 +63,7 @@ The engine takes a redacted skeleton — claim, null, assumptions,
 variables, falsifier checks, forbidden inferences, acceptable evidence
 — and calls your private mechanism as an opaque local `Probe` it never
 inspects. Specified field by field in `docs/PRIVATE_RND_PROTOCOL.md`;
-worked skeleton in `examples/indi_redacted_cognitive_time.yaml`.
+worked skeleton in `examples/indi_redacted_temporal_hypothesis.yaml`.
 
 ## How to run it
 

@@ -41,3 +41,23 @@ jobs:
           path: |
             evidence/
             plots/
+
+  external-adversarial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q numpy pyyaml pytest ruff mypy   # offline, no network
+      - name: external adversarial portability demo (required)
+        run: bash scripts/external_adversarial_demo.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: adversarial-portability-report
+          path: |
+            evidence/ADVERSARIAL_PORTABILITY_*.json
+            docs/ADVERSARIAL_PORTABILITY_REPORT.md

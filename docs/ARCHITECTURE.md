@@ -75,7 +75,7 @@ other box names code that exists in this repository.
 
 | Pipeline box | Code |
 |---|---|
-| RedactedHypothesisSpec | `ctios.falsify.HypothesisSpec`; redacted skeleton `examples/indi_redacted_cognitive_time.yaml` (conceptual layer) |
+| RedactedHypothesisSpec | `ctios.falsify.HypothesisSpec`; redacted skeleton `examples/indi_redacted_temporal_hypothesis.yaml` (conceptual layer) |
 | Spec pinning / sha256 | `HypothesisSpec.sha()`, `falsify.py` |
 | Probe / Negative-control | callable arguments to `falsify(...)`; local, not a repo module (conceptual) |
 | FalsifierBattery | `ctios.falsify.run_battery` |

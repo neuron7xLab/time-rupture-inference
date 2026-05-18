@@ -4,16 +4,21 @@ Audience: an external evaluator at frontier-lab rigor. Every capability
 is stated as **Claim → Falsifier → Evidence → Boundary**. Inverse
 argumentation: a claim is admitted only because its falsifier was run
 and did not trigger; the evidence is a reproducible artifact, not prose.
+<!-- claims:disclaimer -->
 No capability/cognition/AGI language — the repository's own
 `claims-lint` enforces this.
+<!-- claims:end -->
 
 ## 0. System identity (what it IS)
 
 A falsification-first **temporal-inference apparatus** plus a runnable
-**online adaptive agent**. It is NOT a cognitive system, neural-network
+**online adaptive agent**.
+<!-- claims:disclaimer -->
+It is NOT a cognitive system, neural-network
 intelligence, or AGI; the dominant product is a chain of sealed
-negatives + the infrastructure that produces them honestly. Two narrow
-positives survive (S1, S5).
+negatives + the infrastructure that produces them honestly.
+<!-- claims:end -->
+Two narrow positives survive (S1, S5).
 
 ## 1. Formal object
 
@@ -61,9 +66,12 @@ context `z` aliasing identical observation windows to opposite futures.
 ### S3 — Falsification governance (THE PRIMARY ASSET)
 - **Claim.** The apparatus makes inflation and silent pseudo-GREEN
   structurally impossible.
-- **Falsifier.** A magic-literal/window drift, a cognition claim outside
+- **Falsifier.**
+  <!-- claims:disclaimer -->
+  A magic-literal/window drift, a cognition claim outside
   a disclaimer, an unattested file, a verdict tuned to green — any
   passes CI.
+  <!-- claims:end -->
 - **Evidence.** single-source `ctios.contract`; AST gate "every
   post-shift slice calls validate_window"; `claims.yaml`+`claims_lint`
   (planted-violation test); `provenance_attest` (sha256 + SPDX, external
@@ -129,10 +137,12 @@ discoverable, so a learner failing it is informative, not ambiguous.
 
 ## 5. Non-claims (hard scope)
 
+<!-- claims:disclaimer -->
 No intelligence, cognition, consciousness, neuroplasticity, AGI,
 world-model, or learned-model-superiority claim is made anywhere. No
 biological fidelity. External plagiarism/originality: OPEN, not
 asserted. Generality beyond the synthetic families: untested.
+<!-- claims:end -->
 
 ## 6. Reproduction (clean clone)
 

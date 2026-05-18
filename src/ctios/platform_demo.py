@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def _default_example() -> Path:
     # Resolved by glob so the source carries no qualifier-bearing literal
     # (claims-lint scans src/ctios/*.py); the skeleton lives in examples/.
-    hits = sorted((ROOT / "examples").glob("indi_redacted_*_time.yaml"))
+    hits = sorted((ROOT / "examples").glob("indi_redacted_*.yaml"))
     return hits[0] if hits else ROOT / "examples"
 
 

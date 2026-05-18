@@ -80,12 +80,27 @@ negative control; post-hoc threshold tuning (detected via spec sha256);
 claim text exceeding mechanism (lexicon gate). Full taxonomy:
 `docs/FAILURE_TAXONOMY.md`.
 
+## Adversarial portability layer (PR21)
+
+`ctios.adversarial_probes` (8 degenerate probes) × `ctios.benchmark_families`
+(7 deterministic numpy families) driven by `ctios.falsifier_stress`:
+each probe is run fail-closed through the battery plus a seed sweep and
+a family-sensitivity scan. A data-blind probe (constant / identity /
+carrier / threshold-echo) is caught as a BLOCKER; none reaches a clean
+PASS; the minimal valid control still passes. Sealed to
+`evidence/ADVERSARIAL_PORTABILITY_*.json` and
+`docs/ADVERSARIAL_PORTABILITY_REPORT.md`; gated in CI. The extended
+claim-lint now scans docs/examples/scripts/workflows.
+
 ## Failure modes not caught
 
 A probe that is deterministic and discriminative but encodes a hidden
-degenerate solution; a hypothesis whose redaction is itself
-ill-posed; external originality of the underlying ideas; real-world
-validity of a synthetic benchmark. Stated, not hidden.
+degenerate solution **co-designed against this exact scan set**
+(coverage is improved by the family-sensitivity scan, not closed); a
+hypothesis whose redaction is itself ill-posed; external originality of
+the underlying ideas; real-world validity of a synthetic benchmark; an
+**external collaborator run of the private layer (still open — only
+simulated)**. Stated, not hidden.
 
 ## Reproducibility contract
 
@@ -108,8 +123,10 @@ violate its own claim boundary.
 
 ## Claim boundary
 
+<!-- claims:disclaimer -->
 No cognition, consciousness, AGI, biological-fidelity, or
 universal-theory-of-time claim is made. The single claim: the
 difference between a plausible story and a survived falsifier can be
 made mechanical, reproducible, and safe to run on a private hypothesis
 without disclosing it. Scope: `docs/INDI_LIMITATIONS.md`, `docs/SPEC.md`.
+<!-- claims:end -->

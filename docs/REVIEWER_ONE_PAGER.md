@@ -30,7 +30,7 @@ bash scripts/conference_smoke.sh
 
 **What to inspect.** `docs/SYSTEM_CARD.md` (abstraction + boundaries),
 `ctios.falsify` (`HypothesisSpec`, `run_battery`, `next_experiment`),
-`examples/indi_redacted_cognitive_time.yaml` (redacted skeleton),
+`examples/indi_redacted_temporal_hypothesis.yaml` (redacted skeleton),
 `docs/CONTRIBUTION_CLAIMS.md` (original vs prior art),
 `docs/FAILURE_TAXONOMY.md` (defenses + residual risk).
 
@@ -40,10 +40,12 @@ win-rate 1.000, ablation-necessary, no-leakage; and an engine whose
 battery mechanically rejects non-deterministic probes, decorative
 thresholds, and pseudo-GREEN negative controls.
 
+<!-- claims:disclaimer -->
 **Hard non-claims.** No cognition, consciousness, AGI,
 biological-fidelity, or universal-theory-of-time claim. No
 learned-representation-superiority claim. It does not certify any
 private theorem correct.
+<!-- claims:end -->
 
 **What would falsify this package.** A threshold changeable after a run
 without the spec hash changing; the battery passing a deliberately

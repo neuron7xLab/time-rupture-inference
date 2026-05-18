@@ -13,7 +13,7 @@ from ctios.redacted_io import load_redacted_spec, spec_sha256  # noqa: E402
 from ctios.report import render_review_report, write_review_report  # noqa: E402
 from ctios.spec_compiler import compile_redacted_hypothesis  # noqa: E402
 
-EXAMPLE = ROOT / "examples" / "indi_redacted_cognitive_time.yaml"
+EXAMPLE = ROOT / "examples" / "indi_redacted_temporal_hypothesis.yaml"
 
 
 def _pipeline():

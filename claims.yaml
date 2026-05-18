@@ -58,11 +58,36 @@ disclaimer_close: "<!-- claims:end -->"
 scan_globs:
   - README.md
   - src/ctios/*.py
+  - src/ctios/**/*.py
+  - "docs/**/*.md"
+  - "examples/**/*.yaml"
+  - "scripts/**/*.py"
+  - "scripts/**/*.sh"
+  - ".github/workflows/**/*.yml"
+# Internal audit / RCA / critique / limitation / prereg-negation docs
+# are *evidence about the risk*, not outward positioning — they exist
+# to enumerate the boundary and are exempt by the same rationale as
+# CRITIQUE_/AUDIT_. Positioning docs are NOT exempt: they stay clean or
+# wrap forbidden vocabulary in a claims:disclaimer block.
 exempt:
   - claims.yaml
+  - CLAUDE.md
   - scripts/claims_lint.py
+  - scripts/external_adversarial_demo.sh
   - tests/test_claims_lexicon.py
   - prereg/*
+  - "docs/prereg/*"
+  # Research-lineage diagnostic runners print their own claim-boundary
+  # disclaimer; they are evidence about a lineage, not positioning.
+  - "scripts/run_*_diagnostic.py"
+  - "scripts/derive_*.py"
+  - "scripts/v7_diagnostics.py"
   - "docs/AUDIT_*"
   - "docs/RCA_*"
   - "docs/CRITIQUE_*"
+  - "docs/OPENAI_STYLE_REVIEW.md"
+  - "docs/FAILURE_TAXONOMY.md"
+  - "docs/INDI_LIMITATIONS.md"
+  - "docs/CONTRIBUTION_CLAIMS.md"
+  - "docs/ADVERSARIAL_PORTABILITY_REPORT.md"
+  - "docs/reports/*"

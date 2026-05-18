@@ -35,6 +35,8 @@ strategy, and theorem content never enter the public repository. The
 engine needs the *shape* of the question, never the answer or the
 method. Specified field by field in `docs/PRIVATE_RND_PROTOCOL.md`.
 
+<!-- claims:disclaimer -->
+<!-- "cognitive-time" = the collaborator's research domain, not a system claim -->
 **Why this matters to you.** Your private cognitive-time work currently
 lives as intuition and prose, where a capable model will always agree
 with you. This converts one such claim into a pinned redacted skeleton,
@@ -44,9 +46,10 @@ side, self-deception removed from the loop. The output is a sealed
 verdict and, on failure, a decision-gated next experiment. It is a
 falsification loop with a mandatory human gate at every restart, not an
 autonomous research agent.
+<!-- claims:end -->
 
 **Next step.** Run `bash scripts/indi_demo.sh`, read one redacted
-skeleton (`examples/indi_redacted_cognitive_time.yaml`), and answer
+skeleton (`examples/indi_redacted_temporal_hypothesis.yaml`), and answer
 three questions: is this the research loop you meant; is the redacted
 interface enough to protect your IP; what would make it useful for your
 next private experiment. If the answers are yes/yes/concrete, the first
@@ -54,6 +57,7 @@ collaborative task is one redacted hypothesis from you + one local
 probe + one agreed falsifier → one sealed verdict. The structured path
 is `docs/INDI_REVIEWER_CHECKLIST.md`.
 
+<!-- claims:disclaimer -->
 **What this explicitly does not claim.** Not cognition, consciousness,
 artificial general intelligence, biological fidelity, or a universal
 theory of time. It does not claim any private theorem is correct — it
@@ -61,3 +65,4 @@ cannot. It claims one thing: the difference between a plausible story
 and a survived falsifier can be made mechanical, reproducible, and safe
 to run on a private hypothesis without disclosing it. Scope and open
 questions are stated, not implied, in `docs/INDI_LIMITATIONS.md`.
+<!-- claims:end -->

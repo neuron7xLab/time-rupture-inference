@@ -54,13 +54,29 @@ invention of falsification/evals/CI and scopes the claim to the
 integration; external originality is marked OPEN, not asserted.
 7. Stated as a residual risk in `docs/FAILURE_TAXONOMY.md`.
 
+## PR21 status update — private layer
+
+The "private layer unused" objection is now **partially addressed, not
+solved**. PR21 adds a simulated external adversarial pack
+(`ctios.adversarial_probes` × `ctios.benchmark_families` driven by
+`ctios.falsifier_stress`): eight degenerate probes are run fail-closed
+against the battery plus a family-sensitivity scan, and none reaches a
+clean PASS (sealed in `evidence/ADVERSARIAL_PORTABILITY_*.json`). This
+improves battery coverage against deterministic/discriminative
+degeneracy. It does **not** prove real-world validity, and an **external
+collaborator run of the redacted private layer remains open** — a
+simulated red-team is not a third party exercising it on a real private
+hypothesis.
+
 ## What remains unresolved
 
 External originality of the integrated pattern; whether the
-redacted interface survives a genuinely adversarial real hypothesis;
-whether the discipline transfers off the synthetic family; whether the
-human-gate becomes a bottleneck at scale. None of these are claimed as
-solved.
+redacted interface survives a genuinely adversarial *real* hypothesis
+supplied by a third party; whether the discipline transfers off the
+synthetic families; whether the human-gate becomes a bottleneck at
+scale; whether a probe co-designed against this exact scan set could
+still slip through (coverage improved, not closed). None of these are
+claimed as solved.
 
 ## Minimal next experiment
 

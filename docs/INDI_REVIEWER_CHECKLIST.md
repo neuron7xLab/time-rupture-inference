@@ -4,7 +4,7 @@
 
 1. Read `docs/INDI_README.md`.
 2. Run `bash scripts/indi_demo.sh`.
-3. Open `examples/indi_redacted_cognitive_time.yaml`.
+3. Open `examples/indi_redacted_temporal_hypothesis.yaml`.
 4. Answer the three feedback questions (in INDI_README and at the end
    of the demo script).
 
@@ -23,12 +23,14 @@ time allows. Every box is a concrete, checkable thing — not an opinion.
 - [ ] Read `docs/INDI_EXECUTIVE_SUMMARY.md` — confirm the asset stated
       is the discipline (claim → falsifier → evidence → boundary), not
       a result.
+<!-- claims:disclaimer -->
 - [ ] Skim `docs/INDI_LIMITATIONS.md` — confirm the "does not prove"
       list includes cognition, consciousness, biological fidelity,
       general intelligence, universal theory of time, commercial value,
       and correctness of any private theorem.
 - [ ] Confirm no hype vocabulary (breakthrough / genius / AGI /
       understanding) appears as an asserted capability anywhere.
+<!-- claims:end -->
 
 ## 30-minute review
 
@@ -36,7 +38,7 @@ time allows. Every box is a concrete, checkable thing — not an opinion.
       confirm it ends with the single explicit success line.
 - [ ] Confirm the frozen runner prints byte-identical
       `learned post_mae=0.8830 injected=8.0028 oracle=0.7933`.
-- [ ] Read `examples/indi_redacted_cognitive_time.yaml` — confirm it
+- [ ] Read `examples/indi_redacted_temporal_hypothesis.yaml` — confirm it
       carries no mechanism, dataset, or theorem content, and that
       `human_review_required: true` and `auto_run: false`.
 - [ ] Read `docs/PRIVATE_RND_PROTOCOL.md` §3/§4 — confirm the

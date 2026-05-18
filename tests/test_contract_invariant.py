@@ -43,7 +43,7 @@ def test_no_magic_post_shift_window_literal_in_src():
 
 @pytest.mark.parametrize(
     "t_star,horizon,det",
-    [(11, 5, None), (5, 0, None), (5, 3, 10), (-1, 5, None)],
+    [(11, 5, None), (5, 0, None), (5, 3, 10), (-1, 5, None), (8, 5, None)],
 )
 def test_compute_metrics_fails_loud_on_bad_window(t_star, horizon, det):
     with pytest.raises(ValueError):
@@ -59,3 +59,13 @@ def test_run_on_series_fails_loud_on_bad_window():
 def test_causal_run_metrics_fails_loud_on_bad_window():
     with pytest.raises(ValueError):
         run_metrics(np.zeros(10), ["observe"] * 10, t_star=11, eval_horizon=5)
+
+
+def test_causal_run_metrics_fails_loud_on_misaligned_lengths():
+    with pytest.raises(ValueError):
+        run_metrics(np.zeros(10), ["observe"] * 9, t_star=5, eval_horizon=4)
+
+
+def test_validate_aligned_lengths_fails_loud():
+    with pytest.raises(ValueError):
+        contract.validate_aligned_lengths(10, 9, names=("errors_len", "actions_len"))

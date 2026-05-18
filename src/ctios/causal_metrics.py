@@ -6,13 +6,16 @@ from collections import Counter
 
 import numpy as np
 
-from ctios.contract import validate_window
+from ctios.contract import validate_aligned_lengths, validate_window
 
 
 def run_metrics(
     errors: np.ndarray, actions: list[str], t_star: int, eval_horizon: int
 ) -> dict[str, float | dict]:
     validate_window(t_star, eval_horizon, errors.size)
+    validate_aligned_lengths(
+        errors.size, len(actions), names=("errors_len", "actions_len")
+    )
     ae = np.abs(errors)
     pre = ae[:t_star]
     post = ae[t_star : t_star + eval_horizon]

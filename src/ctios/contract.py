@@ -37,7 +37,22 @@ def validate_window(
         raise ValueError(f"t_star {t_star} must be within [0, {n}]")
     if eval_horizon <= 0:
         raise ValueError(f"eval_horizon {eval_horizon} must be > 0")
+    if t_star + eval_horizon > n:
+        raise ValueError(
+            f"window [{t_star}, {t_star + eval_horizon}) exceeds series length {n}"
+        )
     if detection_step is not None and not (0 <= detection_step < n):
         raise ValueError(
             f"detection_step {detection_step} must be within [0, {n - 1}] when provided"
+        )
+
+
+def validate_aligned_lengths(
+    n: int, aux_n: int, *, names: tuple[str, str] = ("n", "aux_n")
+) -> None:
+    """Fail loud when paired series are not index-aligned."""
+    if n != aux_n:
+        left, right = names
+        raise ValueError(
+            f"aligned sequence lengths required, got {left}={n} and {right}={aux_n}"
         )

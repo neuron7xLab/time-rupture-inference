@@ -21,7 +21,7 @@
 
 [![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
 [![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-82_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![tests](https://img.shields.io/badge/tests-91_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
 [![lineage](https://img.shields.io/badge/lineage-3_RED_preserved-FF0033?style=for-the-badge&labelColor=000000)](evidence/)
@@ -146,9 +146,42 @@ src/ctios/   env · agents · drift · metrics · gates · ledger · runner · a
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       82 tests incl. no-leakage, shuffle kill-control, contract
+tests/       91 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
+
+## CTI-OS v7 · GCP readiness (CPU-first, no GPU default)
+
+v7 tests whether a learned sequence model (small GRU / linear
+state-space) beats the frozen v4 heuristic **and** a from-scratch
+conventional baseline on a harder multi-regime, partially-observable
+environment. The repo is prepared as a deterministic, cost-guarded,
+reproducible cloud-run artifact — Google is only an execution surface.
+
+```bash
+# local readiness gates (no cloud, no spend)
+make test
+make v7-prereg-check
+make v7-cpu-smoke
+make v7-artifact-check
+make gcp-doctor          # actionable PASS/FAIL (install gcloud + auth)
+make gcp-dry-run         # non-destructive plan, creates nothing
+# only if all green AND operator-reviewed cost guardrails:
+PROJECT_ID=cti-os-v7 ZONE=europe-west4-a APPLY=1 make gcp-cpu-run
+APPLY=1 PROJECT_ID=cti-os-v7 make gcp-cleanup
+```
+
+Phase 1 is CPU-only; GPU is a documented, manually-unlocked future
+phase. No command creates cloud resources unless `APPLY=1` is explicit.
+Budgets are alerts, not hard caps — see
+[`docs/cloud/gcp_cost_guardrails.md`](docs/cloud/gcp_cost_guardrails.md).
+Pre-registration: [`docs/prereg/cti_os_v7_preregistration.md`](docs/prereg/cti_os_v7_preregistration.md).
+
+<!-- claims:disclaimer -->
+Claim boundary: a learned sequence model with a representational
+advantage on a harder task — NOT intelligence, NOT AGI, NOT cognition.
+<!-- claims:end -->
+
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/neuron7xLab/time-rupture-inference/main/.github/assets/divider.svg" width="100%">

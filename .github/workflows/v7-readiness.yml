@@ -1,0 +1,44 @@
+name: v7-readiness
+
+on:
+  push:
+    branches: [main, "gcp/**"]
+  pull_request:
+  workflow_dispatch:
+
+# No GCP credentials. No cloud calls. CPU-only readiness gates.
+jobs:
+  v7-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q numpy matplotlib pyyaml pytest ruff mypy
+      - name: minimal syntax / lint
+        run: |
+          ruff check src tests scripts
+          bash -n scripts/gcp/doctor.sh
+          bash -n scripts/gcp/dry_run_plan.sh
+          bash -n scripts/gcp/create_cpu_vm.sh
+          bash -n scripts/gcp/cleanup.sh
+      - name: unit tests
+        run: PYTHONPATH=src pytest tests -q
+      - name: v7 config validation
+        run: PYTHONPATH=src pytest tests/test_v7_config.py -q
+      - name: v7 CPU smoke run
+        run: python scripts/run_v7_cpu.py --mode smoke
+      - name: v7 artifact schema validation
+        run: python scripts/check_artifacts.py
+      - name: gcp dry-run is non-destructive
+        run: bash scripts/gcp/dry_run_plan.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v7-artifacts
+          path: |
+            artifacts/v7/
+            artifacts/gcp/

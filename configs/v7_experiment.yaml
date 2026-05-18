@@ -1,0 +1,29 @@
+# CTI-OS v7 experiment contract. Consumed by scripts/run_v7_cpu.py.
+# Phase 1 is CPU-only, no GPU, fail-closed.
+experiment_id: cti_os_v7
+seed_start: 0
+seed_count: 30           # smoke mode overrides to 3
+shift_magnitudes: [7.0, 12.0, -5.0]
+environment_mode: multi_regime_partial_observability
+
+models:
+  - heuristic_v4         # frozen v4 LearnedAgent (reference, not the claim)
+  - gru_small            # learned recurrent (numpy, CPU)
+  - linear_ssm_small     # learned linear state-space (numpy, CPU)
+  - baseline_mlp_or_rnn  # from-scratch conventional baseline
+
+metrics:
+  - post_shift_mae
+  - recovery_steps
+  - win_rate_vs_heuristic
+  - win_rate_vs_baseline
+  - calibration_error
+
+artifact_dir: artifacts/v7
+deterministic: true
+max_runtime_seconds: 1200
+fail_closed: true
+
+# Phase-1 policy: no GPU, no paid cloud. GPU is a future, manually
+# unlocked phase only after the CPU phase proves the model is worth power.
+phase1_no_gpu: true

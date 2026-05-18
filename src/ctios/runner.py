@@ -27,6 +27,7 @@ from ctios.env import Environment
 from ctios.gates import evaluate_gate
 from ctios.ledger import append, provenance
 from ctios.metrics import Metrics, compute_metrics
+from ctios._version import __version__
 from ctios.utils import ROOT, git_commit_epoch, jdump
 
 
@@ -269,7 +270,7 @@ def main() -> int:
     _write_honest_failures(gate, agg, ablation_ok, neuro_ok)
 
     verdict = "PASS (GREEN)" if gate.green else "FAIL (RED)"
-    print(f"\n=== CTI-OS PROOF-OF-LIFE v3 :: {verdict} ===")
+    print(f"\n=== time-rupture-inference v{__version__} :: {verdict} ===")
     for k, v in gate.checks.items():
         print(f"  [{'OK' if v else 'XX'}] {k}")
     print(f"\ngrid: {len(seeds)} seeds x {len(deltas)} deltas={deltas}")

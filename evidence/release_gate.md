@@ -3,7 +3,7 @@
 **Verdict: GREEN / PASS**
 
 - prereg_hash: `58f46a228aecf2cf6f2440a08960ab9f3a4f74ace83f9428accfdfd86402e6df`
-- git_commit: `2751c4be4417966095a603fc1a8f3ba7d5a1ef17`
+- git_commit: `b863ed2521e2ab997ebedf68305ecf236b9554b2`
 - grid win-rate learned>injected: 1.000
 - grid win-rate learned>best-naive: 1.000
 - neuroplasticity markers: `{'synaptic': np.True_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`

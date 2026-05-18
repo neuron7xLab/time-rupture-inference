@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from fnmatch import fnmatch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,11 +43,23 @@ OTHER = (
 )
 
 
+# Engine-generated, gitignored, ephemeral artifacts. They are NOT
+# committed, so they must never enter the signed manifest — otherwise a
+# clean CI checkout fails with "references missing file".
+EPHEMERAL = ("NEXT_*.yaml", "FALSIFY_*.json", "NEGATIVE_FALSIFY_*.md")
+
+
+def _ephemeral(p: Path) -> bool:
+    return any(fnmatch(p.name, pat) for pat in EPHEMERAL)
+
+
 def _files() -> list[Path]:
     out: list[Path] = []
     for g in (*PY_GLOBS, *OTHER):
         out += list(ROOT.glob(g))
-    return sorted({p for p in out if p.is_file()})
+    return sorted(
+        {p for p in out if p.is_file() and not _ephemeral(p)}
+    )
 
 
 def _sha(p: Path) -> str:

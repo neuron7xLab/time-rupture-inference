@@ -1,0 +1,45 @@
+# v6 — precision-weighted update lineage. Pinned BEFORE any run.
+# Frozen v4 is UNTOUCHED: precision_weighted defaults OFF; this is an
+# opt-in mechanism on its own falsifier, never folded into the baseline.
+
+claim: >
+  An online estimator whose update gain is proportional to estimated
+  uncertainty (a Kalman-/predictive-coding-style precision weighting —
+  operational analogy, NOT a biological claim) lowers post-shift error
+  and regret-vs-oracle versus the fixed-gain + drift-boost v4 learner,
+  across the 30 x 3 grid, with the precision mechanism shown necessary
+  by ablation, no hidden-variable leakage, deterministic replay.
+
+forbidden_claims:
+  - intelligence
+  - consciousness
+  - biological_neuroplasticity
+  - brain_fidelity
+  - cognition
+  - understanding_time
+
+mechanism:
+  name: precision_weighted_gain
+  rule: "P_pred = P + Q ; K = P_pred / (P_pred + R) ; m += K*err ; P = (1-K)*P_pred"
+  notes: "scalar Kalman recursion; R,Q estimated online from the error stream"
+
+primary_metric: regret_vs_oracle           # mean post_shift_mae - oracle post_shift_mae
+secondary_metrics: [post_shift_mae, adaptation_time]
+
+grid:
+  seeds: 30
+  shift_deltas: [7.0, 12.0, -5.0]
+
+thresholds:
+  # GREEN requires the precision learner to be NOT WORSE than fixed-gain
+  # on aggregate regret AND strictly better on a pre-registered fraction
+  # of grid cells; ablation (precision_off) must regress.
+  max_regret_ratio_vs_fixed: 1.00          # precision regret <= fixed regret (aggregate)
+  min_win_rate_vs_fixed: 0.60              # cells where precision regret < fixed
+  ablation_must_regress: true              # precision_off worse than precision_on
+
+decision_rule: >
+  GREEN iff every check in the v6 gate passes. A RED is reported as RED
+  and preserved as evidence/NEGATIVE_RESULT_v6.md before any next
+  lineage. No threshold edited after the pinned commit. Frozen v4
+  numbers must remain byte-identical (0.8830/8.0028/0.7933).

@@ -70,6 +70,12 @@
     },
     {
       "license": "MIT",
+      "path": "prereg/v6_precision_weighting_preregistration.yaml",
+      "sha256": "5da4c9231a0725242d19efba295933044904fbabeaba383e486401e7a301be9c",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
       "path": "pyproject.toml",
       "sha256": "28103c5f621826f9247bbf49c605af67a8e1becaba0121598eda8b804ce244de",
       "spdx_header": "n/a"
@@ -113,7 +119,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/agents.py",
-      "sha256": "30efec5df30e065dc6ed90133b0a60b7f1ecd8bd88d4da888b0370f9eea98b6b",
+      "sha256": "3a3ecec97674e7cba4ff3e2f8adb5d09c93fb002be6b48aede5a7e3228c06feb",
       "spdx_header": true
     },
     {
@@ -198,6 +204,12 @@
       "license": "MIT",
       "path": "src/ctios/utils.py",
       "sha256": "6973e3c5ddb873b83952479c3258f5fba5983a28ef756d1b038591df03963ab0",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/v6_precision.py",
+      "sha256": "b867c95faafb9bd79a546ab3ef192dc98d7f2ba51ef0938c5ff38ba495c733ef",
       "spdx_header": true
     }
   ],

@@ -155,6 +155,8 @@ class LearnedAgent(_Base):
         warmup: int = 60,
         anti_divergence: bool = False,
         min_gain_scale: float = 0.35,
+        precision_weighted: bool = False,
+        q_process: float = 1e-3,
     ):
         if not 0.0 < base_gain <= 1.0:
             raise ValueError("base_gain must be in (0, 1]")
@@ -166,6 +168,8 @@ class LearnedAgent(_Base):
             raise ValueError("warmup must be >= 0")
         if not 0.0 < min_gain_scale <= 1.0:
             raise ValueError("min_gain_scale must be in (0, 1]")
+        if q_process <= 0.0:
+            raise ValueError("q_process must be > 0")
 
         self.base_gain = base_gain
         self.boost_gain = boost_gain
@@ -186,6 +190,12 @@ class LearnedAgent(_Base):
         self.anti_divergence = anti_divergence
         self.min_gain_scale = min_gain_scale
         self._prev_err = 0.0
+        # Opt-in scalar-Kalman / precision-weighting state (predictive-coding
+        # analogy ONLY — operational, NOT a biological claim).
+        self.precision_weighted = precision_weighted
+        self.q_process = q_process
+        self._P = 1.0
+        self._R = 1.0
 
     def predict(self) -> float:
         self._pred = self._m if self.use_memory else self._last
@@ -217,6 +227,22 @@ class LearnedAgent(_Base):
                 self._drift = True
                 self._boost_left = self.boost_steps
                 self._ph.reset()
+
+        # Opt-in precision-weighted (scalar-Kalman) update: gain is the
+        # Kalman K from estimated precision; drift inflates the covariance
+        # (the precision analog of the fixed-path boost). Default OFF so
+        # the frozen v4 path below stays byte-identical.
+        if self.precision_weighted:
+            if self._n > self.warmup:
+                self._R = 0.97 * self._R + 0.03 * err * err
+            p_pred = self._P + self.q_process
+            if self._drift:
+                p_pred += 1.0
+            k = p_pred / (p_pred + max(self._R, 1e-6))
+            self._m += k * err
+            self._P = (1.0 - k) * p_pred
+            self._prev_err = err
+            return
 
         gain = self.base_gain
         if self._boost_left > 0:

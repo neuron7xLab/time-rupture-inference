@@ -73,3 +73,6 @@ v8-1-diagnostic:
 
 v8-2-diagnostic:
 	$(PY) scripts/run_v8_2_trigger_scoped_diagnostic.py
+
+v8-3-diagnostic:
+	$(PY) scripts/run_v8_3_correct_history_diagnostic.py

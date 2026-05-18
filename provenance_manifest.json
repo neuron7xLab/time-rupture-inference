@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "b42144e265f4faa991e7586ff386dd7ab99ddd6a62113440af7dedd25147db4c",
+      "sha256": "0a3ee7c969615f89a0452215920fbbbf9408a69c2fbbfdf86b9773f3ce96bd48",
       "spdx_header": "n/a"
     },
     {
@@ -156,6 +156,12 @@
       "license": "MIT",
       "path": "scripts/run_v8_2_trigger_scoped_diagnostic.py",
       "sha256": "7d90dd02d488d736060c8cb75abade4664fbf559f9785ed8d961e0fec11ce607",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/run_v8_3_correct_history_diagnostic.py",
+      "sha256": "5d0d2b3a3c50d72cb7ae366c5326334ba972d2cbd4e1b2fed5d7360f0b1a7f46",
       "spdx_header": true
     },
     {

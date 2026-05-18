@@ -1,0 +1,16 @@
+{
+  "verdict": "BOUNDARY_RED",
+  "trigger_context_gap_ratio": 0.4703902891120579,
+  "carrier_controlled_gap_ratio": 0.4650297827919057,
+  "history_to_regime_distance": 4.219945203136456,
+  "h2r_causal_min_analytic": 0.5715907859114401,
+  "analytic_attainable_at_0_35": false,
+  "empirical_at_causal_bound": true,
+  "trigger_count": 1500,
+  "h_trigger_mae": 4.18988834942939,
+  "r_trigger_mae": 0.802669029343805,
+  "s_trigger_mae": 7.91127553610117,
+  "structural_ok": true,
+  "deterministic_replay_hash": "c0a9cbe5970236d4f90886a1dc9ce26226ec5ca68bb6c96773bb283a08412cf4",
+  "no_learned_model_run": true
+}

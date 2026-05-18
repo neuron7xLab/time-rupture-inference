@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Claim-lexicon linter (audit P1).
 
 Fails loud if external-facing text asserts an ontological claim the

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Online change-point detectors operating on the prediction-error stream.
 
 Page-Hinkley is the primary online signal; CUSUM is provided as an

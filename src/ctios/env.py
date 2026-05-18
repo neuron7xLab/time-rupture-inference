@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Temporal environment with a hidden interval and a step change at T*.
 
 Structural no-leakage guarantee

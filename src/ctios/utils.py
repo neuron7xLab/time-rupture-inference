@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Shared primitives: hashing, RNG discipline, lock-hash."""
 
 from __future__ import annotations

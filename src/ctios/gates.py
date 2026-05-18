@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Release gate v3. Fail-closed. Never auto-softens a RED verdict.
 
 Adds the doctoral-critique closure checks: statistical-power grid,

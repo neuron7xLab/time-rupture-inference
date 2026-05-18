@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Per-run causal metrics + aggregate causal-action gain."""
 
 from __future__ import annotations

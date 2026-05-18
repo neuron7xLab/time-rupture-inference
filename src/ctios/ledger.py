@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Append-only evidence ledger (one JSON object per line)."""
 
 from __future__ import annotations

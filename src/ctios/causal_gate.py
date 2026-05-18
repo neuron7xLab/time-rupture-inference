@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Fail-closed gate for the v5 minimal causal-action line. No soft pass."""
 
 from __future__ import annotations

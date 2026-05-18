@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """v5 minimal causal-action runner. CLI: --mode sanity | full.
 
 GREEN exit 0 only if the fail-closed causal gate passes (full mode).

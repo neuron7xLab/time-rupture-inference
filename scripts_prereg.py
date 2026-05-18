@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Freeze the pre-registration: write sha_pin.txt over prereg+configs+src.
 
 Run BEFORE the experiment and git-commit the result. The runner refuses

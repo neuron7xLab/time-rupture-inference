@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Minimal action agents. No planning, no belief state, no active inference.
 
 All three reuse the v4 ``LearnedAgent`` for interval prediction/update so

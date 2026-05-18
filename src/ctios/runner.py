@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Orchestrator v3: power grid, adaptation markers (operational, NOT biological),
 shuffle kill-control, hidden-provenance ledger, fail-closed gate."""
 

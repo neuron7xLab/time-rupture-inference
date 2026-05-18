@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Pre-registered metrics computed from per-step prediction errors."""
 
 from __future__ import annotations

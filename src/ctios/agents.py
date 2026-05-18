@@ -1,9 +1,11 @@
+# SPDX-License-Identifier: MIT
 """Agents. Learning/baseline agents receive only ``Observation``.
 
-The intelligence claim lives entirely in ``LearnedAgent``: it is never
-told tau0/tau1/T*; it must infer the interval from its own prediction
-error and re-adapt after the hidden shift. Every ablation removes exactly
-one mechanism so necessity (not mere presence) is testable.
+The benchmark-scoped adaptation claim (operational, NOT cognition) lives
+entirely in ``LearnedAgent``: it is never told tau0/tau1/T*; it must
+infer the interval from its own prediction error and re-adapt after the
+hidden shift. Every ablation removes exactly one mechanism so necessity
+(not mere presence) is testable.
 """
 
 from __future__ import annotations

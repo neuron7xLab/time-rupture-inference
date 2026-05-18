@@ -22,6 +22,8 @@ jobs:
         run: ruff check src tests scripts
       - name: claim-lexicon lint (audit P1 — no interpretation inflation)
         run: python scripts/claims_lint.py
+      - name: provenance attestation (audit P1 #3 — internal layer)
+        run: python scripts/provenance_attest.py
       - name: tests
         run: PYTHONPATH=src pytest tests -q
       - name: fail-closed gate (30 seeds × 3 shifts)

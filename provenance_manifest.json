@@ -1,0 +1,187 @@
+{
+  "copyright": "2026 neuron7xLab",
+  "external_similarity_scan": "OPEN \u2014 external arXiv/GitHub similarity scan NOT performed (offline environment). This manifest attests internal integrity + license only; it is explicitly NOT a no-plagiarism claim.",
+  "files": [
+    {
+      "license": "MIT",
+      "path": "LICENSE",
+      "sha256": "a92250a5ec9ba8e8d0c6995e4e45b27961895957bc65b813936d044e20663a73",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "README.md",
+      "sha256": "f2e573d8e50924fa510f34ad60e9cc4f79529fde1ed9239809dabba2143b1522",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "claims.yaml",
+      "sha256": "b8e3563c9c60768bfbbfb8ea4349bef0971ebcb2134f76e053595f1cc07af4bb",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/agents.yaml",
+      "sha256": "a326b0e440433dff1f558a2a6cdb66d254a98d136d99077f8a66152972c93c90",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/env.yaml",
+      "sha256": "767547479225b27091367a4866fa9bba239044f672dcca1b912a95b417dd0b7b",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/experiment.yaml",
+      "sha256": "c0a8ee7fe1c3e733ea452e46137e6aab3a956f55adf44caca231d67f875068c0",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/metrics.yaml",
+      "sha256": "7eafb11f9b8473cfce9197066102aaf644b1cbc35ebb7d10437e96ae741af00e",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/falsifier_contract.yaml",
+      "sha256": "af63fdb264ee789b7eadaa9debd616a979f5f2636fe469fed3663b129dd0d7f1",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/preregistration.yaml",
+      "sha256": "fd8acfa48fd30c9c901facc07da6df74c5289ffa3bf21281b89bf20154e0a871",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/v5_causal_action_preregistration.yaml",
+      "sha256": "f67bc2f3bcb635f7133df799feb3831faaf67b193cc627626abaafaf1f59cb6d",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "pyproject.toml",
+      "sha256": "e4d5a36da7f28a7b618efb447f5a51248458288c9b4a0a3bfb1a831db4bf8b54",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/claims_lint.py",
+      "sha256": "dc181b5944f00c1af8961715ca61c99141020ff5e1500c7aaa281600af4836de",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/provenance_attest.py",
+      "sha256": "b5cb72c412c7748d8587caba3ea658709c324ce6d574d7c1069bce394f93d5b2",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts_prereg.py",
+      "sha256": "e1eccac4177bb8d7cd838971043272ca75782b9f0b1e4e609d28a33c71346b86",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/__init__.py",
+      "sha256": "5be230fa13a76b43315ce684e1e849c7104db7aa30af69f7d91144b4b665e2d3",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/_version.py",
+      "sha256": "ea968a2265a85c1aabc4a25970bbbb5bb8766b19e332dd8fc3125abf77cccd53",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/agents.py",
+      "sha256": "2291dea5c9aa3e7629850530c8828d9a4e33900d69e9df799468ea7504086035",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/causal_agents.py",
+      "sha256": "09d3197214b4e0af22c1628d9cc436ae01910655a34e5883700f665c7ea007e4",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/causal_env.py",
+      "sha256": "56631ed485809503729b7c903c609de01fa6da8247181dc35057b29ba5dd61b8",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/causal_gate.py",
+      "sha256": "5961677d7d70d52cac40608edf272ab5af0b270762f797652c4512806d8e2b67",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/causal_metrics.py",
+      "sha256": "a234dc47730738d09c7b41296692dd3b03c0c0741a15d0a939592a770e2beace",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/causal_runner.py",
+      "sha256": "7874e625f39bfa92558c07962ee6d061fd01c1ffbb4f5183cc18567193b17cac",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/contract.py",
+      "sha256": "8b7aa0f1c0697d3dbc60103d3e2958ee5172b1b46a233fe816e60f8dd87db474",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/drift.py",
+      "sha256": "52cb812dd9cbd2644e90f085c5f81bdd7c26087ec89161ae59fe07d6914deec6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/env.py",
+      "sha256": "d936795dde01a6ebf97f574aa2914e6e8da225f042c6415be62d75c52d626597",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/gates.py",
+      "sha256": "83679bbe5cab01d56f3e78a307038cd25d1b61659bba556c4263e9548c26a13d",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/ledger.py",
+      "sha256": "7530dc29d1640136690d86c8e9ffaa416408e158c56b6de8a67fede957d94c75",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/metrics.py",
+      "sha256": "d3ebbe18a2f9efaee462c5e03e558cf2b8e9baef041ad790b75c0c826c3b639f",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/runner.py",
+      "sha256": "d300c07ec408703001f32c61750d4a0199b270462e25f37cd299594fadd34e5d",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/utils.py",
+      "sha256": "6973e3c5ddb873b83952479c3258f5fba5983a28ef756d1b038591df03963ab0",
+      "spdx_header": true
+    }
+  ],
+  "license": "MIT"
+}

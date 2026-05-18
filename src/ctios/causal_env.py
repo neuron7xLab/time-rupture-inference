@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Action-conditioned temporal environment (v5 minimal causal line).
 
 Adds the smallest possible causal channel on top of the v4 rupture: a

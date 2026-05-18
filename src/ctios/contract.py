@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Single source of truth for experiment invariants.
 
 The class of bug this module exists to kill: a measurement constant

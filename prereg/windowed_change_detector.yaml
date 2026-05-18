@@ -1,0 +1,107 @@
+# SPDX-License-Identifier: MIT
+# PINNED before any verdict run. Boundary-layer experiment #3: the two
+# prior PARTIALs (fixed-lambda, calibrated-lambda PH on a re-converging
+# scalar's error) converged on one root cause — the OBSERVABLE. This
+# replaces it with a stationary two-window standardized contrast on the
+# RAW observation (no re-converging estimator, no cold-start transient).
+# No threshold edited after results.
+
+hid: windowed_change_detector
+
+# 1. FALSIFICATION ANCHOR
+# This fails if: a detector on the stationary two-window contrast,
+# threshold calibrated to false-alarm <= alpha on a HELD-OUT null set,
+# does not reach detect_rate >= tau on DISJOINT rupture streams, OR its
+# evaluation null false-alarm exceeds alpha, OR either degenerate fake
+# (always-fire / never-fire) passes BOTH pinned checks.
+# I will test this by: one pinned run over disjoint calibration (null
+# seeds 100..115) and evaluation (rupture 0..11, null 200..211) sets,
+# plus the two adversarial fakes scored by the same falsifier.
+falsification_anchor: >-
+  windowed detection is FALSE if eval_null_false_alarm > alpha, or
+  detect_rate < tau, or a degenerate fake passes both checks.
+
+# 2. OPERATIONAL BOUNDARY (numbers)
+# observable S_t = |mean(o[t-w:t]) - mean(o[t-W-w:t-w])|
+#                  / (pooled_std(both windows) + eps)
+#   short w=20, baseline W=80, eps=1e-6, warmup = W+w = 100.
+# class A (valid): S_t is stationary under null (no cold-start), spikes
+#   post-rupture; threshold = (1-alpha) empirical quantile of per-stream
+#   max S over CALIBRATION null streams; must generalize to disjoint
+#   eval null.
+# class B (invalid): degenerate (always/never) or non-generalizing.
+# measured: null_fa = frac null eval streams with >=1 trigger;
+#   detect_rate = frac rupture eval streams triggering in [t*, t*+0.2n].
+# n=600, 12 eval seeds per arm, alpha=0.10, tau=0.50.
+operational_boundary: >-
+  stationary two-window standardized contrast on raw observation;
+  fixed quantile rule on held-out null; disjoint seeds; alpha=0.10,
+  tau=0.50; w=20, W=80, warmup=100.
+
+# 3. VERDICT METRICS (pre-registered; post-hoc forbidden)
+metrics:
+  calib_lambda:          {dir: report_only, threshold: null, window: "null calib 100..115", agg: quantile}
+  eval_null_false_alarm: {dir: lower_better, threshold: 0.10, window: "null eval 200..211", agg: mean}
+  detect_rate:           {dir: higher_better, threshold: 0.50, window: "rupture eval 0..11, [t*,t*+0.2n]", agg: mean}
+  always_fake_blocked:   {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  never_fake_blocked:    {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  leakage:               {dir: lower_better, threshold: 0.0, window: "structural", agg: max}
+
+thresholds:
+  max_eval_null_fa: 0.10
+  min_detect_rate: 0.50
+  min_always_blocked: 1.0
+  min_never_blocked: 1.0
+  max_leakage: 0.0
+
+checks:
+  - {metric: eval_null_false_alarm, op: "<=", threshold_key: max_eval_null_fa}
+  - {metric: detect_rate,           op: ">=", threshold_key: min_detect_rate}
+  - {metric: always_fake_blocked,   op: ">=", threshold_key: min_always_blocked}
+  - {metric: never_fake_blocked,    op: ">=", threshold_key: min_never_blocked}
+  - {metric: leakage,               op: "<=", threshold_key: max_leakage}
+
+claim: >-
+  A stationary two-window standardized contrast on the raw observation,
+  thresholded by a held-out-null-calibrated quantile, holds the
+  false-alarm bound on disjoint null AND detects the rupture at the
+  pinned rate, while detect-everything and detect-nothing fakes cannot
+  do both.
+"null": >-
+  Calibration does not generalize, or detection power < tau, or a
+  degenerate fake passes both checks.
+
+assumptions:
+  - Agent receives only the observation stream (no tau0/tau1/t_star).
+  - Calibration and evaluation seed sets are disjoint.
+  - Streams synthetic, deterministic per seed, numpy-only, offline.
+
+variables:
+  - windowed_detector (candidate)
+  - always_fire_fake (adversarial)
+  - never_fire_fake (adversarial)
+
+# 4. ADVERSARIAL NULL
+# AlwaysFire: fires at warmup+1 every stream -> detect_rate high but
+#   eval_null_fa=1.0 -> null check FAILS. NeverFire: never -> null_fa=0
+#   but detect_rate=0 -> detect check FAILS. Real detector must pass
+#   BOTH; fakes fail >=1. Defense: pinned null-FA + detect checks.
+adversarial_null: AlwaysFireDetector / NeverFireDetector — each fails >=1 check.
+
+# 5. CLAIM BOUNDARY (enumerated)
+forbidden_claims:
+  - NOT a model of brain, neurons, or biological cognition.
+  - NOT consciousness, sentience, intelligence, or AGI.
+  - NOT a universal theory of time or perception.
+  - NOT a proof of any private theorem.
+  - GREEN means a calibrated windowed detector on SYNTHETIC streams only.
+
+# 6. MINIMAL KILL TEST
+# AlwaysFireDetector ("detects everything"): a detect-rate-only gate
+# calls it GREEN. The pinned eval_null_false_alarm check MUST reject it.
+kill_test: >-
+  always-fire fake must fail eval_null_false_alarm and the verdict over
+  it must NOT be GREEN.
+claim_boundary: >-
+  Engineering property (calibrated windowed change detection) on a
+  synthetic hidden-rupture stream; not biology, cognition, AGI, time.

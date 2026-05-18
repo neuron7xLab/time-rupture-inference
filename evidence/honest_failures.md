@@ -1,7 +1,6 @@
-# Honest failures register — CTI-OS proof-of-life
+# Honest failures register — CTI-OS proof-of-life v3
 
-Run is GREEN. Acknowledged residual limitations (not papered over):
+RED. Failing checks verbatim, no tuning applied:
 
-- Single synthetic environment family (step change in a Gaussian interval). Generality across regime shapes is untested → next lineage.
-- `last_interval` adapts instantly but is noise-dominated; learned wins on variance, not on adaptation latency alone — claim scoped accordingly.
-- Oracle gap remains (learned post_mae=0.881 vs oracle=0.792): regret > 0, not solved.
+- FAILED: shuffled_order_no_gain
+- FAILED: np_marker_synaptic

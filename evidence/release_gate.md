@@ -1,12 +1,18 @@
-# CTI-OS Proof-of-Life — Release Gate
+# CTI-OS Proof-of-Life v3 — Release Gate
 
-**Verdict: GREEN / PASS**
+**Verdict: RED / FAIL**
 
-- prereg_hash: `55f90a8e376598a7c795be13eaf6307933567aa3f60757f332924bf1787fea30`
-- git_commit: `ffa6496fa40a5ef8096217c2a040af15041cb41d`
-- config_source_hash: `a34321e74a2cd15bf5a0326d2323a912a3ac056974114b3c494b05c99e93e233`
-- win-rate learned>injected: 1.00
-- win-rate learned>best-naive: 1.00
+- prereg_hash: `b98e98209406ddda53fabf17848eb3eb75ba13b3497b5ce42ec9b2928350858f`
+- git_commit: `cc6b3cc583a2a88c6572a846b34829d6b340f719`
+- grid win-rate learned>injected: 1.000
+- grid win-rate learned>best-naive: 1.000
+- neuroplasticity markers: `{'synaptic': np.False_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`
+
+## Allowed claim (verbatim, critique §3)
+> The learned agent adapts to hidden temporal regime shifts better than fixed and naive baselines under preregistered metrics, deterministic replay, no-leakage constraints, and ablation controls.
+
+## Forbidden claim
+> CTI-OS understands time / has cognition / is neuroplastic / simulates causality / has world understanding.
 
 ## Checks
 - [x] learned_beats_injected_post_mae
@@ -21,8 +27,24 @@
 - [x] no_hidden_variable_leakage
 - [x] deterministic_replay
 - [x] prereg_committed_before_run
+- [x] statistical_power_grid
+- [x] pass_holds_on_every_shift
+- [ ] shuffled_order_no_gain
+- [ ] np_marker_synaptic
+- [x] np_marker_homeostatic
+- [x] np_marker_neuromodulation
+- [x] np_marker_extinction
 
-## Aggregate metrics
+## Failure reasons
+- FAILED: shuffled_order_no_gain
+- FAILED: np_marker_synaptic
+
+## Per-shift post_shift_mae (learned / injected / best-naive)
+- delta=7.0: learned=0.882 injected=7.008 best_naive=1.006
+- delta=12.0: learned=0.892 injected=12.008 best_naive=1.167
+- delta=-5.0: learned=0.874 injected=4.992 best_naive=0.936
+
+## Grid-mean metrics
 ```
-{"exp_smoothing_a0.1":{"adaptation_time":29.9375,"area_under_post_shift_error":249.76558782038387,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":0.9990623512815355,"pre_shift_mae":0.8422696272707626,"recovery_slope":0.19147247047972044,"stability_pre_shift":0.6037580853697331},"injected":{"adaptation_time":Infinity,"area_under_post_shift_error":1750.4883817583263,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":7.001953527033306,"pre_shift_mae":0.7885717399549347,"recovery_slope":0.0,"stability_pre_shift":0.35580886147002594},"last_interval":{"adaptation_time":9.4375,"area_under_post_shift_error":285.9899684742514,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.1439598738970056,"pre_shift_mae":1.142331788726347,"recovery_slope":0.586963519244208,"stability_pre_shift":0.9071384162944347},"learned_frozen_post_shift":{"adaptation_time":Infinity,"area_under_post_shift_error":1796.539741934108,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":7.186158967736432,"pre_shift_mae":1.1716467373455517,"recovery_slope":0.0,"stability_pre_shift":1.9566630864706882},"learned_full":{"adaptation_time":16.625,"area_under_post_shift_error":220.17551749353555,"detection_delay":1.0,"false_alarm_rate":0.003333333333333333,"post_shift_mae":0.8807020699741421,"pre_shift_mae":1.1721786300428731,"recovery_slope":0.3119863879637071,"stability_pre_shift":1.9623695707038458},"learned_no_drift":{"adaptation_time":34.25,"area_under_post_shift_error":280.0127998648479,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.1200511994593918,"pre_shift_mae":1.1619600522688471,"recovery_slope":0.15491258374804334,"stability_pre_shift":1.9577658532114377},"learned_no_memory":{"adaptation_time":9.4375,"area_under_post_shift_error":285.9899684742514,"detection_delay":Infinity,"false_alarm_rate":0.006458333333333333,"post_shift_mae":1.1439598738970056,"pre_shift_mae":1.142331788726347,"recovery_slope":0.586963519244208,"stability_pre_shift":0.9071384162944347},"learned_no_update":{"adaptation_time":Infinity,"area_under_post_shift_error":4000.488381758326,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":16.001953527033308,"pre_shift_mae":8.989065045646198,"recovery_slope":0.0,"stability_pre_shift":0.9729989605523894},"moving_average_w20":{"adaptation_time":30.25,"area_under_post_shift_error":259.2285510513139,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.0369142042052557,"pre_shift_mae":0.8386101041625965,"recovery_slope":0.18983641808284396,"stability_pre_shift":0.6049554593718448},"oracle":{"adaptation_time":0.125,"area_under_post_shift_error":197.8784057485503,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":0.7915136229942012,"pre_shift_mae":0.7885717399549347,"recovery_slope":0.030233690170560712,"stability_pre_shift":0.35580886147002594},"random":{"adaptation_time":0.0625,"area_under_post_shift_error":1321.5512293852653,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":5.2862049175410615,"pre_shift_mae":6.6182839652798755,"recovery_slope":0.0902953723548538,"stability_pre_shift":21.393125038421303}}
+{"exp_smoothing_a0.1":{"adaptation_time":30.96666666666667,"area_under_post_shift_error":260.88024176790657,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.0435209670716266,"pre_shift_mae":0.8453866586950881,"recovery_slope":0.2067507228828569,"stability_pre_shift":0.6135524754518201},"injected":{"adaptation_time":Infinity,"area_under_post_shift_error":2000.6915573908516,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":8.002766229563406,"pre_shift_mae":0.7932068327166086,"recovery_slope":0.0,"stability_pre_shift":0.3641835173529964},"last_interval":{"adaptation_time":10.722222222222223,"area_under_post_shift_error":287.66732238749233,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.1506692895499695,"pre_shift_mae":1.1454769344685052,"recovery_slope":0.5952262995314888,"stability_pre_shift":0.9242576062124787},"learned_frozen_post_shift":{"adaptation_time":Infinity,"area_under_post_shift_error":2017.292075158715,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":8.069168300634859,"pre_shift_mae":1.1756035891065688,"recovery_slope":0.0,"stability_pre_shift":1.9707145157262278},"learned_full":{"adaptation_time":16.755555555555556,"area_under_post_shift_error":220.75193557599724,"detection_delay":1.0999999999999999,"false_alarm_rate":0.0030000000000000005,"post_shift_mae":0.883007742303989,"pre_shift_mae":1.1725457930317167,"recovery_slope":0.35244441665625836,"stability_pre_shift":1.978889197921755},"learned_no_drift":{"adaptation_time":35.52222222222222,"area_under_post_shift_error":296.80594841645075,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.1872237936658028,"pre_shift_mae":1.1639975711277433,"recovery_slope":0.1653127734255788,"stability_pre_shift":1.9743891000170717},"learned_no_memory":{"adaptation_time":10.722222222222223,"area_under_post_shift_error":287.66732238749233,"detection_delay":Infinity,"false_alarm_rate":0.005,"post_shift_mae":1.1506692895499695,"pre_shift_mae":1.1454769344685052,"recovery_slope":0.5952262995314888,"stability_pre_shift":0.9242576062124787},"learned_no_update":{"adaptation_time":Infinity,"area_under_post_shift_error":3418.741338839221,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":13.674965355356884,"pre_shift_mae":8.97799148875914,"recovery_slope":0.0,"stability_pre_shift":0.9886232834558232},"moving_average_w20":{"adaptation_time":31.022222222222222,"area_under_post_shift_error":272.5805017713758,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":1.090322007085503,"pre_shift_mae":0.8422102510957629,"recovery_slope":0.20902695458079687,"stability_pre_shift":0.6107983146912946},"oracle":{"adaptation_time":0.26666666666666666,"area_under_post_shift_error":198.3309294868285,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":0.7933237179473137,"pre_shift_mae":0.7932068327166086,"recovery_slope":0.051744341986600405,"stability_pre_shift":0.3641835173529964},"random":{"adaptation_time":4.933333333333333,"area_under_post_shift_error":1892.2204799406034,"detection_delay":Infinity,"false_alarm_rate":0.0,"post_shift_mae":7.568881919762411,"pre_shift_mae":6.378320937406298,"recovery_slope":0.4519553136866188,"stability_pre_shift":19.773339472406697}}
 ```

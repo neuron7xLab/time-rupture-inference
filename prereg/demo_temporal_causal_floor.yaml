@@ -10,6 +10,13 @@ claim: >
 null: >
   The correctly-specified causal oracle does NOT reach the floor; the
   benchmark does not admit a causal solver under the pinned gate.
+assumptions:
+  - "marker is >=3 sigma clear of categorization thresholds (reliable detection)"
+  - "exactly one hidden context flip at n//2"
+  - "warm-scored trigger channel (cold-prior step excluded)"
+  - "delta >> sigma so the post-trigger sign is near-noiseless"
+variables:
+  - "h2r = history_to_regime_distance over the warm trigger channel"
 thresholds:
   h2r_max: 0.35
 checks:

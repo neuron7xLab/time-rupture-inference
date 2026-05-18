@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from ctios.falsify import HypothesisSpec, falsify  # noqa: E402
+from ctios.falsify import HypothesisSpec, falsify, next_experiment  # noqa: E402
 
 SPEC = HypothesisSpec(
     hid="t",
@@ -68,6 +68,32 @@ def test_spec_sha_stable_and_threshold_mutation_changes_it():
     a = SPEC.sha()
     b = HypothesisSpec("t", "c", "n", {"g": 2.0}, SPEC.checks).sha()
     assert a == SPEC.sha() and a != b
+
+
+def test_assumptions_and_variables_are_part_of_the_pinned_sha():
+    base = HypothesisSpec("t", "c", "n", {"g": 1.0}, SPEC.checks)
+    with_a = HypothesisSpec("t", "c", "n", {"g": 1.0}, SPEC.checks,
+                            assumptions=["A holds"])
+    with_v = HypothesisSpec("t", "c", "n", {"g": 1.0}, SPEC.checks,
+                            variables=["x"])
+    assert base.sha() != with_a.sha() != with_v.sha() != base.sha()
+
+
+def test_next_experiment_tightens_survivors_and_focuses_failure(tmp_path):
+    v = falsify(SPEC, _bad, negative_control=_good)        # RED (m=9 > g=1)
+    nxt = next_experiment(SPEC, v)
+    assert nxt["hid"] == "t__next"
+    assert v.spec_sha256[:12] in nxt["parent"]
+    assert "discharge the failed boundary" in nxt["focus"]
+    assert nxt["thresholds"]["g"] <= SPEC.thresholds["g"]   # never loosened
+
+
+def test_autoloop_emits_next_yaml_only_on_non_green(tmp_path):
+    pg = tmp_path / "prereg"
+    falsify(SPEC, _good, negative_control=_bad, prereg_dir=pg)   # GREEN
+    assert not (pg / "NEXT_t.yaml").exists()
+    falsify(SPEC, _bad, negative_control=_good, prereg_dir=pg)   # RED
+    assert (pg / "NEXT_t.yaml").exists()
 
 
 def test_bundled_demo_runs_and_returns_well_formed_verdict(tmp_path):

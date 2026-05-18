@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "8d3a9647b297b8632be9e4ecdf89fc6d12541d698dabc5722df3350034deaa14",
+      "sha256": "f8a473b168f497afa685a62585851f5e286a9b11b0032c43940fd9ce27410bf9",
       "spdx_header": "n/a"
     },
     {
@@ -42,6 +42,12 @@
       "license": "MIT",
       "path": "configs/metrics.yaml",
       "sha256": "7eafb11f9b8473cfce9197066102aaf644b1cbc35ebb7d10437e96ae741af00e",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/scalar_inexpressible_env.yaml",
+      "sha256": "625f4449cfe4bcd607227659b0db37cfe53f8dc1252f5e3f0a4929d30448ee6b",
       "spdx_header": "n/a"
     },
     {
@@ -108,6 +114,12 @@
       "license": "MIT",
       "path": "scripts/provenance_attest.py",
       "sha256": "96a1075501994800a1a15395fa93908828211a19bd4411f4cefcedc214e66a01",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/run_scalar_inexpressibility_diagnostic.py",
+      "sha256": "7af9b78e37787b16164ccd1f6943f4bbc25f79a2723ac61ade7962f102fe739e",
       "spdx_header": true
     },
     {

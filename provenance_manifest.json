@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "83c7caffd2812a2dd9b7886ac13c0256a45b00e1a02641889e9a965039c6afa4",
+      "sha256": "2700b59d234e4e39953fab304195c33a6737f712a4d5816b83f10cbb99b7e743",
       "spdx_header": "n/a"
     },
     {
@@ -41,7 +41,7 @@
     {
       "license": "MIT",
       "path": "configs/metrics.yaml",
-      "sha256": "7eafb11f9b8473cfce9197066102aaf644b1cbc35ebb7d10437e96ae741af00e",
+      "sha256": "fa8849df6c2396ad1d70735c6375f7ca96f3cd6afdb6f03cac202b7f8a6548bc",
       "spdx_header": "n/a"
     },
     {
@@ -245,7 +245,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/causal_metrics.py",
-      "sha256": "c8776ffbb6fc5bc5e9662c8fd294ddd6949d41b1c760764f26cbb8c9777a4bb3",
+      "sha256": "7ea8e06dce15a4f5b5f449c18220f39923c36971169e42cb8c1f96354b808706",
       "spdx_header": true
     },
     {
@@ -257,7 +257,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/contract.py",
-      "sha256": "8b7aa0f1c0697d3dbc60103d3e2958ee5172b1b46a233fe816e60f8dd87db474",
+      "sha256": "eeb0de7cb039fb470f0e61001bbe34ece1588a7fd0def8c7951f57fca4c74227",
       "spdx_header": true
     },
     {
@@ -287,13 +287,19 @@
     {
       "license": "MIT",
       "path": "src/ctios/metrics.py",
-      "sha256": "d3ebbe18a2f9efaee462c5e03e558cf2b8e9baef041ad790b75c0c826c3b639f",
+      "sha256": "391784683c96b448d17730f88437038984c16313361abc48f910c30fd79fbf14",
       "spdx_header": true
     },
     {
       "license": "MIT",
       "path": "src/ctios/runner.py",
       "sha256": "a774a2b263134e48fe2f236bdf358a6bbd5c57332991b968efbbf5ba8d6c930b",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/series.py",
+      "sha256": "d17d00f7569003319800a1914c3ed571fb42c5e98e62543e7970acb682521fe2",
       "spdx_header": true
     },
     {

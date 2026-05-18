@@ -7,7 +7,8 @@ from dataclasses import asdict, dataclass
 
 import numpy as np
 
-from ctios.contract import validate_window
+from ctios.contract import RECOVERY_ROLL_WINDOW, validate_window
+from ctios.series import rolling_mean_prefix
 
 
 @dataclass(frozen=True)
@@ -43,7 +44,7 @@ def compute_metrics(
     stability = float(np.var(pre)) if pre.size else float("nan")
 
     band = recovery_band_mult * pre_mae
-    roll = _rolling_mean(post, 20)
+    roll = rolling_mean_prefix(post, RECOVERY_ROLL_WINDOW)
     rec = np.where(roll <= band)[0]
     adaptation_time = float(rec[0]) if rec.size else float("inf")
 
@@ -57,9 +58,11 @@ def compute_metrics(
     # accept a sentinel and let the runner override (kept 0.0 if unknown).
     false_alarm_rate = float(pre_signals)
 
-    if rec.size >= 2:
+    if rec.size >= 1:
         seg = roll[: int(rec[0]) + 1]
-        recovery_slope = float((seg[0] - seg[-1]) / max(1, len(seg)))
+        # Slope is defined per transition step between consecutive points.
+        # For a single-point segment there are no transitions, so slope = 0.0.
+        recovery_slope = float((seg[0] - seg[-1]) / max(1, len(seg) - 1))
     else:
         recovery_slope = 0.0
 
@@ -73,13 +76,3 @@ def compute_metrics(
         stability_pre_shift=stability,
         recovery_slope=recovery_slope,
     )
-
-
-def _rolling_mean(x: np.ndarray, w: int) -> np.ndarray:
-    if x.size == 0:
-        return x
-    w = min(w, x.size)
-    c = np.cumsum(np.insert(x, 0, 0.0))
-    out = (c[w:] - c[:-w]) / w
-    head = np.array([np.mean(x[: i + 1]) for i in range(w - 1)])
-    return np.concatenate([head, out])

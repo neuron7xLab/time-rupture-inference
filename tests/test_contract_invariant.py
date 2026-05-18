@@ -27,6 +27,11 @@ def test_eval_horizon_single_source_of_truth():
     assert contract.EVAL_HORIZON == int(y["eval_horizon"])
 
 
+def test_recovery_roll_window_single_source_of_truth():
+    y = yaml.safe_load((SRC.parents[1] / "configs" / "metrics.yaml").read_text())
+    assert contract.RECOVERY_ROLL_WINDOW == int(y["recovery_roll_window"])
+
+
 def test_no_magic_post_shift_window_literal_in_src():
     """Any `t_star/T_STAR + <number>` slice is the forbidden pattern."""
     pat = re.compile(r"(t_star|T_STAR)\s*[:+]\s*\d{2,}")
@@ -39,6 +44,17 @@ def test_no_magic_post_shift_window_literal_in_src():
                 offenders.append(f"{f.name}:{i}: {line.strip()}")
     assert not offenders, "magic post-shift window literal reintroduced:\n" + "\n".join(
         offenders
+    )
+
+
+def test_no_magic_recovery_roll_window_literal_in_src():
+    offenders = []
+    for f in SRC.glob("*.py"):
+        for i, line in enumerate(f.read_text().splitlines(), 1):
+            if "rolling_mean_prefix(" in line and ", 20" in line:
+                offenders.append(f"{f.name}:{i}: {line.strip()}")
+    assert not offenders, (
+        "magic recovery rolling window literal reintroduced:\n" + "\n".join(offenders)
     )
 
 

@@ -1,2 +1,3 @@
 eval_horizon: 250         # steps after T* used for post-shift metrics
 recovery_band_mult: 1.5   # adaptation = rolling MAE back within 1.5x pre-shift MAE
+recovery_roll_window: 20  # rolling window length for recovery detection

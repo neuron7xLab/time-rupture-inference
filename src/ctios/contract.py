@@ -21,6 +21,7 @@ _METRICS = yaml.safe_load((ROOT / "configs" / "metrics.yaml").read_text())
 # canonical invariants — read once, never duplicated as literals
 EVAL_HORIZON: int = int(_METRICS["eval_horizon"])
 RECOVERY_BAND_MULT: float = float(_METRICS["recovery_band_mult"])
+RECOVERY_ROLL_WINDOW: int = int(_METRICS["recovery_roll_window"])
 N_STEPS: int = int(_ENV["n_steps"])
 T_STAR: int = int(_ENV["t_star"])
 SIGMA: float = float(_ENV["sigma"])

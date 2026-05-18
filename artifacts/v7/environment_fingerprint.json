@@ -1,8 +1,0 @@
-{
-  "python": "3.12.3",
-  "numpy": "2.4.3",
-  "platform": "Linux-6.8.0-106-lowlatency-x86_64-with-glibc2.39",
-  "config_sha256": "7d54b8a1d26c1d2488b5775e861faa9e1cc73db4444bfe43ebc33e6f93ffdd15",
-  "utc": "2026-05-18T10:41:06Z",
-  "runtime_s": 0.029
-}

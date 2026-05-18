@@ -6,3 +6,6 @@ __pycache__/
 .coverage
 runs/*
 !runs/.gitkeep
+artifacts/v7/*
+artifacts/gcp/*
+!artifacts/**/.gitkeep

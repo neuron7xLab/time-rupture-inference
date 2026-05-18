@@ -56,6 +56,9 @@ field.
 **How to extend.** Write a pinned spec, implement a local
 `probe(thresholds) -> {metric: value}`, add a discriminative negative
 control, call `ctios.falsify.falsify(...)`, inspect the sealed verdict
-and the proposed next experiment. Full steps:
-`docs/REPRODUCIBILITY_CONTRACT.md`. Adversarial self-review:
+and the proposed next experiment. For a *redacted private* hypothesis
+use the typed platform layer (`ctios.redacted` / `redacted_io` /
+`opaque_probe` / `falsifier_battery` / `spec_compiler` / `human_gate` /
+`report`); end-to-end demo: `bash scripts/platform_demo.sh`. Full
+steps: `docs/REPRODUCIBILITY_CONTRACT.md`. Adversarial self-review:
 `docs/OPENAI_STYLE_REVIEW.md`.

@@ -98,3 +98,23 @@ other box names code that exists in this repository.
 | Engine CLI | `ctios.falsify_cli` (`tri-falsify`) |
 
 No module above is invented; every name resolves under `src/ctios/`.
+
+## IP-safe platform layer (typed realization)
+
+The same pipeline, as concrete strongly-typed modules for redacted
+private hypotheses:
+
+| Pipeline box | Platform module |
+|---|---|
+| RedactedHypothesisSpec | `ctios.redacted` (dataclasses + structural invariants) |
+| Spec pinning / sha256 | `ctios.redacted_io.spec_sha256` (fail-closed on forbidden keys) |
+| Probe (opaque) | `ctios.opaque_probe.OpaqueProbe` Protocol + `ProbeResult` |
+| FalsifierBattery | `ctios.falsifier_battery.run_falsifier_battery_v2` (10 checks) |
+| SealedVerdict | `ctios.spec_compiler` (`BLOCKED_UNTIL_PROBED`) + `sealed_verdict.json` |
+| EvidenceLedger | `runs/<demo>/evidence_ledger.jsonl`, `ctios.report` |
+| NextExperimentProposal | `next_experiment.yaml` (proposed only, never run) |
+| HumanApprovalGate | `ctios.human_gate` + `ctios.review_cli` (append-only audit) |
+
+Drivers: `python -m ctios.spec_cli compile`,
+`python -m ctios.platform_demo`, `python -m ctios.review_cli`,
+`bash scripts/platform_demo.sh`.

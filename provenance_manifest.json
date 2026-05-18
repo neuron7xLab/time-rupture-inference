@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "d7c785abce658174c7cd95d17a5468b211548a69836588e01f941e38549a39fc",
+      "sha256": "0c1bfd1d03f901bb6c53c433e187836c6f7ef8cd8cb7a4036e34b3d1f6e343e9",
       "spdx_header": "n/a"
     },
     {
@@ -292,6 +292,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/falsifier_battery.py",
+      "sha256": "a7f5599e1d0f6f245fd83377deeb83faebeaed5ff770a288302d7b06162efc3f",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/falsify.py",
       "sha256": "9ab131159a985bf32fd84d07786e86536c26aec1cdabf0eb786c4c22c6709547",
       "spdx_header": true
@@ -310,6 +316,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/human_gate.py",
+      "sha256": "ec42b0b915389c3317eb8a6e2b6c0df659d25af2c8cdbae89c18bd19f39b6a64",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/ledger.py",
       "sha256": "7530dc29d1640136690d86c8e9ffaa416408e158c56b6de8a67fede957d94c75",
       "spdx_header": true
@@ -322,6 +334,42 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/opaque_probe.py",
+      "sha256": "cfda4a791cc562a5c68842f29156f58b38a58efd729f26e5d4a19507c2d2b5fd",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/platform_demo.py",
+      "sha256": "9bde06f6890bb0d006ccfb6af2e0997c75a2ea2851d6c4a7c2fd8e537182c243",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/redacted.py",
+      "sha256": "87d7ceebe5bb101688bf69f7c64251bfc515c12837a1065e0d2b7bab98c27102",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/redacted_io.py",
+      "sha256": "e5cc2b6f238edeec5c3517086141c118b507d4e283af9704d13479c753bc43f5",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/report.py",
+      "sha256": "138eda4e80fe3b1951c3290ea69aa26bba4a321d0dbd655929783e862435e419",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/review_cli.py",
+      "sha256": "375cb7d595db87a251072620818f6b884364c629d8e32ec12659aaf55821d222",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/runner.py",
       "sha256": "a774a2b263134e48fe2f236bdf358a6bbd5c57332991b968efbbf5ba8d6c930b",
       "spdx_header": true
@@ -330,6 +378,18 @@
       "license": "MIT",
       "path": "src/ctios/series.py",
       "sha256": "d17d00f7569003319800a1914c3ed571fb42c5e98e62543e7970acb682521fe2",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/spec_cli.py",
+      "sha256": "e253799df304c8effaf2279a517a91d5e3d6175f8dbaafa502619127c911a181",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/spec_compiler.py",
+      "sha256": "3fe87484f6388af7c38c03a2332cb081f83012eb36358a0b134868aaac4630a6",
       "spdx_header": true
     },
     {

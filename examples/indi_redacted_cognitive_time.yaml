@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: MIT
 # Redacted hypothesis skeleton — DEMONSTRATION ONLY.
 #
-# This is a *shape*, not a research result. It carries no private
-# mechanism, dataset, strategy, or theorem content. It shows how a
-# collaborator would express a cognitive-time research line so the
-# falsification engine can test it without ever seeing the method.
-# The private mechanism is attached locally as an opaque Probe; it is
-# never committed here. See docs/PRIVATE_RND_PROTOCOL.md.
+# A *shape*, not a research result. No private mechanism, dataset,
+# strategy, or theorem content. The private mechanism is attached
+# locally as an opaque Probe (ctios.opaque_probe) and is never
+# committed. Loadable by ctios.redacted_io.load_redacted_spec.
+# See docs/PRIVATE_RND_PROTOCOL.md.
 
 hypothesis_id: indi_redacted_cognitive_time_demo
 
@@ -27,48 +26,51 @@ assumptions:
     not disclosed to the engine.
 
 variables:
-  - manipulated: hidden_regime_shift_magnitude   # abstract name only
-  - measured: post_rupture_error                 # the falsifier surface
-  - control: negative_control_probe              # must fail the checks
+  - name: hidden_regime_shift_magnitude
+    role: manipulated
+    description: abstract name only; realization stays private
+  - name: post_rupture_error
+    role: measured
+    description: the falsifier surface (a scalar the probe exposes)
+  - name: negative_control_probe
+    role: control
+    description: degenerate baseline that must fail the falsifiers
 
 falsifiers:
   - metric: post_rupture_error
     op: "<="
     threshold_key: error_ceiling
+    threshold: 1.0          # placeholder; pinned before any real run
   - metric: separation_vs_baseline
     op: ">="
     threshold_key: min_separation
+    threshold: 0.10         # placeholder; pinned before any real run
 
-thresholds:
-  error_ceiling: 1.0        # placeholder; pinned before any real run
-  min_separation: 0.10      # placeholder; pinned before any real run
-
-forbidden_claims:
+forbidden_inferences:
   - The estimator has cognition, understanding, or awareness of time.
   - The estimator is conscious, sentient, or brain-like.
   - The result proves a general theory of time or general intelligence.
   - A survived check proves the collaborator's private theorem correct.
 
-required_artifacts:
-  - sealed_verdict_json          # FALSIFY_<hid>.json
-  - adversarial_battery_outcomes # deterministic/finite/load-bearing/neg-ctrl
-  - pinned_spec_sha256
+evidence_requirements:
+  - artifact: sealed_verdict_json
+    description: FALSIFY_<hid>.json with battery + spec sha256
+  - artifact: falsifier_battery_json
+    description: adversarial battery v2 outcomes
+  - artifact: pinned_spec_sha256
+    description: deterministic hash over claim + falsifiers + boundary
 
 # Mandatory: no restart without a human decision.
 human_review_required: true
-
-# The private mechanism is a LOCAL probe. It is never committed here.
-local_probe_required: true
+# The private mechanism is a LOCAL probe; never committed here.
 commit_private_content: false
-
 # Free-text notes the collaborator keeps OUTSIDE this repository.
 reviewer_notes: "free-text private notes kept outside repository"
 
-# Governance for a non-green outcome (the engine only proposes).
 next_experiment_policy:
-  auto_run: false                    # never executed automatically
-  tighten_surviving_checks: true     # survivors made stricter (x0.9)
-  loosen_failed_checks: false        # a failed check is never relaxed
+  auto_run: false                      # never executed automatically
+  tighten_surviving_checks: true       # survivors made stricter (x0.9)
+  loosen_failed_checks: false          # a failed check is never relaxed
   failed_boundary_becomes_focus: true  # what broke is the next subject
 
 # To reuse: copy this file, replace every value, keep the field names.

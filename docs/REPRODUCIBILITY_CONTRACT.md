@@ -27,6 +27,8 @@ python -m ctios.causal_runner --mode full
 python -m ctios.agent_cli --demo --backend echo_state
 # or, one command for all of the above, reviewer-oriented:
 bash scripts/conference_smoke.sh
+# IP-safe platform loop end-to-end (mock probe, no scientific claim):
+bash scripts/platform_demo.sh
 ```
 
 ## Expected frozen outputs
@@ -82,6 +84,15 @@ clone.
 4. Call `ctios.falsify.falsify(spec, probe, negative_control=...)`.
 5. Inspect the sealed verdict and the proposed `NEXT_<hid>.yaml`;
    decide whether to run it. The engine never runs it for you.
+
+For a redacted private hypothesis, use the typed platform layer
+instead: author a YAML skeleton (`ctios.redacted_io`), compile it
+(`python -m ctios.spec_cli compile`), implement a local `OpaqueProbe`
+(`ctios.opaque_probe`), run battery v2
+(`ctios.falsifier_battery`), and gate the next step
+(`python -m ctios.review_cli approve|reject|seal`). The mechanism and
+data never leave your machine; only a sanitized verdict is produced.
+End-to-end interface demo: `bash scripts/platform_demo.sh`.
 
 ## How to report a failed reproduction
 

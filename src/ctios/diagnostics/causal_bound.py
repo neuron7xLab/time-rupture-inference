@@ -41,9 +41,14 @@ def derive(cfg: dict[str, Any]) -> CausalBound:
     delta = float(cfg["delta"])
     sigma = float(cfg["sigma"])
     t = sum(1 for k in range(n) if k % period == 3)
-    # cold prior wrong with prob 0.5; the one post-flip trigger always
-    # wrong until observed -> expected unavoidable wrong = 0.5 + 1.0.
-    forced = 1.5
+    # Unavoidable wrong-sign triggers for ANY causal oracle:
+    #  * cold prior: wrong with prob 0.5 — EXCLUDED if the trigger
+    #    channel is warm-scored (pre-first-trigger step dropped);
+    #  * each hidden context flip: exactly 1 forced wrong until observed.
+    # Backward compatible: configs without these keys -> v8.3 (1.5).
+    flips = float(cfg.get("hidden_flips", 1))
+    warm = bool(cfg.get("warm_scored", False))
+    forced = flips + (0.0 if warm else 0.5)
     floor = sigma * math.sqrt(2.0 / math.pi)        # E|N(0,sigma)|
     wrong_err = 2.0 * delta                          # predict -sign*delta
     hist_min = ((t - forced) * floor + forced * wrong_err) / t

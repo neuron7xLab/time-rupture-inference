@@ -1,0 +1,22 @@
+# v8.4 — env re-derived from first principles so the causal floor <= the
+# (UNCHANGED) h2r gate. All pinned BEFORE the run; proof in the prereg.
+mu: 10.0
+sigma: 1.0
+delta: 8.0
+n_steps: 1200          # derived: with period=10 -> T=120 triggers/seed
+period: 10
+seed_count: 30
+short_thresh: 8.0
+long_thresh: 12.0
+marker_sep: 5.0        # forced short=mu-5(=5), long=mu+5(=15): 3 sigma
+                       # clear of thresholds -> P(detection miss) ~ 1e-3
+warm_scored: true      # exclude the pre-first-trigger cold-prior step
+hidden_flips: 1        # one hidden context flip at n//2
+
+# Gates: h2r REUSED from v8.2/v8.3 unchanged. tc/cc reused too.
+trigger_context_gap_ratio_min: 0.35
+carrier_controlled_gap_ratio_min: 0.25
+history_to_regime_distance_max: 0.35
+trigger_count_min: 300
+aliasing_rate_min: 0.05
+same_obs_diff_future_rate_min: 0.05

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "0a3ee7c969615f89a0452215920fbbbf9408a69c2fbbfdf86b9773f3ce96bd48",
+      "sha256": "c17f940a371ebf412be5365c97e7efba9ded4d48cb6aa8740e3c3adafccb448c",
       "spdx_header": "n/a"
     },
     {
@@ -66,6 +66,12 @@
       "license": "MIT",
       "path": "configs/v8_2_trigger_scoped_env.yaml",
       "sha256": "367fba2695dc9f7b68141db461e0ec1b9529e8532734440a03d141dd0b9e0263",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/v8_4_rederived_env.yaml",
+      "sha256": "b3b7dfea7e96770723321cabde138c2c4997170f526904da2002158a9ffd88d7",
       "spdx_header": "n/a"
     },
     {
@@ -162,6 +168,12 @@
       "license": "MIT",
       "path": "scripts/run_v8_3_correct_history_diagnostic.py",
       "sha256": "5d0d2b3a3c50d72cb7ae366c5326334ba972d2cbd4e1b2fed5d7360f0b1a7f46",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/run_v8_4_rederived_diagnostic.py",
+      "sha256": "bd7186819000fc862b24ded867bc108d96ff1d68c799af0828ebd530698c20f8",
       "spdx_header": true
     },
     {

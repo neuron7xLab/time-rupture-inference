@@ -76,3 +76,6 @@ v8-2-diagnostic:
 
 v8-3-diagnostic:
 	$(PY) scripts/run_v8_3_correct_history_diagnostic.py
+
+v8-4-diagnostic:
+	$(PY) scripts/run_v8_4_rederived_diagnostic.py

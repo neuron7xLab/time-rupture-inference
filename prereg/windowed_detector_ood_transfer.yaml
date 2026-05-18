@@ -1,0 +1,102 @@
+# SPDX-License-Identifier: MIT
+# PINNED before any verdict run. Lineage #27: OOD-transfer evidence for
+# the #26 GREEN. The contract bans "generalizes" without OOD evidence;
+# this MEASURES the transfer boundary instead of asserting it. λ is
+# calibrated on the Gaussian held-out null (as in #26); the test is
+# whether that calibration transfers. No threshold edited after results.
+
+hid: windowed_detector_ood_transfer
+
+# 1. FALSIFICATION ANCHOR
+# This fails if: the Gaussian-null-calibrated detector's false-alarm on
+# the OOD no-rupture family exceeds alpha, OR the in-scope
+# single_rupture_gaussian detection under the portfolio harness drops
+# below tau (the validated #26 positive must replicate), OR a
+# degenerate fake passes both gated checks.
+# I will test this by: one pinned run — λ from Gaussian null calib
+# seeds 100..115; evaluation on benchmark-family seeds 0..11; the two
+# adversarial fakes scored by the same gates.
+falsification_anchor: >-
+  transfer is FALSE if null_family_false_alarm > alpha, or
+  gaussian_detect_rate < tau, or a degenerate fake passes both gates.
+
+# 2. OPERATIONAL BOUNDARY
+# Two GATED metrics only (the honest, falsifiable core). The other five
+# families are REPORT-ONLY: a measured boundary map, never a gate —
+# asserting GREEN there would be the prohibited "generalizes without
+# evidence"; demanding RED there would over-fit the falsifier.
+# observable + λ rule identical to ctios.windowed_change_detector
+# (w=20, W=80, warmup=100); alpha=0.10, tau=0.50; 12 eval seeds;
+# detection hit window [t*, t*+0.2n] for families exposing t_star.
+operational_boundary: >-
+  gate on OOD null-family false-alarm and in-scope Gaussian
+  detect-rate only; 5 other families report-only boundary map.
+
+# 3. VERDICT METRICS (pre-registered; post-hoc forbidden)
+metrics:
+  calib_lambda:             {dir: report_only, threshold: null, window: "gaussian null calib 100..115", agg: quantile}
+  null_family_false_alarm:  {dir: lower_better, threshold: 0.10, window: "NullNoRuptureFamily seeds 0..11", agg: mean}
+  gaussian_detect_rate:     {dir: higher_better, threshold: 0.50, window: "SingleRuptureGaussianFamily 0..11, [t*,t*+0.2n]", agg: mean}
+  always_fake_blocked:      {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  never_fake_blocked:       {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  leakage:                  {dir: lower_better, threshold: 0.0, window: "structural", agg: max}
+  # report-only boundary map (NOT gated): per-family fire/detect rate
+  boundary_map_emitted:     {dir: higher_better, threshold: 1.0, window: "7 families", agg: bool}
+
+thresholds:
+  max_null_family_fa: 0.10
+  min_gaussian_detect: 0.50
+  min_always_blocked: 1.0
+  min_never_blocked: 1.0
+  max_leakage: 0.0
+  min_boundary_map: 1.0
+
+checks:
+  - {metric: null_family_false_alarm, op: "<=", threshold_key: max_null_family_fa}
+  - {metric: gaussian_detect_rate,    op: ">=", threshold_key: min_gaussian_detect}
+  - {metric: always_fake_blocked,     op: ">=", threshold_key: min_always_blocked}
+  - {metric: never_fake_blocked,      op: ">=", threshold_key: min_never_blocked}
+  - {metric: leakage,                 op: "<=", threshold_key: max_leakage}
+  - {metric: boundary_map_emitted,    op: ">=", threshold_key: min_boundary_map}
+
+claim: >-
+  A Gaussian-null-calibrated windowed detector holds its false-alarm
+  bound on an out-of-distribution no-rupture family AND replicates the
+  in-scope Gaussian detection under a 7-family portfolio harness; the
+  remaining families are a measured boundary map, not a generalization
+  claim.
+"null": >-
+  Calibration does not transfer to the OOD null family, or the
+  in-scope Gaussian positive does not replicate, or a fake passes both.
+
+assumptions:
+  - Agent receives only the observation stream.
+  - λ calibrated on Gaussian held-out null; eval seeds disjoint.
+  - Synthetic families, deterministic per seed, numpy-only, offline.
+
+variables:
+  - windowed_detector (candidate, λ from #26 calibration rule)
+  - always_fire_fake (adversarial)
+  - never_fire_fake (adversarial)
+
+# 4. ADVERSARIAL NULL
+adversarial_null: >-
+  AlwaysFire fails null_family_false_alarm; NeverFire fails
+  gaussian_detect_rate. Each fails >=1 gate.
+
+# 5. CLAIM BOUNDARY (enumerated)
+forbidden_claims:
+  - NOT a model of brain, neurons, or biological cognition.
+  - NOT consciousness, sentience, intelligence, or AGI.
+  - NOT a universal theory of time or perception.
+  - NOT a proof of any private theorem.
+  - Does NOT claim generalization beyond single_rupture_gaussian; the
+    other families are a measured boundary, not a positive.
+
+# 6. MINIMAL KILL TEST
+kill_test: >-
+  always-fire fake must fail null_family_false_alarm; verdict over it
+  must NOT be GREEN.
+claim_boundary: >-
+  A measured OOD-transfer boundary map on synthetic families; not
+  biology, cognition, AGI, time, or a generalization claim.

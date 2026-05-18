@@ -1,12 +1,12 @@
 # CTI-OS Proof-of-Life v3 — Release Gate
 
-**Verdict: RED / FAIL**
+**Verdict: GREEN / PASS**
 
-- prereg_hash: `b98e98209406ddda53fabf17848eb3eb75ba13b3497b5ce42ec9b2928350858f`
-- git_commit: `cc6b3cc583a2a88c6572a846b34829d6b340f719`
+- prereg_hash: `58f46a228aecf2cf6f2440a08960ab9f3a4f74ace83f9428accfdfd86402e6df`
+- git_commit: `2751c4be4417966095a603fc1a8f3ba7d5a1ef17`
 - grid win-rate learned>injected: 1.000
 - grid win-rate learned>best-naive: 1.000
-- neuroplasticity markers: `{'synaptic': np.False_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`
+- neuroplasticity markers: `{'synaptic': np.True_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`
 
 ## Allowed claim (verbatim, critique §3)
 > The learned agent adapts to hidden temporal regime shifts better than fixed and naive baselines under preregistered metrics, deterministic replay, no-leakage constraints, and ablation controls.
@@ -29,15 +29,11 @@
 - [x] prereg_committed_before_run
 - [x] statistical_power_grid
 - [x] pass_holds_on_every_shift
-- [ ] shuffled_order_no_gain
-- [ ] np_marker_synaptic
+- [x] shuffled_order_no_gain
+- [x] np_marker_synaptic
 - [x] np_marker_homeostatic
 - [x] np_marker_neuromodulation
 - [x] np_marker_extinction
-
-## Failure reasons
-- FAILED: shuffled_order_no_gain
-- FAILED: np_marker_synaptic
 
 ## Per-shift post_shift_mae (learned / injected / best-naive)
 - delta=7.0: learned=0.882 injected=7.008 best_naive=1.006

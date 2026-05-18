@@ -58,6 +58,24 @@ def _build_agents(
     return agents
 
 
+def _agents_for_mode(all_agents: dict[str, Agent], mode: str) -> dict[str, Agent]:
+    """Select the agent subset for the CLI mode (full keeps everything)."""
+    if mode == "full":
+        return all_agents
+    if mode == "baselines":
+        return {k: v for k, v in all_agents.items() if not k.startswith("learned_")}
+    if mode == "learned":
+        keep = {
+            "learned_full",
+            "learned_no_update",
+            "learned_no_drift",
+            "oracle",
+            "injected",
+        }
+        return {k: v for k, v in all_agents.items() if k in keep}
+    raise ValueError(f"unknown mode: {mode}")
+
+
 def _run_agent(env: Environment, agent: Agent, n: int, t_star: int) -> dict[str, Any]:
     env.reset()
     errs = np.empty(n, dtype=float)
@@ -105,7 +123,7 @@ def _seed_hash(errs: np.ndarray) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["baselines", "learned", "full"], default="full")
-    ap.parse_args()
+    args = ap.parse_args()
 
     run_epoch = int(time.time())
     ecfg = _load("env.yaml")
@@ -151,7 +169,7 @@ def main() -> int:
         per_agent: dict[str, list[Metrics]] = {}
         for seed in seeds:
             env = Environment(tau0, tau1, t_star, ecfg["sigma"], n, seed)
-            agents = _build_agents(env, ecfg, acfg, tau0)
+            agents = _agents_for_mode(_build_agents(env, ecfg, acfg, tau0), args.mode)
             run_cache: dict[str, dict[str, Any]] = {}
             for name, agent in agents.items():
                 r = _run_agent(env, agent, n, t_star)
@@ -175,36 +193,40 @@ def main() -> int:
                 append(ledger, rec)
                 rows.append({"agent": name, "delta": delta, "seed": seed, **m.as_dict()})
 
-            # grid win accounting
-            lf = per_agent["learned_full"][-1]
-            ij = per_agent["injected"][-1]
-            naive = min(
-                per_agent[k][-1].post_shift_mae
-                for k in per_agent
-                if k.startswith(("moving_average", "last_interval", "exp_smoothing"))
-            )
-            grid_total += 1
-            grid_wins_inj += int(lf.post_shift_mae < ij.post_shift_mae)
-            grid_wins_base += int(lf.post_shift_mae < naive)
+            # grid win + markers + replay feed ONLY the full-mode
+            # fail-closed verdict (subset modes early-return below), and
+            # need the full agent set (naive baselines etc).
+            if args.mode == "full":
+                lf = per_agent["learned_full"][-1]
+                ij = per_agent["injected"][-1]
+                naive = min(
+                    per_agent[k][-1].post_shift_mae
+                    for k in per_agent
+                    if k.startswith(("moving_average", "last_interval", "exp_smoothing"))
+                )
+                grid_total += 1
+                grid_wins_inj += int(lf.post_shift_mae < ij.post_shift_mae)
+                grid_wins_base += int(lf.post_shift_mae < naive)
 
             # operational adaptation markers (neuroplastic-like label only;
             # operational, NOT biological — critique §6)
-            lf_run = run_cache["learned_full"]
-            preds = lf_run["preds"]
-            pre_v = float(np.var(preds[t_star - 50 : t_star]))
-            # v4 fix: synaptic = change of the CONVERGED pre-shift estimate
-            # to the post-shift estimate (not vs the cold-start transient).
-            moved = abs(
-                np.mean(preds[t_star + EVAL_HORIZON - 50 : t_star + EVAL_HORIZON])
-                - np.mean(preds[t_star - 50 : t_star])
-            )
-            neuro["synaptic"].append(moved > abs(delta) * 0.5)
-            neuro["homeostatic"].append(pre_v < (ecfg["sigma"] ** 2) * 1.5)
-            neuro["neuromodulation"].append(lf_run["detection_step"] is not None)
-            neuro["extinction"].append(
-                per_agent["learned_full"][-1].post_shift_mae
-                < per_agent["learned_no_update"][-1].post_shift_mae
-            )
+            if args.mode == "full":
+                lf_run = run_cache["learned_full"]
+                preds = lf_run["preds"]
+                pre_v = float(np.var(preds[t_star - 50 : t_star]))
+                # v4 fix: synaptic = change of the CONVERGED pre-shift
+                # estimate to post-shift (not vs the cold-start transient).
+                moved = abs(
+                    np.mean(preds[t_star + EVAL_HORIZON - 50 : t_star + EVAL_HORIZON])
+                    - np.mean(preds[t_star - 50 : t_star])
+                )
+                neuro["synaptic"].append(moved > abs(delta) * 0.5)
+                neuro["homeostatic"].append(pre_v < (ecfg["sigma"] ** 2) * 1.5)
+                neuro["neuromodulation"].append(lf_run["detection_step"] is not None)
+                neuro["extinction"].append(
+                    per_agent["learned_full"][-1].post_shift_mae
+                    < per_agent["learned_no_update"][-1].post_shift_mae
+                )
 
             # shuffle kill-control: accumulate over ALL seeds of delta[0]
             # (v4 fix: single-seed strict compare was sampling-noise driven).
@@ -226,7 +248,7 @@ def main() -> int:
                         LearnedAgent(prior=float(acfg["prior"])), sh, t_star, horizon
                     )
                 )
-            if delta == deltas[0] and seed == 0:
+            if args.mode == "full" and delta == deltas[0] and seed == 0:
                 env2 = Environment(tau0, tau1, t_star, ecfg["sigma"], n, 0)
                 r2 = _run_agent(env2, LearnedAgent(prior=float(acfg["prior"])), n, t_star)
                 replay_ok = _seed_hash(lf_run["errors"]) == _seed_hash(r2["errors"])
@@ -237,6 +259,15 @@ def main() -> int:
             k: {mk: float(np.mean([getattr(mm, mk) for mm in v])) for mk in v[0].as_dict()}
             for k, v in per_agent.items()
         }
+
+    # Non-full modes are operational subsets (Makefile run-baselines /
+    # run-learned): emit artifacts and exit BEFORE the fail-closed grid
+    # verdict, which is defined only for the full agent set.
+    if args.mode != "full":
+        _write_csv(rows)
+        print(f"\n=== time-rupture-inference v{__version__} :: MODE={args.mode} ===")
+        print(f"grid: {len(seeds)} seeds x {len(deltas)} deltas={deltas}")
+        return 0
 
     # shuffle kill-control verdict: averaged over all delta[0] seeds with a
     # 2% measurement-noise band (pre-declared in prereg leakage section).

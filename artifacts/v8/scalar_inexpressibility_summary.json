@@ -1,0 +1,22 @@
+{
+  "verdict": "RED",
+  "scalar_oracle_mae": 0.7973388192413225,
+  "history_oracle_mae": 0.7970187318103893,
+  "regime_oracle_mae": 0.79258118880934,
+  "scalar_inexpressibility_gap": 0.00040144468475500166,
+  "gap_min_pinned": 0.25,
+  "aliasing_rate": 5.555555555555556e-05,
+  "history_disambiguation_gain": 0.000320087430933258,
+  "context_recovery_score": 1.0,
+  "same_observation_different_future_rate": 0.0,
+  "checks": {
+    "gap_ge_min": false,
+    "history_beats_scalar": true,
+    "history_approaches_regime": true,
+    "aliasing_measured": true,
+    "same_obs_diff_future_measured": false,
+    "deterministic_replay": true
+  },
+  "grid": "30 seeds x 600 steps",
+  "no_learned_model_run": true
+}

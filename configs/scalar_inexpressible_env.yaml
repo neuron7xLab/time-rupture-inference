@@ -1,0 +1,11 @@
+# v8 scalar-inexpressible environment. Pinned pre-run.
+mu: 10.0
+sigma: 1.0
+delta: 8.0          # signed post-trigger jump; >> sigma by design
+n_steps: 600
+seed_count: 30
+short_thresh: 8.0   # interval < mu-2 -> "short"
+long_thresh: 12.0   # interval > mu+2 -> "long"
+# z flips once at n_steps//2 (hidden). Trigger pattern: short,short,long.
+gap_min: 0.25       # GREEN gate on scalar_inexpressibility_gap
+history_close_frac: 0.15  # history_oracle within 15% of regime_oracle

@@ -77,7 +77,7 @@ clone.
 ## How to extend with a new hypothesis
 
 1. Write a pinned spec (claim / null / assumptions / variables /
-   falsifier checks) — see `examples/indi_redacted_cognitive_time.yaml`.
+   falsifier checks) — see `examples/indi_redacted_temporal_hypothesis.yaml`.
 2. Implement a local `probe(thresholds) -> {metric: value}` (kept
    local; never committed if private).
 3. Add a discriminative negative-control probe.

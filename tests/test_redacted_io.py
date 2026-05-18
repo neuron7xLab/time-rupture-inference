@@ -16,12 +16,12 @@ from ctios.redacted_io import (  # noqa: E402
     validate_redacted_spec,
 )
 
-EXAMPLE = ROOT / "examples" / "indi_redacted_cognitive_time.yaml"
+EXAMPLE = ROOT / "examples" / "indi_redacted_temporal_hypothesis.yaml"
 
 
 def test_bundled_example_loads_and_hashes():
     s = load_redacted_spec(EXAMPLE)
-    assert s.hypothesis_id == "indi_redacted_cognitive_time_demo"
+    assert s.hypothesis_id == "indi_redacted_temporal_hypothesis_demo"
     assert len(s.falsifiers) == 2
     assert spec_sha256(s) == spec_sha256(s)  # deterministic
     assert len(spec_sha256(s)) == 64

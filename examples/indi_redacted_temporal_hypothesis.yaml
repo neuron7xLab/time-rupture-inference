@@ -7,7 +7,7 @@
 # committed. Loadable by ctios.redacted_io.load_redacted_spec.
 # See docs/PRIVATE_RND_PROTOCOL.md.
 
-hypothesis_id: indi_redacted_cognitive_time_demo
+hypothesis_id: indi_redacted_temporal_hypothesis_demo
 
 claim: >-
   A private estimator infers a hidden temporal regime change from its
@@ -46,11 +46,15 @@ falsifiers:
     threshold_key: min_separation
     threshold: 0.10         # placeholder; pinned before any real run
 
+# <!-- claims:disclaimer -->
+# This block enumerates inferences the result may NEVER support — it is
+# a hard negative boundary, not a positioning claim.
 forbidden_inferences:
   - The estimator has cognition, understanding, or awareness of time.
   - The estimator is conscious, sentient, or brain-like.
   - The result proves a general theory of time or general intelligence.
   - A survived check proves the collaborator's private theorem correct.
+# <!-- claims:end -->
 
 evidence_requirements:
   - artifact: sealed_verdict_json

@@ -20,7 +20,7 @@ from ctios.redacted import (  # noqa: E402
 from ctios.spec_cli import main as spec_cli_main  # noqa: E402
 from ctios.spec_compiler import compile_redacted_hypothesis  # noqa: E402
 
-EXAMPLE = ROOT / "examples" / "indi_redacted_cognitive_time.yaml"
+EXAMPLE = ROOT / "examples" / "indi_redacted_temporal_hypothesis.yaml"
 
 
 def _spec(**over):

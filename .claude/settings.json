@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**)",
+      "Edit(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**)",
+      "Write(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(mypy:*)",
+      "Bash(bash scripts/*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/.env)",
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**/.env)",
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**/*secret*)",
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**/*.pem)",
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**/*.key)",
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**/id_rsa*)",
+      "Read(//home/neuro7/Desktop/DATA/03_ENGINEERING/CTI_OS_PROOF_LIFE/**/credentials*)",
+      "Bash(rm -rf:*)",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "WebFetch",
+      "WebSearch"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/block-dangerous-research-edits.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

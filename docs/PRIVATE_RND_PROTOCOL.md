@@ -39,7 +39,7 @@ what data built it, or why you believe the claim.
 ## 2. Redacted hypothesis interface
 
 A hypothesis enters as a pinned skeleton with the fields in
-`examples/indi_redacted_cognitive_time.yaml`: `hypothesis_id`, `claim`,
+`examples/indi_redacted_temporal_hypothesis.yaml`: `hypothesis_id`, `claim`,
 `null`, `assumptions`, `variables`, `falsifiers`, `forbidden_claims`,
 `required_artifacts`, `human_review_required` (must be `true`),
 `next_experiment_policy`. The private mechanism is supplied separately
@@ -80,10 +80,13 @@ rejected.
 
 ## 7. Claim-boundary policy
 
-A claim's external text cannot exceed its mechanism. A machine-checkable
-lexicon blocks cognition / general-intelligence / consciousness
-language outside an explicit disclaimer, enforced in CI and tests. A
-skeleton's `forbidden_claims` list is honored as a hard boundary.
+A claim's external text cannot exceed its mechanism.
+<!-- claims:disclaimer -->
+A machine-checkable lexicon blocks cognition / general-intelligence /
+consciousness language outside an explicit disclaimer, enforced in CI
+and tests.
+<!-- claims:end -->
+A skeleton's `forbidden_claims` list is honored as a hard boundary.
 
 ## 8. Failure logging
 

@@ -14,4 +14,5 @@ artifacts/v8_2/*
 !artifacts/**/.gitkeep
 evidence/FALSIFY_*.json
 evidence/NEGATIVE_FALSIFY_*.md
+evidence/ADVERSARIAL_PORTABILITY_*.json
 prereg/NEXT_*.yaml

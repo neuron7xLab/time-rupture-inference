@@ -51,10 +51,16 @@ def lint() -> list[str]:
             has_qual = any(q in line for q in quals)
             for t in forb:
                 if t in line and not has_qual:
-                    violations.append(f"{rel}:{i}: forbidden assertive '{t.strip()}' :: {raw.strip()}")
+                    violations.append(
+                        f"{rel}:{i}: forbidden assertive "
+                        f"'{t.strip()}' :: {raw.strip()}"
+                    )
             for t in soft:
                 if t in line and not has_qual:
-                    violations.append(f"{rel}:{i}: unqualified metaphor '{t.strip()}' :: {raw.strip()}")
+                    violations.append(
+                        f"{rel}:{i}: unqualified metaphor "
+                        f"'{t.strip()}' :: {raw.strip()}"
+                    )
     return violations
 
 

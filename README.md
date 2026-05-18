@@ -161,16 +161,16 @@ Formal specification (claim → falsifier → evidence → boundary):
 
 ## External review package
 
-A private-safe entry point for an external technical reviewer. It lets
-the apparatus be evaluated, and a redacted private hypothesis run
-through it, without any proprietary mechanism, dataset, or theorem
-content entering this repository. One-command check:
-`bash scripts/indi_demo.sh`.
+**Start here if you are reviewing the private-safe redacted-hypothesis
+R&D package:** [`docs/INDI_README.md`](docs/INDI_README.md). One-command
+check: `bash scripts/indi_demo.sh`. A redacted private hypothesis runs
+through the apparatus with no proprietary mechanism, dataset, or
+theorem content entering this repository.
 
-- [`docs/INDI_README.md`](docs/INDI_README.md) — read me first.
-- [`docs/INDI_EXECUTIVE_SUMMARY.md`](docs/INDI_EXECUTIVE_SUMMARY.md) — 4-minute summary.
-- [`docs/PRIVATE_RND_PROTOCOL.md`](docs/PRIVATE_RND_PROTOCOL.md) — redacted hypothesis interface.
-- [`docs/INDI_REVIEWER_CHECKLIST.md`](docs/INDI_REVIEWER_CHECKLIST.md) — graded review path.
+- [`docs/INDI_README.md`](docs/INDI_README.md) — read this first.
+- [`docs/INDI_EXECUTIVE_SUMMARY.md`](docs/INDI_EXECUTIVE_SUMMARY.md) — 3-minute summary.
+- [`docs/PRIVATE_RND_PROTOCOL.md`](docs/PRIVATE_RND_PROTOCOL.md) — redacted hypothesis interface + IP boundary table.
+- [`docs/INDI_REVIEWER_CHECKLIST.md`](docs/INDI_REVIEWER_CHECKLIST.md) — fastest useful path, then graded tiers.
 
 ## CTI-OS v7 · GCP readiness (CPU-first, no GPU default)
 

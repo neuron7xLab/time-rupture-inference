@@ -1,5 +1,18 @@
 # Reviewer Checklist
 
+## Fastest useful path
+
+1. Read `docs/INDI_README.md`.
+2. Run `bash scripts/indi_demo.sh`.
+3. Open `examples/indi_redacted_cognitive_time.yaml`.
+4. Answer the three feedback questions (in INDI_README and at the end
+   of the demo script).
+
+That is enough to decide if this is worth a conversation. The tiers
+below are for going deeper, not prerequisites.
+
+---
+
 A graded path. Each tier is self-contained; stop at the depth your
 time allows. Every box is a concrete, checkable thing — not an opinion.
 

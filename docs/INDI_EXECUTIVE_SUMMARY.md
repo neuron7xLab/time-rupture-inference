@@ -1,106 +1,63 @@
-# Executive Summary — For a Busy Technical Founder
+# Executive Summary
 
-**Read time: ~4 minutes. No code required to follow this page.**
+**~3 minutes. No code required.**
 
-## The premise this is built against
-
-A sufficiently capable language model can produce a confident,
+**The problem.** A capable language model can produce a confident,
 internally coherent evaluation of almost any research hypothesis —
-including yours, including its own. The evaluation will read as
-rigorous. It is not, by itself, evidence. The gap between *a system
-that can argue a claim is true* and *a claim whose falsifier was run
-and did not trigger* is the entire problem this artifact addresses.
-The deliverable is the machinery that enforces that distinction
-mechanically, so it cannot be talked around.
+including yours, including its own. It reads as rigorous. It is not, by
+itself, evidence. The gap between *a system that can argue a claim is
+true* and *a claim whose falsifier was run and did not trigger* is the
+entire problem this artifact addresses.
 
-## What the apparatus is
-
-A falsification-first temporal-inference apparatus. Its concrete
+**The apparatus.** A falsification-first temporal-inference engine. Its
 benchmark is a hidden temporal rupture: an inter-event interval holds
-one regime, then silently switches to another at an unseen step. The
-agent never observes the regime, the switch time, or the noise — only
-the realized signal. It must infer that the world changed from its own
-prediction error and re-adapt. This is deliberately the smallest
-environment in which fluent language cannot fake adaptation: either
-the post-rupture error drops on pre-registered metrics across many
-seeds and shift magnitudes, or it does not, and the negative is kept.
+one regime, then silently switches at an unseen step. The agent sees
+only the realized signal — never the regime, switch time, or noise —
+and must infer the change from its own prediction error. This is the
+smallest environment where fluent language cannot fake adaptation:
+either post-rupture error drops on pre-registered metrics across many
+seeds, or it does not and the negative is kept. One positive is frozen
+byte-identical (win-rate 1.000, ablation-necessary, no-leakage);
+several lineages are preserved *negatives*, none tuned to pass, each a
+sealed artifact with a reproduction command. The real asset is the
+discipline as runnable code: claim → falsifier → evidence → boundary,
+each arrow mechanically enforced — a pre-run hash, an adversarial
+battery (rejects non-deterministic probes, decorative thresholds,
+non-discriminative controls), and a lexicon gate that stops a claim's
+text from exceeding its mechanism.
 
-On that benchmark one positive is frozen and byte-identical on any
-machine (a learned scalar estimator beats a hard-wired and the best
-naive baseline post-rupture, win-rate 1.000, with an ablation proving
-the drift mechanism necessary and a no-leakage check). Several other
-lineages are preserved **negatives** — a precision-weighted variant
-that was principled but not better, a learned sequence model that did
-not exceed the heuristic, a constructed task whose first gate was
-proven information-theoretically unattainable before it was re-derived
-honestly. None of these were tuned to pass. Every red is a sealed
-artifact with a reproduction command.
+**Private R&D.** The engine consumes a *redacted hypothesis structure*,
+not your research. You supply only the claim, null, assumptions,
+variables, falsifier checks, forbidden inferences, and acceptable
+evidence. Your mechanism is plugged in locally as an opaque probe the
+engine calls but never inspects. The proprietary mechanism, dataset,
+strategy, and theorem content never enter the public repository. The
+engine needs the *shape* of the question, never the answer or the
+method. Specified field by field in `docs/PRIVATE_RND_PROTOCOL.md`.
 
-## The actual asset
+**Why this matters to you.** Your private cognitive-time work currently
+lives as intuition and prose, where a capable model will always agree
+with you. This converts one such claim into a pinned redacted skeleton,
+attaches your mechanism as a local probe, and forces the claim through
+its own kill-test *before* any belief is updated — IP entirely on your
+side, self-deception removed from the loop. The output is a sealed
+verdict and, on failure, a decision-gated next experiment. It is a
+falsification loop with a mandatory human gate at every restart, not an
+autonomous research agent.
 
-The asset is not the frozen positive and not the benchmark. It is the
-research discipline expressed as runnable code:
-**claim → falsifier → evidence → boundary**, with each arrow
-mechanically enforced. A claim must be pre-registered and hashed
-before the run. The verdict goes through an adversarial battery: it
-rejects a non-deterministic probe, a non-finite metric, a threshold
-that is decorative rather than load-bearing, and a negative control
-that also passes (which would mean the gate does not discriminate).
-The pinned specification hash covers the assumptions and the variables,
-so silently retuning a threshold changes the hash and is detectable.
-A claim's external text cannot exceed the implemented mechanism: a
-machine-checkable lexicon, enforced in CI and tests, blocks
-cognition / general-intelligence / neural-equivalence language outside
-an explicit disclaimer. When a hypothesis does not pass, the engine
-auto-proposes the next experiment — surviving checks tightened, the
-failed boundary made the focus, assumptions demoted to open
-questions — and it never runs that next experiment itself. A human
-gate is mandatory.
+**Next step.** Run `bash scripts/indi_demo.sh`, read one redacted
+skeleton (`examples/indi_redacted_cognitive_time.yaml`), and answer
+three questions: is this the research loop you meant; is the redacted
+interface enough to protect your IP; what would make it useful for your
+next private experiment. If the answers are yes/yes/concrete, the first
+collaborative task is one redacted hypothesis from you + one local
+probe + one agreed falsifier → one sealed verdict. The structured path
+is `docs/INDI_REVIEWER_CHECKLIST.md`.
 
-## Why it is safe for private collaboration
-
-The engine consumes a *redacted hypothesis structure*, not your
-research. A collaborator supplies only: the claim, the null, the
-assumptions, the variables, the falsifier checks, the forbidden
-inferences, and what counts as acceptable evidence. The private
-mechanism is plugged in locally as an opaque probe — a function the
-engine calls but never inspects. The proprietary mechanism, the
-dataset, the strategy, and the content of the private theorem do not
-need to enter the public repository at any point. The engine needs the
-*shape* of the question, never the answer or the method. This is
-specified field by field in `docs/PRIVATE_RND_PROTOCOL.md`, with a
-worked redacted skeleton in
-`examples/indi_redacted_cognitive_time.yaml`.
-
-## The strongest next use
-
-The highest-value application is private theorem-to-experiment
-conversion: take a research claim that currently lives only as
-intuition and prose, express it as a pinned redacted skeleton, attach
-the private mechanism as a local probe, and let the apparatus force
-the claim through its own kill-test before any belief is updated. The
-output is a sealed verdict and, on failure, a decision-gated next
-experiment — a falsification loop with a mandatory human approval gate
-at every restart, not an autonomous research agent. The point is to
-make a private research line *harder to fool itself*, while the IP
-stays entirely on the collaborator's side.
-
-## What this explicitly does not claim
-
-This does not claim cognition, consciousness, artificial general
-intelligence, biological fidelity, or a universal theory of time. It
-does not claim that any private theorem is correct — it cannot, and
-asserting otherwise would itself violate the lexicon gate. It claims
-exactly one thing: that the difference between a plausible story and a
-survived falsifier can be made mechanical, reproducible, and safe to
-run on a private hypothesis without disclosing it. The scope and the
-open questions are stated, not implied, in
-`docs/INDI_LIMITATIONS.md`.
-
-## What is asked of the reviewer
-
-A short, adversarial pass: find a route by which a false positive
-survives the battery, or a redacted field that cannot be filled
-without leaking private structure. If neither exists, identify which
-component is load-bearing for your own work. The structured checklist
-is in `docs/INDI_REVIEWER_CHECKLIST.md`.
+**What this explicitly does not claim.** Not cognition, consciousness,
+artificial general intelligence, biological fidelity, or a universal
+theory of time. It does not claim any private theorem is correct — it
+cannot. It claims one thing: the difference between a plausible story
+and a survived falsifier can be made mechanical, reproducible, and safe
+to run on a private hypothesis without disclosing it. Scope and open
+questions are stated, not implied, in `docs/INDI_LIMITATIONS.md`.

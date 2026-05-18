@@ -54,10 +54,22 @@ required_artifacts:
   - adversarial_battery_outcomes # deterministic/finite/load-bearing/neg-ctrl
   - pinned_spec_sha256
 
+# Mandatory: no restart without a human decision.
 human_review_required: true
 
+# The private mechanism is a LOCAL probe. It is never committed here.
+local_probe_required: true
+commit_private_content: false
+
+# Free-text notes the collaborator keeps OUTSIDE this repository.
+reviewer_notes: "free-text private notes kept outside repository"
+
+# Governance for a non-green outcome (the engine only proposes).
 next_experiment_policy:
-  auto_run: false
-  tighten_surviving_checks: true
-  loosen_failed_checks: false
-  failed_boundary_becomes_focus: true
+  auto_run: false                    # never executed automatically
+  tighten_surviving_checks: true     # survivors made stricter (x0.9)
+  loosen_failed_checks: false        # a failed check is never relaxed
+  failed_boundary_becomes_focus: true  # what broke is the next subject
+
+# To reuse: copy this file, replace every value, keep the field names.
+# Do not overfit to the bundled temporal benchmark.

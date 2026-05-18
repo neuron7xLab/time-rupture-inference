@@ -79,3 +79,6 @@ v8-3-diagnostic:
 
 v8-4-diagnostic:
 	$(PY) scripts/run_v8_4_rederived_diagnostic.py
+
+v9-learned:
+	$(PY) scripts/run_v9_learned_diagnostic.py

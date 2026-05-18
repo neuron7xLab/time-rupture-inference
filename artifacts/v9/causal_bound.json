@@ -1,0 +1,8 @@
+{
+  "triggers_per_seed": 120,
+  "expected_forced_wrong": 1.0,
+  "regime_trigger_floor": 0.7978845608028654,
+  "history_trigger_mae_min": 0.9245688561295081,
+  "h2r_causal_min": 0.15877521830873326,
+  "attainable_at_0_35": true
+}

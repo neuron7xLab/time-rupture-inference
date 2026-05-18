@@ -24,7 +24,7 @@
 [![tests](https://img.shields.io/badge/tests-150_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
-[![lineage](https://img.shields.io/badge/lineage-7_RED_1_PARTIAL_1_GREEN-FF0033-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
+[![lineage](https://img.shields.io/badge/lineage-all_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
 [![license](https://img.shields.io/badge/license-MIT-0000FF?style=for-the-badge&labelColor=000000)](LICENSE)
 
 <br>
@@ -154,6 +154,10 @@ evidence/    ledger · negatives · v4 baseline lock · release gate
 tests/       150 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
+
+Formal specification (claim → falsifier → evidence → boundary):
+[`docs/SPEC.md`](docs/SPEC.md). Reproducible demonstration:
+[`docs/DEMO.md`](docs/DEMO.md).
 
 ## CTI-OS v7 · GCP readiness (CPU-first, no GPU default)
 

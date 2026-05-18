@@ -1,0 +1,42 @@
+# v5 minimal causal-action — pre-registered BEFORE the run.
+claim: >
+  The learned action agent has causal-action gain under hidden temporal
+  rupture: choosing actions after prediction error improves post-shift
+  performance ONLY when those actions causally modify the environment
+  transition (interventional), not when they are merely logged
+  (action_null).
+
+forbidden_claims:
+  - intelligence
+  - consciousness
+  - biological_neuroplasticity
+  - brain_fidelity
+  - AGI
+  - cognition
+  - understanding_time
+
+modes:
+  - action_null
+  - interventional
+
+actions:
+  - observe
+  - stabilize
+  - destabilize
+
+primary_metric: causal_action_gain
+
+thresholds:
+  min_causal_action_gain: 0.05
+  max_allowed_action_null_gap: 0.02
+  min_win_rate_vs_no_action: 0.80
+  min_win_rate_vs_random_action: 0.80
+
+grid:
+  seeds: 30
+  shift_deltas: [4.0, 8.0, -4.0]
+
+decision_rule: >
+  GREEN iff every check in src/ctios/causal_gate.py passes. Any single
+  RED fails the line. No threshold edited after the pinned commit. A RED
+  verdict is reported as RED and preserved as NEGATIVE_RESULT_v5.md.

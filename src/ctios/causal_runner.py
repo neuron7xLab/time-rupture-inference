@@ -22,7 +22,7 @@ from ctios.causal_env import CausalEnvironment, CausalObservation
 from ctios.causal_gate import evaluate
 from ctios.causal_metrics import causal_action_gain, run_metrics
 from ctios.contract import EVAL_HORIZON as EVAL_H
-from ctios.contract import N_STEPS, SIGMA, T_STAR, TAU0
+from ctios.contract import N_STEPS, SIGMA, T_STAR, TAU0, validate_window
 from ctios.utils import ROOT
 
 # v4/v5 share ONE invariant channel (ctios.contract). No magic literals.
@@ -87,6 +87,7 @@ def _interventional_effect_probe(seed: int, delta: float) -> bool:
         for k in range(N_STEPS):
             obs = env.step(action)
             ae.append(abs(obs.observed_interval - (TAU0 if k < T_STAR else TAU0 + delta)))
+        validate_window(T_STAR, EVAL_H, len(ae))
         return float(np.mean(ae[T_STAR : T_STAR + EVAL_H]))
 
     return abs(fixed("stabilize") - fixed("observe")) > 1e-6

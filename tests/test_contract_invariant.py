@@ -6,6 +6,7 @@ drift out of agreement with the pre-registered metric. These tests make
 that class structurally impossible to reintroduce without a red test.
 """
 
+import ast
 import re
 from pathlib import Path
 
@@ -37,6 +38,24 @@ def test_no_magic_post_shift_window_literal_in_src():
             if pat.search(line):
                 offenders.append(f"{f.name}:{i}: {line.strip()}")
     assert not offenders, "magic post-shift window literal reintroduced:\n" + "\n".join(
+        offenders
+    )
+
+
+def test_every_post_shift_slice_site_is_guarded():
+    """RCA §8.1 control, enforced: any two-sided post-shift slice must live
+    in a function that also calls validate_window — no bypass path."""
+    win = re.compile(r"\[\s*(t_star|T_STAR)\s*:\s*(t_star|T_STAR)\s*\+")
+    offenders = []
+    for f in SRC.glob("*.py"):
+        tree = ast.parse(f.read_text())
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.FunctionDef):
+                continue
+            body = ast.get_source_segment(f.read_text(), node) or ""
+            if win.search(body) and "validate_window(" not in body:
+                offenders.append(f"{f.name}:{node.name}")
+    assert not offenders, "post-shift slice without validate_window: " + ", ".join(
         offenders
     )
 

@@ -3,15 +3,25 @@
 from __future__ import annotations
 
 from collections import Counter
+from typing import TypedDict
 
 import numpy as np
 
 from ctios.contract import validate_aligned_lengths, validate_window
 
 
+class RunMetrics(TypedDict):
+    pre_shift_mae: float
+    post_shift_mae: float
+    post_shift_aue: float
+    adaptation_time: float
+    action_counts: dict[str, int]
+    stabilize_fraction_post_shift: float
+
+
 def run_metrics(
     errors: np.ndarray, actions: list[str], t_star: int, eval_horizon: int
-) -> dict[str, float | dict]:
+) -> RunMetrics:
     validate_window(t_star, eval_horizon, errors.size)
     validate_aligned_lengths(
         errors.size, len(actions), names=("errors_len", "actions_len")

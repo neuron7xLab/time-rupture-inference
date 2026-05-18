@@ -129,7 +129,12 @@ def main() -> int:
     grid_wins_inj = 0
     grid_wins_base = 0
     grid_total = 0
-    neuro = {"synaptic": [], "homeostatic": [], "neuromodulation": [], "extinction": []}
+    neuro: dict[str, list[bool]] = {
+        "synaptic": [],
+        "homeostatic": [],
+        "neuromodulation": [],
+        "extinction": [],
+    }
 
     shuf_real: list[float] = []
     shuf_perm: list[float] = []

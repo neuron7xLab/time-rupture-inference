@@ -1,6 +1,7 @@
 import numpy as np
 
 from ctios.agents import InjectedAgent, LearnedAgent, OracleAgent
+from ctios.contract import EVAL_HORIZON
 from ctios.env import Environment
 
 
@@ -12,7 +13,7 @@ def _post_mae(agent, env, n, t_star):
         o = env.step()
         errs.append(abs(o.observed_interval - p))
         agent.update(o.observed_interval)
-    return float(np.mean(errs[t_star : t_star + 250]))
+    return float(np.mean(errs[t_star : t_star + EVAL_HORIZON]))
 
 
 def test_injected_fails_post_shift():

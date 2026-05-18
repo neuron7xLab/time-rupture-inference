@@ -21,13 +21,11 @@ from ctios.causal_agents import CausalLearnedAgent, NoActionAgent, RandomActionA
 from ctios.causal_env import CausalEnvironment, CausalObservation
 from ctios.causal_gate import evaluate
 from ctios.causal_metrics import causal_action_gain, run_metrics
+from ctios.contract import EVAL_HORIZON as EVAL_H
+from ctios.contract import N_STEPS, SIGMA, T_STAR, TAU0
 from ctios.utils import ROOT
 
-N_STEPS = 600
-T_STAR = 300
-SIGMA = 1.0
-EVAL_H = 250
-TAU0 = 10.0
+# v4/v5 share ONE invariant channel (ctios.contract). No magic literals.
 
 
 def _make_agent(kind: str, seed: int):

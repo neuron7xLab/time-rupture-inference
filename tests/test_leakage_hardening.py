@@ -6,6 +6,7 @@ import numpy as np
 
 from ctios import agents
 from ctios.agents import LearnedAgent
+from ctios.contract import EVAL_HORIZON
 from ctios.env import Environment
 
 
@@ -36,7 +37,7 @@ def _post_mae_on_series(intervals: np.ndarray, t_star: int) -> float:
         p = a.predict()
         ae.append(abs(x - p))
         a.update(float(x))
-    return float(np.mean(ae[t_star : t_star + 250]))
+    return float(np.mean(ae[t_star : t_star + EVAL_HORIZON]))
 
 
 def test_shuffling_post_shift_order_does_not_systematically_help():

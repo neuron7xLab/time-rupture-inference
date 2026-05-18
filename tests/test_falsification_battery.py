@@ -3,6 +3,7 @@
 import numpy as np
 
 from ctios.agents import InjectedAgent, LastIntervalAgent, LearnedAgent
+from ctios.contract import EVAL_HORIZON
 from ctios.env import Environment
 
 
@@ -14,7 +15,7 @@ def _post_mae(agent, seed, tau1=17.0, t_star=300):
         o = env.step()
         errs.append(abs(o.observed_interval - p))
         agent.update(o.observed_interval)
-    return float(np.mean(errs[t_star : t_star + 250]))
+    return float(np.mean(errs[t_star : t_star + EVAL_HORIZON]))
 
 
 def test_rung1_survives_time_shift():

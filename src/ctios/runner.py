@@ -24,6 +24,7 @@ from ctios.agents import (
     RandomAgent,
     make_ablations,
 )
+from ctios.contract import EVAL_HORIZON, validate_window
 from ctios.env import Environment
 from ctios.gates import evaluate_gate
 from ctios.ledger import append, provenance
@@ -71,19 +72,23 @@ def _run_agent(env: Environment, agent: Agent, n: int, t_star: int) -> dict[str,
             "pre_alarms": pre_alarms}
 
 
-def _run_on_series(agent: Agent, intervals: np.ndarray, t_star: int) -> float:
+def _run_on_series(
+    agent: Agent, intervals: np.ndarray, t_star: int, eval_horizon: int
+) -> float:
     """Drive an agent over a fixed interval array; return post-shift MAE.
 
     Used for the shuffled-order kill-control (critique §5): a genuine
     temporal learner must NOT improve when post-shift order is destroyed.
+    The evaluation window is the single contract horizon — never a literal.
     """
     n = len(intervals)
+    validate_window(t_star, eval_horizon, n)
     ae = np.empty(n)
     for k in range(n):
         p = agent.predict()
         ae[k] = abs(intervals[k] - p)
         agent.update(float(intervals[k]))
-    return float(np.mean(ae[t_star : t_star + 250]))
+    return float(np.mean(ae[t_star : t_star + eval_horizon]))
 
 
 def _seed_hash(errs: np.ndarray) -> str:
@@ -177,7 +182,7 @@ def main() -> int:
             # v4 fix: synaptic = change of the CONVERGED pre-shift estimate
             # to the post-shift estimate (not vs the cold-start transient).
             moved = abs(
-                np.mean(preds[t_star + 200 : t_star + 250])
+                np.mean(preds[t_star + EVAL_HORIZON - 50 : t_star + EVAL_HORIZON])
                 - np.mean(preds[t_star - 50 : t_star])
             )
             neuro["synaptic"].append(moved > abs(delta) * 0.5)
@@ -195,14 +200,18 @@ def main() -> int:
                 env3.reset()
                 seq = np.array([env3.step().observed_interval for _ in range(n)])
                 shuf_real.append(
-                    _run_on_series(LearnedAgent(prior=float(acfg["prior"])), seq, t_star)
+                    _run_on_series(
+                        LearnedAgent(prior=float(acfg["prior"])), seq, t_star, horizon
+                    )
                 )
                 sh = seq.copy()
                 post = sh[t_star:].copy()
                 np.random.default_rng(9999 + seed).shuffle(post)
                 sh[t_star:] = post
                 shuf_perm.append(
-                    _run_on_series(LearnedAgent(prior=float(acfg["prior"])), sh, t_star)
+                    _run_on_series(
+                        LearnedAgent(prior=float(acfg["prior"])), sh, t_star, horizon
+                    )
                 )
             if delta == deltas[0] and seed == 0:
                 env2 = Environment(tau0, tau1, t_star, ecfg["sigma"], n, 0)

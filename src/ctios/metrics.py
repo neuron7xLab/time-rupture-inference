@@ -6,6 +6,8 @@ from dataclasses import asdict, dataclass
 
 import numpy as np
 
+from ctios.contract import validate_window
+
 
 @dataclass(frozen=True)
 class Metrics:
@@ -29,6 +31,7 @@ def compute_metrics(
     detection_step: int | None,
     recovery_band_mult: float,
 ) -> Metrics:
+    validate_window(t_star, eval_horizon, errors.size, detection_step)
     abs_err = np.abs(errors)
     pre = abs_err[:t_star]
     post = abs_err[t_star : t_star + eval_horizon]

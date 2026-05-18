@@ -1,7 +1,7 @@
 PY := python3
 export PYTHONPATH := src
 
-.PHONY: setup prereg test run-baselines run-learned run-falsification ledger gate all
+.PHONY: setup prereg test run-baselines run-learned run-falsification ledger gate automate all
 
 setup:
 	$(PY) -m pip install -q numpy matplotlib pyyaml pytest
@@ -26,5 +26,8 @@ ledger:
 
 gate: test
 	$(PY) -m ctios.runner --mode full
+
+automate:
+	$(PY) -m ctios.automation
 
 all: test gate

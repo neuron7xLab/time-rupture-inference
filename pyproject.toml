@@ -21,6 +21,7 @@ Repository = "https://github.com/neuron7xLab/time-rupture-inference"
 
 [project.scripts]
 tri-gate = "ctios.runner:main"
+tri-automate = "ctios.automation:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

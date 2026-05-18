@@ -129,6 +129,7 @@ pip install -e ".[dev]"
 python scripts_prereg.py        # pin the falsifier, then commit it
 PYTHONPATH=src pytest tests -q
 PYTHONPATH=src python -m ctios.runner --mode full   # fail-closed gate
+PYTHONPATH=src python -m ctios.automation            # full chain → runs/ UTC ledger
 ```
 
 Exit `0` ⇔ GREEN. Evidence regenerated every run:
@@ -138,11 +139,12 @@ Exit `0` ⇔ GREEN. Evidence regenerated every run:
 ## Structure
 
 ```
-src/ctios/   env · agents · drift · metrics · gates · ledger · runner
+src/ctios/   env · agents · drift · metrics · gates · ledger · runner · automation
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       28 tests incl. no-leakage & shuffle kill-control
+tests/       70 tests incl. no-leakage, shuffle kill-control, contract
+invariants.yaml  machine-readable invariant register (enforced refs)
 ```
 
 <p align="center">

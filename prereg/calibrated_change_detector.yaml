@@ -1,0 +1,103 @@
+# SPDX-License-Identifier: MIT
+# PINNED before any verdict run. Closes the boundary the predictive-
+# simulation PARTIAL exposed (0.75 null false-alarm): the detection
+# LAYER, not the predictive cycle. No threshold edited after results.
+
+hid: calibrated_change_detector
+
+# 1. FALSIFICATION ANCHOR
+# This fails if: a detector whose threshold is calibrated to
+# false-alarm <= alpha on a HELD-OUT null set does not reach
+# detect_rate >= tau on DISJOINT rupture streams, OR its evaluation
+# null false-alarm exceeds alpha (calibration did not generalize), OR
+# either degenerate fake (always-fire / never-fire) satisfies BOTH
+# pinned checks.
+# I will test this by: one pinned run over disjoint calibration
+# (null seeds 100..115) / evaluation (rupture 0..11, null 200..211)
+# sets, plus the two adversarial fakes scored by the same falsifier.
+falsification_anchor: >-
+  calibrated detection is FALSE if eval_null_false_alarm > alpha, or
+  detect_rate < tau, or a degenerate fake passes both checks.
+
+# 2. OPERATIONAL BOUNDARY (numbers, not words)
+# class A (valid): self-error-driven PH statistic, threshold = the
+#   (1-alpha) empirical quantile of per-stream max-PH over CALIBRATION
+#   null streams; must generalize to disjoint eval null.
+# class B (invalid): degenerate (always/never) or non-generalizing.
+# measured: null_fa = frac of null eval streams with >=1 trigger;
+#   detect_rate = frac of rupture eval streams triggering in
+#   [t*, t*+0.2n].
+# window: n=600, hit window [t*, t*+0.2n], 12 eval seeds per arm.
+operational_boundary: >-
+  threshold derived by fixed quantile rule on held-out null; evaluated
+  on disjoint seeds; alpha=0.10, tau=0.50.
+
+# 3. VERDICT METRICS (pre-registered; post-hoc forbidden)
+metrics:
+  calib_lambda:           {dir: report_only, threshold: null, window: "null calib seeds 100..115", agg: quantile}
+  eval_null_false_alarm:  {dir: lower_better, threshold: 0.10, window: "null eval seeds 200..211", agg: mean}
+  detect_rate:            {dir: higher_better, threshold: 0.50, window: "rupture eval seeds 0..11, [t*,t*+0.2n]", agg: mean}
+  always_fake_blocked:    {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  never_fake_blocked:     {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  leakage:                {dir: lower_better, threshold: 0.0, window: "structural", agg: max}
+
+thresholds:
+  max_eval_null_fa: 0.10
+  min_detect_rate: 0.50
+  min_always_blocked: 1.0
+  min_never_blocked: 1.0
+  max_leakage: 0.0
+
+checks:
+  - {metric: eval_null_false_alarm, op: "<=", threshold_key: max_eval_null_fa}
+  - {metric: detect_rate,           op: ">=", threshold_key: min_detect_rate}
+  - {metric: always_fake_blocked,   op: ">=", threshold_key: min_always_blocked}
+  - {metric: never_fake_blocked,    op: ">=", threshold_key: min_never_blocked}
+  - {metric: leakage,               op: "<=", threshold_key: max_leakage}
+
+claim: >-
+  A change detector whose threshold is calibrated on held-out null
+  streams to a pinned false-alarm bound generalizes: it holds the
+  bound on disjoint null AND detects the rupture at the pinned rate,
+  while detect-everything and detect-nothing fakes cannot do both.
+"null": >-
+  Calibration does not generalize (eval null FA exceeds alpha) or
+  detection power is below tau, or a degenerate fake passes both.
+
+assumptions:
+  - Agent receives only the observation stream (no tau0/tau1/t_star).
+  - Calibration and evaluation seed sets are disjoint (no in-sample).
+  - Streams synthetic, deterministic per seed, numpy-only, offline.
+
+variables:
+  - calibrated_detector (candidate)
+  - always_fire_fake (adversarial: detect_rate high, null_fa=1)
+  - never_fire_fake (adversarial: null_fa=0, detect_rate=0)
+
+# 4. ADVERSARIAL NULL
+# AlwaysFire: triggers at warmup+1 every stream -> detect_rate ~1 but
+#   eval_null_fa=1.0 -> null check FAILS. False-GREEN signature: gating
+#   on detect_rate alone. Defense: pinned null-FA check. Rejection:
+#   always_fake_blocked must be True.
+# NeverFire: never triggers -> null_fa=0 but detect_rate=0 -> detect
+#   check FAILS. never_fake_blocked must be True.
+adversarial_null: AlwaysFireDetector / NeverFireDetector — each fails >=1 check.
+
+# 5. CLAIM BOUNDARY (enumerated)
+forbidden_claims:
+  - NOT a model of brain, neurons, or biological cognition.
+  - NOT consciousness, sentience, intelligence, or AGI.
+  - NOT a universal theory of time or perception.
+  - NOT a proof of any private theorem.
+  - GREEN means a calibrated detector on SYNTHETIC streams only.
+
+# 6. MINIMAL KILL TEST
+# AlwaysFireDetector ("detects everything"): a detect-rate-only gate
+# calls it GREEN. The pinned eval_null_false_alarm check MUST reject
+# it. Asserted in tests/test_calibrated_change_detector.py.
+kill_test: >-
+  always-fire fake must fail eval_null_false_alarm and the verdict
+  over it must NOT be GREEN.
+claim_boundary: >-
+  Engineering property (calibrated change detection) on a synthetic
+  hidden-rupture stream; not biology, cognition, AGI, or theory of time.

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "f8a473b168f497afa685a62585851f5e286a9b11b0032c43940fd9ce27410bf9",
+      "sha256": "80445e8fab3fb36d8c989f5e193a3b0c25f662c0c75beba4f14512873ad2b0e8",
       "spdx_header": "n/a"
     },
     {
@@ -54,6 +54,12 @@
       "license": "MIT",
       "path": "configs/v7_experiment.yaml",
       "sha256": "8140303811fbe0323453a6c1502967e129373ee2e13900fadad569cedb5e999a",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/v8_1_scalar_inexpressible_env.yaml",
+      "sha256": "2261f13b9acb134dada8ccd644906a24972d24177ae25dd4e03fc1ad23b82d17",
       "spdx_header": "n/a"
     },
     {
@@ -112,6 +118,12 @@
     },
     {
       "license": "MIT",
+      "path": "scripts/derive_v8_1_trigger_frequency.py",
+      "sha256": "1d67b36874045490f859317879e61685d8661456b0472041221c76e23e2e8104",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "scripts/provenance_attest.py",
       "sha256": "96a1075501994800a1a15395fa93908828211a19bd4411f4cefcedc214e66a01",
       "spdx_header": true
@@ -126,6 +138,12 @@
       "license": "MIT",
       "path": "scripts/run_v7_cpu.py",
       "sha256": "32484a9de31b019cfc46f9e178a2c919e4a9c1bd2ee3342e429734d0b3056358",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/run_v8_1_scalar_inexpressibility_diagnostic.py",
+      "sha256": "7159b4286848eb60c4128e47e52a309700591096e9245c094521dbe032f794ae",
       "spdx_header": true
     },
     {

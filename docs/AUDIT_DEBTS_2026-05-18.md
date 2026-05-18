@@ -29,13 +29,19 @@ Ensure adaptive interval learning remains evidence-grounded, reproducible, and r
   must earn its place through its own pre-registered improvement lineage,
   not by folding into the frozen baseline. Frozen v4 attestation holds.
 
-### Still open (recommended next)
-1. **Config/logic separation debt (P2)**
-   - Anti-divergence defaults are coded in Python, not surfaced in YAML experiment config for sweep governance.
-2. **Property-based stress debt (P2)**
-   - No Hypothesis-style tests over shift magnitude/noise/warmup that assert bounded adaptation regret.
-3. **Artifact contract debt (P3)**
-   - No dedicated machine-readable invariants file (`invariants.yaml`) despite invariant-heavy methodology.
+### Closed in the v0.1.1 production cycle
+4. **Config/logic separation debt (P2) — CLOSED**
+   - `anti_divergence` / `min_gain_scale` surfaced in `configs/agents.yaml`;
+     `test_governance_surface` asserts code default == YAML (single source).
+5. **Artifact contract debt (P3) — CLOSED**
+   - `invariants.yaml` machine-readable register added; test asserts every
+     `enforced_by` reference resolves to a real gate/test file.
+
+### Still open (recommended next — honestly deferred, not blocking prod)
+1. **Property-based stress debt (P2)**
+   - No Hypothesis-style tests over shift magnitude/noise/warmup that assert
+     bounded adaptation regret. Warrants its own pre-registered cycle (adds
+     a dependency + needs a falsifiable regret bound) — not rushed.
 
 ## Checklist mapping (condensed)
 - PRE-WORK: mostly satisfied; explicit falsifier contracts exist in `prereg/`.

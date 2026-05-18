@@ -1,0 +1,30 @@
+# Machine-readable invariant register (audit P3 close-out).
+# Every entry is ENFORCED by a named gate/test — not aspirational.
+# A test asserts this file stays in sync with the live enforcers.
+version: 1
+
+invariants:
+  - id: INV-NO-LEAKAGE
+    statement: "Learning/baseline agents never receive tau0/tau1/T*/sigma/n_steps."
+    enforced_by: ["tests/test_no_leakage.py", "tests/test_leakage_hardening.py"]
+  - id: INV-DETERMINISTIC-REPLAY
+    statement: "Same seed reproduces an identical error trajectory hash."
+    enforced_by: ["tests/test_replay_hash.py", "runner: deterministic_replay"]
+  - id: INV-FROZEN-V4
+    statement: "v4 grid numbers byte-identical: learned 0.8830 / injected 8.0028 / oracle 0.7933."
+    enforced_by: ["evidence/V4_BASELINE_LOCK.md", "git tag cti-os-v4-GREEN"]
+  - id: INV-WINDOW-CONTRACT
+    statement: "Post-shift slices validated (bounds + alignment); no silent clamp."
+    enforced_by: ["src/ctios/contract.py", "tests/test_contract_invariant.py"]
+  - id: INV-CLAIM-BOUNDARY
+    statement: "External text cannot assert cognition/AGI/neural-equivalence outside a disclaimer."
+    enforced_by: ["claims.yaml", "tests/test_claims_lexicon.py"]
+  - id: INV-PROVENANCE
+    statement: "Every source carries SPDX; manifest sha256 drift fails loud; external scan stays OPEN."
+    enforced_by: ["scripts/provenance_attest.py", "tests/test_provenance.py"]
+  - id: INV-CAUSAL-GAIN
+    statement: "v5 causal gain only via interventional mode; action_null gap ~ 0."
+    enforced_by: ["src/ctios/causal_gate.py", "tests/test_causal_runner.py"]
+  - id: INV-HYPERPARAM-CONTRACT
+    statement: "LearnedAgent rejects out-of-range gains/scales/horizons (fail-fast)."
+    enforced_by: ["tests/test_agents.py::test_learned_agent_rejects_invalid_hyperparameters"]

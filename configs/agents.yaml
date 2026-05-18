@@ -1,3 +1,10 @@
 prior: 1.0        # uninformed start (no agent is seeded near tau0)
 ma_window: 20     # moving-average baseline window
 es_alpha: 0.10    # exponential-smoothing baseline rate
+
+# Sweep-governance surface for the opt-in convergence guard. These mirror
+# the LearnedAgent defaults (single source: test_config_surface asserts
+# code == yaml). anti_divergence stays OFF in v4 — flipping it is a
+# pre-registered improvement line, not a silent baseline change.
+anti_divergence: false
+min_gain_scale: 0.35

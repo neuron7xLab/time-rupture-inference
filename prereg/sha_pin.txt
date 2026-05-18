@@ -1,3 +1,3 @@
 prereg_hash=5fb40c47609114ea44cd2cdaa4f509f0eb822ea3b0c19d885e7fa605416264c4
-source_config_hash=e2381bd311dbef58475cd22f852aafb10f0b1f62562a60ef0bffdb17afed93d0
-pinned_at_utc=2026-05-18T09:22:57Z
+source_config_hash=0f87f5ca641b835c7968b6701b80580b117209cd7e00360a46ba9b1a242b848b
+pinned_at_utc=2026-05-18T09:25:31Z

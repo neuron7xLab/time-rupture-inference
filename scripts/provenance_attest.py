@@ -34,6 +34,8 @@ OTHER = (
     "configs/*.yaml",
     "prereg/*.yaml",
     "claims.yaml",
+    "invariants.yaml",
+    "requirements-lock.txt",
     "pyproject.toml",
     "LICENSE",
     "README.md",

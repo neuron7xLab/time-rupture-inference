@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "23d2eb85c6101280d0509663b42b0193cbb4f6e61404ee9322d3c5b5c600fb83",
+      "sha256": "8d3a9647b297b8632be9e4ecdf89fc6d12541d698dabc5722df3350034deaa14",
       "spdx_header": "n/a"
     },
     {
@@ -114,6 +114,12 @@
       "license": "MIT",
       "path": "scripts/run_v7_cpu.py",
       "sha256": "32484a9de31b019cfc46f9e178a2c919e4a9c1bd2ee3342e429734d0b3056358",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/v7_diagnostics.py",
+      "sha256": "3fbc9982e7beb2fefc97cc3c26ac814a0c9548e2622faa1ef528966ab735c9d5",
       "spdx_header": true
     },
     {

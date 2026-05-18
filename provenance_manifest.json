@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "b0efaa60636591bbeadf26f2cb383d6a4785be9cdfc2d0f651a8f3971bab763c",
+      "sha256": "ba726fa8d17ff4f7b4da11870cb5aee7485deb6be849975060fc6494687d1266",
       "spdx_header": "n/a"
     },
     {
@@ -126,6 +126,12 @@
       "license": "MIT",
       "path": "prereg/windowed_change_detector.yaml",
       "sha256": "1c436611487afb7d9440025401c684303b3c447801a5a392bb50793b1230fdd3",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/windowed_detector_ood_transfer.yaml",
+      "sha256": "df8a55e90206d2fa33e19d11208961fcac4e3b2d485c038e509efa56d1076597",
       "spdx_header": "n/a"
     },
     {
@@ -456,6 +462,12 @@
       "license": "MIT",
       "path": "src/ctios/windowed_change_detector.py",
       "sha256": "b3e38757fca8f103e901ca6d2baea1cd00687109a0f4f76b56349bca426836a9",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/windowed_detector_ood.py",
+      "sha256": "43a991e889fea2966d305bab129100f4c77c28d0a4904b1364e5c17bde852238",
       "spdx_header": true
     }
   ],

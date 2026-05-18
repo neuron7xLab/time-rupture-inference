@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "8bb2fc3bd03f1a8c47aa52c874739bbc975666ee75d8ddd422a3f0f5e09bb008",
+      "sha256": "ed76160aa9e62e77580a1c94e570355162c83eda5b20118716eb1f81cf976ead",
       "spdx_header": "n/a"
     },
     {
@@ -78,6 +78,12 @@
       "license": "MIT",
       "path": "invariants.yaml",
       "sha256": "0a15dfb518f42ee98968480301fc0a4a6967c48d66b176dc23088aa054264fa0",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/calibrated_change_detector.yaml",
+      "sha256": "78d42d8680b5d2bf6291db457869145a909d52c5a216768b9108b7224bca81e4",
       "spdx_header": "n/a"
     },
     {
@@ -258,6 +264,12 @@
       "license": "MIT",
       "path": "src/ctios/benchmark_families.py",
       "sha256": "300c7e98e7ba49aa137ebfb06364fcaf9bf5e63b5ef92ba2baf3672d1dcd18ae",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/calibrated_change_detector.py",
+      "sha256": "4aeb00cf780f65212d073382e3aab702aa4665553671b3420b8f2d23afd641fc",
       "spdx_header": true
     },
     {

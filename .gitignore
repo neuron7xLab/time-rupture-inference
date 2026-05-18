@@ -12,3 +12,5 @@ artifacts/v8/*
 artifacts/v8_1/*
 artifacts/v8_2/*
 !artifacts/**/.gitkeep
+evidence/FALSIFY_*.json
+evidence/NEGATIVE_FALSIFY_*.md

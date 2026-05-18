@@ -1,0 +1,99 @@
+# SPDX-License-Identifier: MIT
+# PRE-REGISTERED before the verdict run. Pinned by sha; no threshold
+# may be edited after results (V3 no-tuning). A RED here is preserved,
+# not nudged to green.
+
+hid: predictive_simulation_vs_imitation
+
+# 1. FALSIFICATION ANCHOR
+# This fails if an agent WITHOUT an internal predictive model (a pure
+# surface imitator) can self-flag the hidden rupture at the same rate as
+# the predictive cycle, OR if the predictive cycle's flag is not driven
+# by its own error (leakage), OR if the cycle's detector fires on a
+# NULL no-rupture stream above the pinned false-alarm bound.
+# Tested by: a 3-arm run (predictive cycle / echo imitation /
+# clairvoyant-leak probe) over rupture AND null streams.
+falsification_anchor: >-
+  simulation>imitation is FALSE if imit_detect_rate >= sim_detect_rate,
+  or sim_null_false_alarm > alpha, or leakage > 0.
+
+# 2. OPERATIONAL DISTINCTION (quantitative, pre-committed)
+# Quantity: self-detection of the regime change from the agent's OWN
+# one-step prediction error, via a frozen-reference Page-Hinkley
+# statistic. Window: detection counts only if it fires in
+# [t_star, t_star + 0.2*n]. A simulation maintains an internal state
+# whose error is persistently biased post-rupture until re-convergence
+# (detectable); an echo imitation's one-step error is regime-mean
+# invariant (the rupture is a single sample) so it is structurally
+# undetectable. The separation is the discriminator, not MAE — the
+# echo is a strong MAE baseline and MAE is explicitly NOT gated.
+operational_distinction: >-
+  D = sim_detect_rate - imit_detect_rate on rupture streams, jointly
+  with sim false-alarm on a null stream; MAE is reported, never gated.
+
+# 3. PRE-REGISTERED METRICS (direction · threshold · window)
+metrics:
+  sim_detect_rate:       {dir: higher_better, threshold: 0.50, window: "[t*, t*+0.2n], 12 seeds"}
+  imit_detect_rate:      {dir: lower_better,  threshold: 0.00, window: "same; strict 0"}
+  sim_null_false_alarm:  {dir: lower_better,  threshold: 0.10, window: "no-rupture stream, 12 seeds"}
+  leakage:               {dir: lower_better,  threshold: 0.00, window: "structural; strict 0"}
+  separation:            {dir: report_only,   threshold: null, window: "evidence, not a gate"}
+  sim_post_mae:          {dir: report_only,   threshold: null, window: "evidence, not a gate"}
+
+thresholds:
+  min_sim_detect: 0.50
+  max_imit_detect: 0.0
+  max_null_false_alarm: 0.10
+  max_leakage: 0.0
+
+checks:
+  - {metric: sim_detect_rate,      op: ">=", threshold_key: min_sim_detect}
+  - {metric: imit_detect_rate,     op: "<=", threshold_key: max_imit_detect}
+  - {metric: sim_null_false_alarm, op: "<=", threshold_key: max_null_false_alarm}
+  - {metric: leakage,              op: "<=", threshold_key: max_leakage}
+
+claim: >-
+  An internal predictive cycle self-detects a hidden regime rupture
+  from its own prediction error at a rate a surface imitator provably
+  cannot, with bounded false alarm and zero leakage.
+"null": >-
+  A surface imitator self-detects the rupture at >= the predictive
+  cycle's rate, or the cycle's detection is leakage / false-alarm
+  driven.
+
+assumptions:
+  - The agent receives only the observation stream, never tau0/tau1/t_star.
+  - Streams are synthetic, deterministic per seed, numpy-only, offline.
+
+variables:
+  - predictive_cycle (candidate, internal model)
+  - echo_imitation (negative control, no model)
+  - clairvoyant_leak_probe (adversarial: hard-codes t_star -> leakage>0)
+
+# 4. ADVERSARIAL PROBE (designed before implementation)
+# ClairvoyantEchoProbe: an echo with NO predictive model that hard-codes
+# detected_at = t_star. It would fake a high detect_rate. It is blocked
+# because it can only know t_star by receiving it -> leakage metric > 0
+# -> check fails. A naive module gating on detect_rate alone goes false
+# GREEN; this module's leakage check + null false-alarm check block it.
+adversarial_probe: ClairvoyantEchoProbe (must yield leakage>0 -> RED)
+
+# 5. BOUNDARY — explicit forbidden claims (enumerated, not named)
+forbidden_claims:
+  - This is NOT a model of the brain, neurons, or biological cognition.
+  - This is NOT consciousness, sentience, intelligence, or AGI.
+  - This is NOT a universal theory of time or of perception.
+  - It does NOT claim MAE superiority over the imitation baseline.
+  - A GREEN here does NOT prove any real-world or private theorem.
+
+# 6. MINIMAL FALSIFIABLE UNIT (kill test, not smoke)
+# Inject t_star into the echo imitation (clairvoyant leak). A correct
+# implementation MUST flip the verdict to RED via the leakage check.
+# A plausible-but-wrong implementation (detect_rate-only gate) stays
+# GREEN -> kill test fails it.
+kill_test: >-
+  clairvoyant-leak arm sets leakage>0 -> verdict MUST be RED; if it is
+  GREEN the module is wrong.
+claim_boundary: >-
+  Functional dynamical contract on a synthetic hidden-rupture stream;
+  not biology, not cognition, not AGI, not real-world validity.

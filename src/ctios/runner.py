@@ -12,6 +12,7 @@ from typing import Any
 import numpy as np
 import yaml
 
+from ctios._version import __version__
 from ctios.agents import (
     Agent,
     ExpSmoothingAgent,
@@ -27,7 +28,6 @@ from ctios.env import Environment
 from ctios.gates import evaluate_gate
 from ctios.ledger import append, provenance
 from ctios.metrics import Metrics, compute_metrics
-from ctios._version import __version__
 from ctios.utils import ROOT, git_commit_epoch, jdump
 
 

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "ed76160aa9e62e77580a1c94e570355162c83eda5b20118716eb1f81cf976ead",
+      "sha256": "b0efaa60636591bbeadf26f2cb383d6a4785be9cdfc2d0f651a8f3971bab763c",
       "spdx_header": "n/a"
     },
     {
@@ -120,6 +120,12 @@
       "license": "MIT",
       "path": "prereg/v6_precision_weighting_preregistration.yaml",
       "sha256": "5da4c9231a0725242d19efba295933044904fbabeaba383e486401e7a301be9c",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/windowed_change_detector.yaml",
+      "sha256": "1c436611487afb7d9440025401c684303b3c447801a5a392bb50793b1230fdd3",
       "spdx_header": "n/a"
     },
     {
@@ -444,6 +450,12 @@
       "license": "MIT",
       "path": "src/ctios/v6_precision.py",
       "sha256": "b867c95faafb9bd79a546ab3ef192dc98d7f2ba51ef0938c5ff38ba495c733ef",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/windowed_change_detector.py",
+      "sha256": "b3e38757fca8f103e901ca6d2baea1cd00687109a0f4f76b56349bca426836a9",
       "spdx_header": true
     }
   ],

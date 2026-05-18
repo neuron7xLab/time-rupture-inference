@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "ba726fa8d17ff4f7b4da11870cb5aee7485deb6be849975060fc6494687d1266",
+      "sha256": "de4571a7fc09b8efc644fcecca724f69027790e47f6d84443a882ed194d4dfee",
       "spdx_header": "n/a"
     },
     {
@@ -84,6 +84,12 @@
       "license": "MIT",
       "path": "prereg/calibrated_change_detector.yaml",
       "sha256": "78d42d8680b5d2bf6291db457869145a909d52c5a216768b9108b7224bca81e4",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/carrier_robust_observable.yaml",
+      "sha256": "995b1f9598fc8caca53d7e5f9531d963b7304f9ef0861e955ff4c9ec3cad0b6f",
       "spdx_header": "n/a"
     },
     {
@@ -282,6 +288,12 @@
       "license": "MIT",
       "path": "src/ctios/calibrated_change_detector.py",
       "sha256": "4aeb00cf780f65212d073382e3aab702aa4665553671b3420b8f2d23afd641fc",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/carrier_robust_observable.py",
+      "sha256": "7508e32fcdc6f5ceb12f5bcdb93aebd43e456407fae7319f2d1774b2b2cccb69",
       "spdx_header": true
     },
     {

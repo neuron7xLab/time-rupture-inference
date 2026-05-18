@@ -119,7 +119,7 @@ markers (synaptic / homeostatic / neuromodulation / extinction) are
 | `cti-os-v3-RED` | 🔴 | two new controls mis-specified |
 | `cti-os-v4-GREEN` | 🟢 | doctoral critique closed → `v0.1.0` |
 | v5 (PR #1) | 🟢 | minimal causal-action: gain 0.868, action_null 0.000 |
-| v6 | 🔴 | precision-weighting RED — brain-inspired ≠ better, preserved |
+| v6 | 🔴 | precision-weighting (Kalman) RED — principled ≠ better, kept |
 
 `git checkout cti-os-v1-RED` reproduces the failure. Scientific
 thresholds are byte-identical v2→v4. No threshold was ever tuned to

@@ -1,0 +1,23 @@
+name: platform-demo
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  platform-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - name: pytest
+        run: PYTHONPATH=src pytest tests -q
+      - name: IP-safe platform demo
+        run: bash scripts/platform_demo.sh

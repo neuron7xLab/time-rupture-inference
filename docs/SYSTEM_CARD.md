@@ -43,6 +43,17 @@ negative-control-fails). `SealedVerdict` = `Verdict` +
 under `evidence/`. `NextExperimentProposal` = `next_experiment` →
 `NEXT_<hid>.yaml`, never auto-run.
 
+**IP-safe platform layer** (the strongly-typed, redaction-first
+realization of the same abstraction): `ctios.redacted`
+(`RedactedHypothesisSpec` + structural invariants), `ctios.redacted_io`
+(load / validate / deterministic `spec_sha256`, forbidden-key
+fail-closed), `ctios.opaque_probe` (`OpaqueProbe` Protocol +
+`ProbeResult`), `ctios.falsifier_battery` (battery v2, 10 checks →
+INADMISSIBLE / CONDITIONAL / PASS), `ctios.spec_compiler`
+(`BLOCKED_UNTIL_PROBED` compiled object), `ctios.human_gate` +
+`ctios.review_cli` (append-only approval audit), `ctios.report`
+(sealed `REVIEW_REPORT.md`). One command: `bash scripts/platform_demo.sh`.
+
 ## Inputs
 
 A pinned hypothesis specification (hashed: claim, null, thresholds,

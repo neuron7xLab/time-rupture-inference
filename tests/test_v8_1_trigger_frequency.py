@@ -5,6 +5,7 @@ exact. NOT a scientific verdict (that lives in the diagnostic)."""
 import sys
 from pathlib import Path
 
+import pytest
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,3 +43,24 @@ def test_closed_form_exact():
 def test_precheck_passes_at_pinned_config():
     # contract: the pinned config is constructed to clear the precheck
     assert derive(CFG).frequency_precheck_passed is True
+
+
+def test_invalid_n_steps_rejected():
+    cfg = dict(CFG)
+    cfg["n_steps"] = 0
+    with pytest.raises(ValueError, match="n_steps"):
+        derive(cfg)
+
+
+def test_invalid_min_aliasing_rate_rejected():
+    cfg = dict(CFG)
+    cfg["min_aliasing_rate"] = float("nan")
+    with pytest.raises(ValueError, match="min_aliasing_rate"):
+        derive(cfg)
+
+
+def test_invalid_min_same_obs_diff_future_rate_rejected():
+    cfg = dict(CFG)
+    cfg["min_same_obs_diff_future_rate"] = 1.5
+    with pytest.raises(ValueError, match="min_same_obs_diff_future_rate"):
+        derive(cfg)

@@ -24,7 +24,7 @@
 [![tests](https://img.shields.io/badge/tests-116_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
-[![lineage](https://img.shields.io/badge/lineage-3_RED_preserved-FF0033?style=for-the-badge&labelColor=000000)](evidence/)
+[![lineage](https://img.shields.io/badge/lineage-6_RED_%2B_1_PARTIAL_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
 [![license](https://img.shields.io/badge/license-MIT-0000FF?style=for-the-badge&labelColor=000000)](LICENSE)
 
 <br>
@@ -120,10 +120,15 @@ markers (synaptic / homeostatic / neuromodulation / extinction) are
 | `cti-os-v4-GREEN` | 🟢 | doctoral critique closed → `v0.1.0` |
 | v5 (PR #1) | 🟢 | minimal causal-action: gain 0.868, action_null 0.000 |
 | v6 | 🔴 | precision-weighting (Kalman) RED — principled ≠ better, kept |
+| v7 | 🔴 | learned reservoir/SSM ≤ heuristic — NO_HEADROOM (boundary = task) |
+| v8 | 🔴 | scalar-inexpressible env: trigger too rare, decorative |
+| v8.1 | 🔴 | frequency fixed; inexpressibility real but carrier-masked |
+| v8.2 | 🟠 | trigger-scoped+carrier-controlled: signal confirmed & carrier-robust; history-oracle under-specified (PARTIAL_RED) |
 
 `git checkout cti-os-v1-RED` reproduces the failure. Scientific
 thresholds are byte-identical v2→v4. No threshold was ever tuned to
-green; every RED (v1, v3, v6) is a preserved artifact.
+green; every RED (v1, v3, v6, v7, v8, v8.1) and PARTIAL_RED (v8.2) is a
+preserved artifact. Full state: [`docs/reports/LINEAGE_STATE.md`](docs/reports/LINEAGE_STATE.md).
 
 ## Run
 

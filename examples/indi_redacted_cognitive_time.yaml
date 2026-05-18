@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: MIT
+# Redacted hypothesis skeleton — DEMONSTRATION ONLY.
+#
+# This is a *shape*, not a research result. It carries no private
+# mechanism, dataset, strategy, or theorem content. It shows how a
+# collaborator would express a cognitive-time research line so the
+# falsification engine can test it without ever seeing the method.
+# The private mechanism is attached locally as an opaque Probe; it is
+# never committed here. See docs/PRIVATE_RND_PROTOCOL.md.
+
+hypothesis_id: indi_redacted_cognitive_time_demo
+
+claim: >-
+  A private estimator infers a hidden temporal regime change from its
+  own prediction error faster than a hard-wired baseline, on a
+  structure the collaborator asserts is privately defined.
+
+null: >-
+  The private estimator does not separate from the hard-wired baseline
+  on the pinned post-rupture metric.
+
+assumptions:
+  - The hidden regime change is unobserved by the estimator.
+  - The estimator receives only the realized signal, never the regime,
+    the switch time, or the noise.
+  - The private mechanism is supplied as an opaque local probe and is
+    not disclosed to the engine.
+
+variables:
+  - manipulated: hidden_regime_shift_magnitude   # abstract name only
+  - measured: post_rupture_error                 # the falsifier surface
+  - control: negative_control_probe              # must fail the checks
+
+falsifiers:
+  - metric: post_rupture_error
+    op: "<="
+    threshold_key: error_ceiling
+  - metric: separation_vs_baseline
+    op: ">="
+    threshold_key: min_separation
+
+thresholds:
+  error_ceiling: 1.0        # placeholder; pinned before any real run
+  min_separation: 0.10      # placeholder; pinned before any real run
+
+forbidden_claims:
+  - The estimator has cognition, understanding, or awareness of time.
+  - The estimator is conscious, sentient, or brain-like.
+  - The result proves a general theory of time or general intelligence.
+  - A survived check proves the collaborator's private theorem correct.
+
+required_artifacts:
+  - sealed_verdict_json          # FALSIFY_<hid>.json
+  - adversarial_battery_outcomes # deterministic/finite/load-bearing/neg-ctrl
+  - pinned_spec_sha256
+
+human_review_required: true
+
+next_experiment_policy:
+  auto_run: false
+  tighten_surviving_checks: true
+  loosen_failed_checks: false
+  failed_boundary_becomes_focus: true

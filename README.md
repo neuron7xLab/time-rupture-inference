@@ -159,6 +159,19 @@ Formal specification (claim → falsifier → evidence → boundary):
 [`docs/SPEC.md`](docs/SPEC.md). Reproducible demonstration:
 [`docs/DEMO.md`](docs/DEMO.md).
 
+## External review package
+
+A private-safe entry point for an external technical reviewer. It lets
+the apparatus be evaluated, and a redacted private hypothesis run
+through it, without any proprietary mechanism, dataset, or theorem
+content entering this repository. One-command check:
+`bash scripts/indi_demo.sh`.
+
+- [`docs/INDI_README.md`](docs/INDI_README.md) — read me first.
+- [`docs/INDI_EXECUTIVE_SUMMARY.md`](docs/INDI_EXECUTIVE_SUMMARY.md) — 4-minute summary.
+- [`docs/PRIVATE_RND_PROTOCOL.md`](docs/PRIVATE_RND_PROTOCOL.md) — redacted hypothesis interface.
+- [`docs/INDI_REVIEWER_CHECKLIST.md`](docs/INDI_REVIEWER_CHECKLIST.md) — graded review path.
+
 ## CTI-OS v7 · GCP readiness (CPU-first, no GPU default)
 
 v7 tests whether a learned sequence model (small GRU / linear

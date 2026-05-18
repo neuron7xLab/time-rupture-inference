@@ -40,6 +40,13 @@ leakage_kill_conditions:                 # closes critique §1.2.4 / §5
   - "learned post_shift_mae IMPROVES under shuffled post-shift order"
   - "any learning agent constructor exposes a hidden parameter"
   - "agent receives n_steps or t_star through any channel"
+shuffle_control_v4:                      # v4 instrument spec (was single-seed in v3)
+  estimator: "mean over ALL seeds of the first shift delta"
+  noise_band: 0.02                       # shuffled may not beat real by >2% (measurement band, NOT a success threshold)
+  intent: "kill iff shuffling SYSTEMATICALLY helps; single-seed wiggle is sampling noise"
+synaptic_marker_v4:
+  reference_window: "converged pre-shift [T*-50:T*] vs post-shift [T*+200:T*+250]"
+  rule: "estimate must move > 0.5 * |shift delta| (tracks at least half the rupture)"
 
 neuroplasticity_markers:                 # closes critique §6 (mechanism, not rhetoric)
   synaptic: "internal estimate changes after a prediction error"

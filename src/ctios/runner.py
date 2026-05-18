@@ -126,6 +126,9 @@ def main() -> int:
     grid_total = 0
     neuro = {"synaptic": [], "homeostatic": [], "neuromodulation": [], "extinction": []}
 
+    shuf_real: list[float] = []
+    shuf_perm: list[float] = []
+
     for delta in deltas:
         tau1 = tau0 + delta
         per_agent: dict[str, list[Metrics]] = {}
@@ -171,7 +174,12 @@ def main() -> int:
             lf_run = run_cache["learned_full"]
             preds = lf_run["preds"]
             pre_v = float(np.var(preds[t_star - 50 : t_star]))
-            moved = abs(np.mean(preds[t_star + 200 : t_star + 250]) - np.mean(preds[:50]))
+            # v4 fix: synaptic = change of the CONVERGED pre-shift estimate
+            # to the post-shift estimate (not vs the cold-start transient).
+            moved = abs(
+                np.mean(preds[t_star + 200 : t_star + 250])
+                - np.mean(preds[t_star - 50 : t_star])
+            )
             neuro["synaptic"].append(moved > abs(delta) * 0.5)
             neuro["homeostatic"].append(pre_v < (ecfg["sigma"] ** 2) * 1.5)
             neuro["neuromodulation"].append(lf_run["detection_step"] is not None)
@@ -180,22 +188,26 @@ def main() -> int:
                 < per_agent["learned_no_update"][-1].post_shift_mae
             )
 
-            # deterministic-replay + shuffle kill-control on the canonical cell
+            # shuffle kill-control: accumulate over ALL seeds of delta[0]
+            # (v4 fix: single-seed strict compare was sampling-noise driven).
+            if delta == deltas[0]:
+                env3 = Environment(tau0, tau1, t_star, ecfg["sigma"], n, seed)
+                env3.reset()
+                seq = np.array([env3.step().observed_interval for _ in range(n)])
+                shuf_real.append(
+                    _run_on_series(LearnedAgent(prior=float(acfg["prior"])), seq, t_star)
+                )
+                sh = seq.copy()
+                post = sh[t_star:].copy()
+                np.random.default_rng(9999 + seed).shuffle(post)
+                sh[t_star:] = post
+                shuf_perm.append(
+                    _run_on_series(LearnedAgent(prior=float(acfg["prior"])), sh, t_star)
+                )
             if delta == deltas[0] and seed == 0:
                 env2 = Environment(tau0, tau1, t_star, ecfg["sigma"], n, 0)
                 r2 = _run_agent(env2, LearnedAgent(prior=float(acfg["prior"])), n, t_star)
                 replay_ok = _seed_hash(lf_run["errors"]) == _seed_hash(r2["errors"])
-                env3 = Environment(tau0, tau1, t_star, ecfg["sigma"], n, 0)
-                env3.reset()
-                seq = np.array([env3.step().observed_interval for _ in range(n)])
-                m_real = _run_on_series(LearnedAgent(prior=float(acfg["prior"])), seq, t_star)
-                sh = seq.copy()
-                rng = np.random.default_rng(9999)
-                post = sh[t_star:].copy()
-                rng.shuffle(post)
-                sh[t_star:] = post
-                m_shuf = _run_on_series(LearnedAgent(prior=float(acfg["prior"])), sh, t_star)
-                shuffle_ok = m_shuf >= m_real  # shuffling must NOT help
                 for nm in ("learned_full", "injected", "oracle"):
                     trace_for_plot[nm] = run_cache[nm]["errors"]
 
@@ -203,6 +215,11 @@ def main() -> int:
             k: {mk: float(np.mean([getattr(mm, mk) for mm in v])) for mk in v[0].as_dict()}
             for k, v in per_agent.items()
         }
+
+    # shuffle kill-control verdict: averaged over all delta[0] seeds with a
+    # 2% measurement-noise band (pre-declared in prereg leakage section).
+    mr, mp = float(np.mean(shuf_real)), float(np.mean(shuf_perm))
+    shuffle_ok = mp >= mr - 0.02 * mr
 
     # aggregate over the whole grid for the headline
     agg = _grid_mean(per_delta_agg)

@@ -1,0 +1,16 @@
+{
+  "verdict": "RED",
+  "learned_trigger_mae_warm": 5.918283952274109,
+  "scalar_trigger_mae_warm": 7.977674918564434,
+  "regime_trigger_mae_warm": 0.7918823669571184,
+  "learned_to_regime_distance": 6.4736907894737765,
+  "learned_vs_scalar_gap_ratio": 0.2581442572318938,
+  "analytic_h2r_causal_min": 0.15877521830873326,
+  "beats_scalar": true,
+  "h2r_within_gate": false,
+  "not_below_information_floor": true,
+  "trigger_count": 3600,
+  "structural_ok": true,
+  "deterministic_replay_hash": "11716c87ca6ec1c46932bf3bdd1f1048d662abd8977c06f3ddc07accc5df28ff",
+  "learned_model_run": true
+}

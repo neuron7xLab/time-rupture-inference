@@ -1,10 +1,7 @@
 # Honest failures register — CTI-OS proof-of-life
 
-Run is RED. Failing checks recorded verbatim, no tuning applied:
+Run is GREEN. Acknowledged residual limitations (not papered over):
 
-- FAILED: learned_beats_best_naive_post_mae
-- FAILED: detection_delay_bounded
-- FAILED: win_rate_vs_baseline
-- FAILED: ablation_shows_necessity
-
-- Ablation necessity NOT shown: error-update/drift may be inert.
+- Single synthetic environment family (step change in a Gaussian interval). Generality across regime shapes is untested → next lineage.
+- `last_interval` adapts instantly but is noise-dominated; learned wins on variance, not on adaptation latency alone — claim scoped accordingly.
+- Oracle gap remains (learned post_mae=0.881 vs oracle=0.792): regret > 0, not solved.

@@ -82,3 +82,6 @@ v8-4-diagnostic:
 
 v9-learned:
 	$(PY) scripts/run_v9_learned_diagnostic.py
+
+agent:
+	$(PY) -m ctios.agent_cli --demo

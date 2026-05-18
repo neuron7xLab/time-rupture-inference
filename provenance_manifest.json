@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "2700b59d234e4e39953fab304195c33a6737f712a4d5816b83f10cbb99b7e743",
+      "sha256": "454c5db530637229d143af196456456ea2cabffef6980cafddb2044008f3cb45",
       "spdx_header": "n/a"
     },
     {
@@ -107,7 +107,7 @@
     {
       "license": "MIT",
       "path": "pyproject.toml",
-      "sha256": "28103c5f621826f9247bbf49c605af67a8e1becaba0121598eda8b804ce244de",
+      "sha256": "88b55ec979fe7ccc9a8a282568fcb6361447cce751b874340e898fe2336ff407",
       "spdx_header": "n/a"
     },
     {
@@ -210,6 +210,18 @@
       "license": "MIT",
       "path": "src/ctios/_version.py",
       "sha256": "248e0692f09a8518ba0c4c3e7f8ccf12e6bd66575e419ef6e427a304a64b4577",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/agent.py",
+      "sha256": "92b9a55fb6d9cfb6701571bb9fd11a22aba31480d34117e4177f95eeb58284f7",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/agent_cli.py",
+      "sha256": "0bfa90957af70c3d8489c29896622b8d3c486164a188b3b8dbe854ceaa117517",
       "spdx_header": true
     },
     {

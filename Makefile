@@ -85,3 +85,6 @@ v9-learned:
 
 agent:
 	$(PY) -m ctios.agent_cli --demo
+
+falsify:
+	$(PY) -m ctios.falsify_cli

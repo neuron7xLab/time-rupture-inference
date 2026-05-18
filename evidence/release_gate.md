@@ -2,8 +2,8 @@
 
 **Verdict: GREEN / PASS**
 
-- prereg_hash: `b4d51045689fadb66a68c03e9d63bdb307a488d3cd11ca544e036b3d8d689691`
-- git_commit: `497d78a57e6801241c2db861ad35456e2cacce6a`
+- prereg_hash: `d284c5ea9366c674a0785a7c81a005b48892f2c8e5616cec0fcc025d876178cb`
+- git_commit: `63fe21aefe6d9afc2809068fe48ebe7e8d5531c2`
 - grid win-rate learned>injected: 1.000
 - grid win-rate learned>best-naive: 1.000
 - operational adaptation markers (neuroplastic-like label only, NOT biological): `{'synaptic': np.True_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`

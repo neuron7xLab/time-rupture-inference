@@ -1,0 +1,20 @@
+# Bundled demo HypothesisSpec for ctios.falsify (temporal-rupture env).
+# Pinned; the engine records its sha256 in the verdict and proves the
+# threshold is load-bearing (criticism step). No private data.
+hid: temporal_causal_floor
+claim: >
+  On the v8.4 latent-context temporal-rupture env, a correctly-specified
+  causal history oracle reaches the trigger-channel noise floor
+  (history-to-regime distance within the pinned gate), where a scalar is
+  provably insufficient.
+null: >
+  The correctly-specified causal oracle does NOT reach the floor; the
+  benchmark does not admit a causal solver under the pinned gate.
+thresholds:
+  h2r_max: 0.35
+checks:
+  - {metric: h2r, op: "<=", threshold_key: h2r_max}
+parent: docs/reports/LINEAGE_STATE.md (v8.4 GREEN preserved)
+claim_boundary: >
+  A validated task-design / identifiability property only. No
+  intelligence / cognition / AGI / model-capability claim.

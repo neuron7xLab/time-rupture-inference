@@ -159,6 +159,24 @@ Formal specification (claim → falsifier → evidence → boundary):
 [`docs/SPEC.md`](docs/SPEC.md). Reproducible demonstration:
 [`docs/DEMO.md`](docs/DEMO.md).
 
+## System identity
+
+TRI-Falsify is a falsification-first temporal inference and
+hypothesis-auditing apparatus. A pinned, hashed hypothesis runs
+through an adversarial battery into a sealed, reproducible verdict;
+on failure it auto-proposes a human-gated next experiment and never
+runs anything itself. Conference-grade entry points:
+
+- [`docs/REVIEWER_ONE_PAGER.md`](docs/REVIEWER_ONE_PAGER.md) — 60-second system identity.
+- [`docs/SYSTEM_CARD.md`](docs/SYSTEM_CARD.md) — abstraction, inputs/outputs, boundaries.
+- [`docs/CONFERENCE_ABSTRACT.md`](docs/CONFERENCE_ABSTRACT.md) — workshop abstract.
+- [`docs/CONTRIBUTION_CLAIMS.md`](docs/CONTRIBUTION_CLAIMS.md) — original vs prior art.
+- [`docs/REPRODUCIBILITY_CONTRACT.md`](docs/REPRODUCIBILITY_CONTRACT.md) — clean-clone contract + frozen outputs.
+- [`docs/FAILURE_TAXONOMY.md`](docs/FAILURE_TAXONOMY.md) — defenses + residual risk.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — pipeline + module map.
+
+One command for a reviewer: `bash scripts/conference_smoke.sh`.
+
 ## External review package
 
 **Start here if you are reviewing the private-safe redacted-hypothesis

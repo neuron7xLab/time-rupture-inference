@@ -1,7 +1,8 @@
 PY := python3
 export PYTHONPATH := src
 
-.PHONY: setup prereg test run-baselines run-learned run-falsification ledger gate automate all
+.PHONY: setup prereg test run-baselines run-learned run-falsification ledger gate automate all \
+        v7-prereg-check v7-cpu-smoke v7-artifact-check gcp-doctor gcp-dry-run gcp-cpu-run gcp-cleanup
 
 setup:
 	$(PY) -m pip install -q numpy matplotlib pyyaml pytest
@@ -29,5 +30,28 @@ gate: test
 
 automate:
 	$(PY) -m ctios.automation
+
+# --- CTI-OS v7 GCP-readiness (CPU-first, no paid run without APPLY=1) ---
+v7-prereg-check:
+	@test -f docs/prereg/cti_os_v7_preregistration.md || (echo "FAIL: v7 prereg missing" && exit 1)
+	$(PY) -m pytest tests/test_v7_config.py tests/test_v7_artifact_schema.py -q
+
+v7-cpu-smoke:
+	$(PY) scripts/run_v7_cpu.py --mode smoke
+
+v7-artifact-check:
+	$(PY) scripts/check_artifacts.py
+
+gcp-doctor:
+	@bash scripts/gcp/doctor.sh
+
+gcp-dry-run:
+	@bash scripts/gcp/dry_run_plan.sh
+
+gcp-cpu-run:
+	@bash scripts/gcp/create_cpu_vm.sh
+
+gcp-cleanup:
+	@bash scripts/gcp/cleanup.sh
 
 all: test gate

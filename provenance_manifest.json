@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "5bc7d01e4ffb61f6fdaf3dd08cd0e949d07d8995a757970698fa3d9a6420d09e",
+      "sha256": "23d2eb85c6101280d0509663b42b0193cbb4f6e61404ee9322d3c5b5c600fb83",
       "spdx_header": "n/a"
     },
     {
@@ -42,6 +42,12 @@
       "license": "MIT",
       "path": "configs/metrics.yaml",
       "sha256": "7eafb11f9b8473cfce9197066102aaf644b1cbc35ebb7d10437e96ae741af00e",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/v7_experiment.yaml",
+      "sha256": "7d54b8a1d26c1d2488b5775e861faa9e1cc73db4444bfe43ebc33e6f93ffdd15",
       "spdx_header": "n/a"
     },
     {
@@ -88,6 +94,12 @@
     },
     {
       "license": "MIT",
+      "path": "scripts/check_artifacts.py",
+      "sha256": "b6466d30aef83297a31eef68c7286e30b9d97a7896b48b4d5b819caa561df05e",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "scripts/claims_lint.py",
       "sha256": "dc181b5944f00c1af8961715ca61c99141020ff5e1500c7aaa281600af4836de",
       "spdx_header": true
@@ -96,6 +108,12 @@
       "license": "MIT",
       "path": "scripts/provenance_attest.py",
       "sha256": "96a1075501994800a1a15395fa93908828211a19bd4411f4cefcedc214e66a01",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/run_v7_cpu.py",
+      "sha256": "931162b82bc27ed90d17ecc4455aac94a54a3e6f44e816387db0b5da02fa676a",
       "spdx_header": true
     },
     {

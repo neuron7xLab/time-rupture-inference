@@ -45,6 +45,20 @@ This page is the scope contract for the external review package.
   that tightens survivors and never loosens a failed check, and is
   never executed without a human gate.
 
+## What would make this collaboration-ready
+
+The first concrete collaborative task is small and bounded:
+
+- one private redacted hypothesis supplied by the reviewer,
+- one custom `Probe` implementation (kept local, never committed),
+- one agreed falsifier (metric / operator / threshold),
+- one sealed verdict produced by the engine,
+- one decision on the proposed next experiment.
+
+That single loop is the minimum that converts this repository from a
+demonstration into a working collaboration. Nothing larger is required
+to start.
+
 ## Open questions (framed as future experiments)
 
 These are motivation and direction, not claims.

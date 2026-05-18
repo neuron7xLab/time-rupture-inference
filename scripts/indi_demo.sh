@@ -48,4 +48,17 @@ else
   echo "SKIP: ctios.agent_cli absent"
 fi
 
-printf '\nINDI-DEMO :: ALL HARD GATES PASSED — package verified\n'
+cat <<'EOF'
+
+INDI-DEMO :: ALL HARD GATES PASSED — package verified
+
+Read next:
+  docs/INDI_README.md                        (start here)
+  examples/indi_redacted_cognitive_time.yaml (redacted skeleton)
+  docs/PRIVATE_RND_PROTOCOL.md               (IP boundary)
+
+Three questions (the only thing asked):
+  1. Is this close to the research loop you meant?
+  2. Is the redacted hypothesis interface enough to protect your IP?
+  3. What would make this useful for your next private experiment?
+EOF

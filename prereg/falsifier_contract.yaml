@@ -1,0 +1,18 @@
+# What must happen for the intelligence claim to be DECLARED DEAD.
+kills_the_claim_if_any:
+  - "learned_full.post_shift_mae >= injected.post_shift_mae (aggregate)"
+  - "learned_full.post_shift_mae >= best naive baseline post_shift_mae"
+  - "learned_full.area_under_post_shift_error >= injected.area_under_post_shift_error"
+  - "win-rate(learned > injected) < 0.85 across seeds"
+  - "win-rate(learned > best naive) < 0.85 across seeds"
+  - "learned only wins because it read tau0/tau1/T* (no-leakage introspection fails)"
+  - "learned_full does NOT beat learned_no_update AND learned_no_drift (mechanism inert)"
+  - "deterministic replay hash differs across identical seed runs"
+  - "preregistration not git-committed before the run timestamp"
+  - "any threshold/metric/config changed after the pinned commit"
+
+interpretation: >
+  Passing means the implementation demonstrates a learned temporal causal
+  model that survives a regime shift. It does NOT claim biological fidelity,
+  generality across environments, or superiority of any specific estimator
+  family — those are separate, later falsification lineages.

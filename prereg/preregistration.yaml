@@ -1,0 +1,24 @@
+# PRE-REGISTRATION — frozen BEFORE any run, sha-pinned, git-committed.
+# Changing any value after the first run invalidates the experiment.
+title: "CTI-OS minimal proof-of-life: learned temporal model survives a hidden regime shift"
+hypothesis: >
+  An agent that infers the interval purely from its own prediction error
+  and re-adapts after an unseen step change in temporal dynamics will,
+  post-shift, beat both an injected (hard-wired) agent and the best naive
+  baseline on prediction error — across many seeds, with the error-update
+  mechanism shown necessary by ablation — without ever accessing the
+  hidden parameters.
+
+primary_metrics: [post_shift_mae, adaptation_time, area_under_post_shift_error]
+secondary_metrics: [detection_delay, false_alarm_rate, stability_pre_shift, recovery_slope]
+
+thresholds:
+  adaptation_time_max: 60.0      # steps to return within recovery band
+  detection_delay_max: 40.0      # steps after T* to flag drift
+  false_alarm_rate_max: 0.05     # pre-shift spurious drift signals
+  min_win_rate: 0.85             # fraction of seeds learned must win
+
+decision_rule: >
+  GREEN iff ALL gate checks pass (see src/ctios/gates.py). Any single RED
+  check fails the whole experiment. No metric, threshold or config may be
+  edited after the pinned commit. A RED verdict is reported as RED.

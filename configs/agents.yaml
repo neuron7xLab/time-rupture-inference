@@ -1,0 +1,3 @@
+prior: 1.0        # uninformed start (no agent is seeded near tau0)
+ma_window: 20     # moving-average baseline window
+es_alpha: 0.10    # exponential-smoothing baseline rate

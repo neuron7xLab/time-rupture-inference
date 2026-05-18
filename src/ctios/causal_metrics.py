@@ -17,6 +17,9 @@ class RunMetrics(TypedDict):
     post_shift_aue: float
     adaptation_time: float
     action_counts: dict[str, int]
+    action_counts_total: dict[str, int]
+    action_counts_pre_shift: dict[str, int]
+    action_counts_post_shift: dict[str, int]
     stabilize_fraction_post_shift: float
 
 
@@ -39,8 +42,11 @@ def run_metrics(
     rec = np.where(roll <= band)[0]
     adapt = float(rec[0]) if rec.size else float("inf")
 
+    pre_actions = actions[:t_star]
     post_actions = actions[t_star : t_star + eval_horizon]
-    counts = dict(Counter(actions))
+    counts_post = dict(Counter(post_actions))
+    counts_pre = dict(Counter(pre_actions))
+    counts_total = dict(Counter(actions))
     stab_frac = (
         sum(a == "stabilize" for a in post_actions) / len(post_actions)
         if post_actions
@@ -51,7 +57,10 @@ def run_metrics(
         "post_shift_mae": post_mae,
         "post_shift_aue": aue,
         "adaptation_time": adapt,
-        "action_counts": counts,
+        "action_counts": counts_post,
+        "action_counts_total": counts_total,
+        "action_counts_pre_shift": counts_pre,
+        "action_counts_post_shift": counts_post,
         "stabilize_fraction_post_shift": stab_frac,
     }
 

@@ -1,7 +1,8 @@
 """Release gate v3. Fail-closed. Never auto-softens a RED verdict.
 
 Adds the doctoral-critique closure checks: statistical-power grid,
-shuffled-order leakage kill-control, and the four neuroplasticity markers.
+shuffled-order leakage kill-control, and the four operational adaptation
+markers (neuroplastic-like label only, NOT biological).
 """
 
 from __future__ import annotations

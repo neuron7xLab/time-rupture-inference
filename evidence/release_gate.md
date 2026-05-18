@@ -3,16 +3,16 @@
 **Verdict: GREEN / PASS**
 
 - prereg_hash: `5fb40c47609114ea44cd2cdaa4f509f0eb822ea3b0c19d885e7fa605416264c4`
-- git_commit: `ba5d6f9c2db3094042403a3416085a15a2699992`
+- git_commit: `2e800fb31642cff284f05317b7c8e7c925a287e0`
 - grid win-rate learned>injected: 1.000
 - grid win-rate learned>best-naive: 1.000
-- neuroplasticity markers: `{'synaptic': np.True_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`
+- operational adaptation markers (neuroplastic-like label only, NOT biological): `{'synaptic': np.True_, 'homeostatic': True, 'neuromodulation': True, 'extinction': True}`
 
 ## Allowed claim (verbatim, critique §3)
 > The learned agent adapts to hidden temporal regime shifts better than fixed and naive baselines under preregistered metrics, deterministic replay, no-leakage constraints, and ablation controls.
 
 ## Forbidden claim
-> CTI-OS understands time / has cognition / is neuroplastic / simulates causality / has world understanding.
+> NOT claimed: CTI-OS understands time / has cognition; NOT neuroplastic; NOT simulating causality or world understanding.
 
 ## Checks
 - [x] learned_beats_injected_post_mae

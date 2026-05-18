@@ -280,9 +280,8 @@ def main() -> int:
         "## Claim boundary",
         "Allowed: causal-action gain under hidden temporal rupture, "
         "preregistered, replayable.",
-        "Forbidden: intelligence / consciousness / biological "
-        "neuroplasticity / brain fidelity / AGI / cognition / "
-        "understanding time.",
+        "Forbidden — NOT claimed: intelligence, consciousness, biological "
+        "neuroplasticity-like fidelity, AGI, cognition, understanding time.",
         "",
         "## Checks",
         *[f"- [{'x' if v else ' '}] {k}" for k, v in gate.checks.items()],
@@ -325,7 +324,7 @@ def _write_negative(gate, gain, gap, win_no, win_rnd) -> None:
         "## Disposition\n"
         "v4 remains frozen and unaffected. The causal-action claim is the "
         "instrument under test; this RED is preserved before any next "
-        "lineage. No claim of intelligence / cognition is made.\n"
+        "lineage. Intelligence / cognition is explicitly NOT claimed.\n"
     )
 
 

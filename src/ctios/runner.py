@@ -1,5 +1,5 @@
-"""Orchestrator v3: power grid, neuroplasticity markers, shuffle kill-control,
-hidden-provenance ledger, fail-closed gate. Closes the doctoral critique."""
+"""Orchestrator v3: power grid, adaptation markers (operational, NOT biological),
+shuffle kill-control, hidden-provenance ledger, fail-closed gate."""
 
 from __future__ import annotations
 
@@ -180,7 +180,8 @@ def main() -> int:
             grid_wins_inj += int(lf.post_shift_mae < ij.post_shift_mae)
             grid_wins_base += int(lf.post_shift_mae < naive)
 
-            # neuroplasticity markers (critique §6)
+            # operational adaptation markers (neuroplastic-like label only;
+            # operational, NOT biological — critique §6)
             lf_run = run_cache["learned_full"]
             preds = lf_run["preds"]
             pre_v = float(np.var(preds[t_star - 50 : t_star]))
@@ -292,7 +293,7 @@ def main() -> int:
           f"injected={agg['injected']['post_shift_mae']:.4f} "
           f"oracle={agg['oracle']['post_shift_mae']:.4f}")
     print(f"win-rate vs injected={wr_inj:.3f}  vs best-naive={wr_base:.3f}")
-    print(f"neuroplasticity markers={neuro_ok}")
+    print(f"operational adaptation markers (NOT biological)={neuro_ok}")
     print(f"prereg_hash={prov['prereg_hash'][:16]}  commit={prov['git_commit'][:10]}")
     return 0 if gate.green else 1
 
@@ -365,7 +366,8 @@ def _write_release(gate, agg, per_delta, wr_inj, wr_base, neuro_ok, prov) -> Non
         f"- git_commit: `{prov['git_commit']}`",
         f"- grid win-rate learned>injected: {wr_inj:.3f}",
         f"- grid win-rate learned>best-naive: {wr_base:.3f}",
-        f"- neuroplasticity markers: `{neuro_ok}`",
+        f"- operational adaptation markers (neuroplastic-like label only, "
+        f"NOT biological): `{neuro_ok}`",
         "",
         "## Allowed claim (verbatim, critique §3)",
         "> The learned agent adapts to hidden temporal regime shifts better "
@@ -373,8 +375,8 @@ def _write_release(gate, agg, per_delta, wr_inj, wr_base, neuro_ok, prov) -> Non
         "deterministic replay, no-leakage constraints, and ablation controls.",
         "",
         "## Forbidden claim",
-        "> CTI-OS understands time / has cognition / is neuroplastic / "
-        "simulates causality / has world understanding.",
+        "> NOT claimed: CTI-OS understands time / has cognition; NOT "
+        "neuroplastic; NOT simulating causality or world understanding.",
         "",
         "## Checks",
     ]

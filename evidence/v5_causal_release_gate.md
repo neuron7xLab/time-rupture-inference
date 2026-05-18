@@ -11,7 +11,7 @@
 
 ## Claim boundary
 Allowed: causal-action gain under hidden temporal rupture, preregistered, replayable.
-Forbidden: intelligence / consciousness / biological neuroplasticity / brain fidelity / AGI / cognition / understanding time.
+Forbidden — NOT claimed: intelligence, consciousness, biological neuroplasticity-like fidelity, AGI, cognition, understanding time.
 
 ## Checks
 - [x] v4_tests_still_pass

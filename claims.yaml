@@ -1,0 +1,68 @@
+# Machine-checkable claim lexicon (audit P1).
+# Enforced by scripts/claims_lint.py + tests/test_claims_lexicon.py + CI.
+# Goal: kill interpretation-layer inflation — cognitive/neural rhetoric
+# implying more than the implemented scalar adaptive estimator.
+
+# Hard-forbidden: an assertive ontological claim about the SYSTEM.
+# Allowed ONLY on a line that also negates it (forbidden / not / never /
+# no … claim) or inside a disclaimer block.
+forbidden_assertive:
+  - artificial general intelligence
+  - " agi"
+  - consciousness
+  - conscious
+  - sentience
+  - sentient
+  - self-aware
+  - neural network
+  - backprop
+  - gradient descent
+  - understands time
+  - understanding of time
+  - has cognition
+  - is intelligent
+  - general intelligence
+
+# Soft-gated: domain metaphors that MUST carry a qualifier on the same
+# line (one of qualifier_tokens) or sit inside a disclaimer block.
+requires_qualifier:
+  - neuroplastic
+  - neuroplasticity
+  - cognitive
+  - cognition
+  - " brain"
+  - neuro-
+
+qualifier_tokens:
+  - "-like"
+  - operational
+  - "not biological"
+  - "not a claim"
+  - metaphor
+  - label only
+  - forbidden
+  - " not "
+  - never
+  - negation
+  - benchmark-scoped
+  - "no biological"
+
+# A markdown/code region between these markers is an explicit disclaimer
+# zone (negations, claim boundaries) and is exempt from the gate.
+disclaimer_open: "<!-- claims:disclaimer -->"
+disclaimer_close: "<!-- claims:end -->"
+
+# Files scanned for external-facing positioning. Internal audit / RCA /
+# critique / prereg-negation docs are evidence about the risk, not
+# positioning, and are exempt.
+scan_globs:
+  - README.md
+  - src/ctios/*.py
+exempt:
+  - claims.yaml
+  - scripts/claims_lint.py
+  - tests/test_claims_lexicon.py
+  - prereg/*
+  - "docs/AUDIT_*"
+  - "docs/RCA_*"
+  - "docs/CRITIQUE_*"

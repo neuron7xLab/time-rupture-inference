@@ -20,6 +20,8 @@ jobs:
       - run: pip install -q numpy matplotlib pyyaml pytest ruff
       - name: lint
         run: ruff check src tests
+      - name: claim-lexicon lint (audit P1 — no interpretation inflation)
+        run: python scripts/claims_lint.py
       - name: tests
         run: PYTHONPATH=src pytest tests -q
       - name: fail-closed gate (30 seeds × 3 shifts)

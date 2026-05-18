@@ -59,6 +59,7 @@ state   obs    belief  prediction  error   update
 
 ## What is proven — and what is not
 
+<!-- claims:disclaimer -->
 > **Allowed claim.** The learned agent adapts to hidden temporal regime
 > shifts better than fixed and naive baselines under preregistered
 > metrics, deterministic replay, no-leakage constraints, and ablation
@@ -66,10 +67,33 @@ state   obs    belief  prediction  error   update
 
 > **Forbidden claim.** The agent has intelligence, consciousness,
 > biological neuroplasticity, or understanding of time.
+<!-- claims:end -->
 
 This release is `prediction-error temporal adaptation` — frozen and
 scoped. Causal action (`do(A) → S(t+Δ)`) is the **next** pre-registered
 lineage, deliberately not begun here.
+
+## What this is / is not  (model taxonomy card)
+
+<!-- claims:disclaimer -->
+| dimension | this system | explicitly NOT |
+|---|---|---|
+| learner | one scalar estimate `m += gain·error` + Page-Hinkley drift trigger | a neural network / backprop / gradients |
+| representation | a single inter-event interval scalar | a representational hierarchy or world model |
+| "adaptation" | online error-driven parameter + gain update | cognition, understanding, or sentience |
+| "neuroplastic-like" markers | 4 measured operational quantities, ablation-gated | biological neuroplasticity or brain fidelity |
+| scope | one hidden-regime temporal-rupture benchmark | general intelligence / AGI |
+| claim status | narrow, gate-enforced, falsifiable | an ontological claim about mind |
+<!-- claims:end -->
+
+A machine-checkable lexicon (`claims.yaml`) plus `scripts/claims_lint.py`
+<!-- claims:disclaimer -->
+is enforced in CI and pytest: external-facing text cannot assert
+cognition / neural-equivalence / AGI outside an explicit disclaimer
+block (all such terms are forbidden unless negated).
+<!-- claims:end -->
+The risk this kills is interpretation-layer inflation, not a code
+defect.
 
 ## Result · 30 seeds × 3 shift magnitudes (incl. a decrease)
 

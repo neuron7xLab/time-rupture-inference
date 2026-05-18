@@ -37,6 +37,8 @@ class HypothesisSpec:
     null: str
     thresholds: dict[str, float]
     checks: list[dict[str, str]]          # {metric, op, threshold_key}
+    assumptions: list[str] = field(default_factory=list)
+    variables: list[str] = field(default_factory=list)
     parent: str = ""
     claim_boundary: str = ""
 
@@ -52,13 +54,21 @@ class HypothesisSpec:
             null=str(null_v),
             thresholds={k: float(v) for k, v in d["thresholds"].items()},
             checks=list(d["checks"]),
+            assumptions=[str(a) for a in d.get("assumptions", [])],
+            variables=[str(v) for v in d.get("variables", [])],
             parent=str(d.get("parent", "")),
             claim_boundary=str(d.get("claim_boundary", "")),
         )
 
     def sha(self) -> str:
         blob = json.dumps(
-            {"hid": self.hid, "thresholds": self.thresholds, "checks": self.checks},
+            {
+                "hid": self.hid,
+                "thresholds": self.thresholds,
+                "checks": self.checks,
+                "assumptions": self.assumptions,
+                "variables": self.variables,
+            },
             sort_keys=True,
         )
         return hashlib.sha256(blob.encode()).hexdigest()
@@ -130,9 +140,57 @@ def run_battery(
 
 def _rethr(spec: HypothesisSpec, thr: dict[str, float]) -> HypothesisSpec:
     return HypothesisSpec(
-        spec.hid, spec.claim, spec.null, thr, spec.checks, spec.parent,
-        spec.claim_boundary,
+        hid=spec.hid,
+        claim=spec.claim,
+        null=spec.null,
+        thresholds=thr,
+        checks=spec.checks,
+        assumptions=spec.assumptions,
+        variables=spec.variables,
+        parent=spec.parent,
+        claim_boundary=spec.claim_boundary,
     )
+
+
+def next_experiment(spec: HypothesisSpec, verdict: Verdict) -> dict[str, Any]:
+    """Autonomous-loop closure (decision-gated, NOT auto-run).
+
+    On a non-GREEN verdict, derive the next pre-registered experiment:
+    the surviving checks are kept and tightened (×0.9 toward the metric),
+    the failed checks become the new claim's focus, and every assumption
+    is demoted to an explicit open question to be discharged next. It
+    PROPOSES; it never executes — closure-before-restart.
+    """
+    failed = [
+        c for c in spec.checks
+        if not verdict.checks.get(
+            f"{c['metric']}{c['op']}{c['threshold_key']}", True
+        )
+    ]
+    survived = [c for c in spec.checks if c not in failed]
+    tight = {
+        k: (round(v * 0.9, 6) if any(c["threshold_key"] == k for c in survived)
+            else v)
+        for k, v in spec.thresholds.items()
+    }
+    focus = (
+        "discharge the failed boundary: "
+        + ", ".join(f"{c['metric']}{c['op']}{c['threshold_key']}" for c in failed)
+        if failed
+        else "tighten the surviving claim and re-pin"
+    )
+    return {
+        "hid": f"{spec.hid}__next",
+        "parent": f"{spec.hid} ({verdict.status}, sha {verdict.spec_sha256[:12]})",
+        "claim": f"[narrowed] {spec.claim}",
+        "null": spec.null,
+        "focus": focus,
+        "thresholds": tight,
+        "checks": spec.checks,
+        "open_assumptions": spec.assumptions,
+        "variables": spec.variables,
+        "claim_boundary": spec.claim_boundary,
+    }
 
 
 def falsify(
@@ -141,6 +199,7 @@ def falsify(
     *,
     negative_control: Probe | None = None,
     evidence_dir: Path | None = None,
+    prereg_dir: Path | None = None,
 ) -> Verdict:
     metrics = probe(dict(spec.thresholds))
     checks = _eval_checks(metrics, spec)
@@ -179,4 +238,14 @@ def falsify(
                 "reasons:\n" + "".join(f"- {r}\n" for r in reasons)
                 + "\nNo threshold tuned. Preserved.\n"
             )
+    if prereg_dir is not None and status != "GREEN":
+        # autonomous-loop closure: PROPOSE the next experiment, never run
+        prereg_dir.mkdir(parents=True, exist_ok=True)
+        nxt = next_experiment(spec, verdict)
+        (prereg_dir / f"NEXT_{spec.hid}.yaml").write_text(
+            "# AUTO-PROPOSED next experiment (decision-gated, NOT run).\n"
+            "# Surviving checks tightened ×0.9; failed boundary = focus;\n"
+            "# assumptions demoted to open questions. Review before use.\n"
+            + yaml.safe_dump(nxt, sort_keys=False)
+        )
     return verdict

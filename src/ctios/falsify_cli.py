@@ -77,7 +77,13 @@ def main() -> int:
 
     spec = HypothesisSpec.load(args.spec)
     cand, neg = REGISTRY[args.probe]
-    v = falsify(spec, cand, negative_control=neg, evidence_dir=ROOT / "evidence")
+    v = falsify(
+        spec,
+        cand,
+        negative_control=neg,
+        evidence_dir=ROOT / "evidence",
+        prereg_dir=ROOT / "prereg",   # non-GREEN -> auto-propose NEXT_*.yaml
+    )
 
     print(f"\nTRI-FALSIFY :: {v.status}  [{spec.hid}]")
     for k, ok in {**v.checks, **v.battery}.items():

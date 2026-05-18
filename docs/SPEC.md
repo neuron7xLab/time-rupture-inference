@@ -99,6 +99,24 @@ context `z` aliasing identical observation windows to opposite futures.
   detected the hidden shift at step 301 (true 300); 5 contract tests.
 - **Boundary.** A stream tool; measured hard-task capability modest (S5).
 
+### S7 — Generalized falsification engine (THE REUSABLE PRIMITIVE)
+- **Claim.** `ctios.falsify` runs the full loop on ANY pinned
+  hypothesis: theorem (claim/null) + assumptions + variables + falsifier
+  checks + Probe → adversarial battery → sealed verdict → auto-proposed
+  next experiment.
+- **Falsifier.** Battery does not catch a non-deterministic probe, a
+  decorative (non-load-bearing) threshold, or a pseudo-GREEN negative
+  control; or a tuned threshold is not detected by the spec sha.
+- **Evidence.** `tri-falsify` demo GREEN with all 5 gates incl
+  `thresholds_load_bearing` + `negative_control_fails`; assumptions &
+  variables are part of the pinned `spec_sha256`; non-GREEN auto-emits a
+  decision-gated `NEXT_*.yaml` (surviving checks tightened ×0.9, failed
+  boundary = focus, assumptions demoted to open questions). 12 engine
+  contract tests. Private hypotheses plug in locally as a `Probe`; the
+  engine never needs the IP.
+- **Boundary.** A discipline primitive that prevents self-deception; it
+  does not generate truth, and it never auto-runs the next experiment.
+
 ## 4. Inverse argument (why the surviving claims stand)
 
 S1 would be false if a scalar heuristic were not near-oracle — it is

@@ -2,7 +2,7 @@ PY := python3
 export PYTHONPATH := src
 
 .PHONY: setup prereg test run-baselines run-learned run-falsification ledger gate automate all \
-        v7-prereg-check v7-cpu-smoke v7-artifact-check v7-verdict v7-diagnostics v8-scalar-inexpr v8-1-derive v8-1-diagnostic gcp-doctor gcp-dry-run gcp-cpu-run gcp-cleanup
+        v7-prereg-check v7-cpu-smoke v7-artifact-check v7-verdict v7-diagnostics v8-scalar-inexpr v8-1-derive v8-1-diagnostic v8-2-diagnostic gcp-doctor gcp-dry-run gcp-cpu-run gcp-cleanup
 
 setup:
 	$(PY) -m pip install -q numpy matplotlib pyyaml pytest
@@ -70,3 +70,6 @@ v8-1-derive:
 
 v8-1-diagnostic:
 	$(PY) scripts/run_v8_1_scalar_inexpressibility_diagnostic.py
+
+v8-2-diagnostic:
+	$(PY) scripts/run_v8_2_trigger_scoped_diagnostic.py

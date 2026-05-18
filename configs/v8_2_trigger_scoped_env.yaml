@@ -1,0 +1,25 @@
+# v8.2 — reuses the v8.1 generator-guaranteed alias schedule. Only the
+# EVALUATION is corrected (trigger-scoped + carrier-controlled). Env
+# params identical to v8.1 (no env tuning); all pinned BEFORE the run.
+mu: 10.0
+sigma: 1.0
+delta: 8.0
+n_steps: 600
+seed_count: 30
+period: 12
+short_thresh: 8.0
+long_thresh: 12.0
+
+# Masks (disjoint, derived from the schedule, NOT given to oracles):
+#   carrier  : slot % period in {0,1,2}  (forced short,short,long marker)
+#   trigger  : slot % period == 3        (aliased z-dependent future)
+#   background: all other slots          (filler ~ Normal(mu,sigma))
+
+# Pinned thresholds (frozen pre-run; never edited after results)
+trigger_context_gap_ratio_min: 0.35
+carrier_controlled_gap_ratio_min: 0.25
+whole_stream_gap_ratio_min: 0.10
+history_to_regime_distance_max: 0.35
+trigger_count_min: 300
+aliasing_rate_min: 0.05
+same_obs_diff_future_rate_min: 0.05

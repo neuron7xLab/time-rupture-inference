@@ -22,9 +22,32 @@ Production-hardening cycle. **Zero behaviour change**: v4 byte-identical
   peak across a seed set, not a single fragile seed).
 - `requirements-lock.txt` (pinned), `.gitignore` cache/coverage entries.
 
+- Single-source `eval_horizon` contract + fail-loud `validate_window`
+  (kills the silent-pseudo-GREEN window-drift class); E0 follow-up adds
+  window-overflow + cross-series alignment guards.
+- AST gate: every post-shift slice site must call `validate_window`.
+- v5 minimal causal-action line merged (PR #1): `causal_action_gain
+  0.868`, action_null gap 0.000, win 1.000 — opt-in, claim-bounded.
+- v5 `action_counts` made window-scoped (+ total/pre/post views) —
+  closes the same scope-ambiguity class; v5 verdict unchanged.
+- Automation gateway `ctios.automation` (one-command CI-contract repro,
+  UTC ledger to gitignored `runs/`); stale-base regressions from the
+  proposed patch rejected.
+- README test-count drift killed structurally via enforced
+  `test_readme_sync` (CI fails on drift).
+
+### Lineage outcomes (negatives preserved, never erased)
+- **v6 precision-weighting (Kalman / predictive-coding analogy) — RED.**
+  Pre-registered; regret precision 0.5422 vs fixed 0.0897, win 1/90.
+  The heuristic drift-boost is near-oracle (no headroom); brain-inspired
+  ≠ better here. `evidence/NEGATIVE_RESULT_v6.md`, not tagged, opt-in OFF.
+
 ### Governance
-- Audit debts ledger `docs/AUDIT_DEBTS_2026-05-18.md` (closed vs still
-  open P2/P3, no rounding up).
+- Audit P0/P1/P2/P3 closed: `claims.yaml` lexicon + lint, taxonomy card,
+  SPDX + `provenance_manifest.json` (internal CLOSED; external scan
+  honestly OPEN), `invariants.yaml` register, config-surface single
+  source. Ledgers: `docs/AUDIT_CLOSURE_LEDGER.md`,
+  `docs/AUDIT_DEBTS_2026-05-18.md` (PARTIAL never rounded to GREEN).
 
 ## [0.1.0] — 2026-05-18
 

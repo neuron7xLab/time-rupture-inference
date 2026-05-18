@@ -1,1 +1,5 @@
-n_seeds: 16        # multi-seed: a single-seed win is rejected by design
+# Lineage v3 — statistical power grid (closes critique §1.2.3 / §4.5).
+n_seeds: 30                 # >= 30 seeds required by the critique
+shift_deltas: [7.0, 12.0, -5.0]   # >= 3 magnitudes incl. a DECREASE shift
+# Each condition: tau1 = tau0 + delta. PASS must hold on EVERY delta AND
+# win-rate >= min_win_rate across the full seed x delta grid.

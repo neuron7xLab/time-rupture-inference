@@ -22,3 +22,36 @@ decision_rule: >
   GREEN iff ALL gate checks pass (see src/ctios/gates.py). Any single RED
   check fails the whole experiment. No metric, threshold or config may be
   edited after the pinned commit. A RED verdict is reported as RED.
+
+# ---- lineage v3: doctoral critique closure (thresholds above UNCHANGED) ----
+observation_model:                       # closes critique §1.2.1
+  generative: "inter-event interval ~ Normal(mean(step), sigma)"
+  mean: "piecewise constant: tau0 for step<T*, tau1 otherwise"
+  agent_observes: "step index + realised (noisy) interval ONLY"
+  agent_forbidden: "tau0, tau1, T*, sigma, n_steps, future events, filenames"
+  noise: "additive Gaussian, homoscedastic, sigma from configs/env.yaml"
+
+statistical_power:                       # closes critique §1.2.3 / §4.5
+  min_seeds: 30
+  min_shift_magnitudes: 3
+  rule: "PASS must hold on EVERY shift delta AND grid-wide win-rate >= min_win_rate"
+
+leakage_kill_conditions:                 # closes critique §1.2.4 / §5
+  - "learned post_shift_mae IMPROVES under shuffled post-shift order"
+  - "any learning agent constructor exposes a hidden parameter"
+  - "agent receives n_steps or t_star through any channel"
+
+neuroplasticity_markers:                 # closes critique §6 (mechanism, not rhetoric)
+  synaptic: "internal estimate changes after a prediction error"
+  homeostatic: "pre-shift estimate variance bounded (no runaway updates)"
+  neuromodulation: "effective gain rises under post-shift surprise (boost engaged)"
+  extinction_relearning: "update-enabled cuts post-shift error vs frozen control"
+  rule: "ALL four markers must be measurably TRUE or the neuroplastic-like claim is withheld"
+
+claim_boundary_allowed: >               # verbatim from critique §3
+  The learned agent adapts to hidden temporal regime shifts better than
+  fixed and naive baselines under preregistered metrics, deterministic
+  replay, no-leakage constraints, and ablation controls.
+claim_boundary_forbidden: >
+  CTI-OS understands time / has cognition / is neuroplastic / simulates
+  causality / has world understanding.

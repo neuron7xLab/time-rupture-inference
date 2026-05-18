@@ -95,6 +95,23 @@ class Environment:
         """Explicitly hand the schedule to the oracle (upper bound only)."""
         return self._hidden
 
+    def hidden_provenance(self) -> dict[str, str]:
+        """sha256 of each hidden parameter salted by seed.
+
+        Logs provenance (proves the run used the declared schedule) WITHOUT
+        revealing the value — closes critique §7.2 with no leakage.
+        """
+        import hashlib
+
+        def h(v: float | int) -> str:
+            return hashlib.sha256(f"{v}:{self.seed}".encode()).hexdigest()
+
+        return {
+            "tau0_hidden_hash": h(self._hidden.tau0),
+            "tau1_hidden_hash": h(self._hidden.tau1),
+            "T_star_hidden_hash": h(self._hidden.t_star),
+        }
+
 
 def true_mean_series(env: Environment) -> np.ndarray:
     return np.array([env.eval_true_mean(k) for k in range(env.n_steps)], dtype=float)

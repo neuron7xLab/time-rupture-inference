@@ -20,6 +20,7 @@ the current stage — it is a convergence artifact, not new science.
 | v8.1 | 🔴 RED | frequency fixed (1500 triggers); inexpressibility *real* but carrier-masked (gap 0.15<0.25) |
 | v8.2 | 🟠 PARTIAL_RED | trigger-scoped+carrier-controlled: signal **confirmed & carrier-robust** (tc 0.470, cc 0.465); reference history-oracle under-specified (h2r 4.22) |
 | v8.3 | 🟥 BOUNDARY_RED | correctly-specified causal oracle + analytic bound (pre-run): `h2r_causal_min=0.572 > 0.35` → the pinned gate is **information-theoretically unattainable by ANY causal oracle** (one hidden flip + δ≫σ). v8.2 PARTIAL_RED was a benchmark mis-pinning, not an oracle defect |
+| v8.4 | 🟢 GREEN | env re-derived from first principles (floor proven ≤ gate pre-run); causal oracle attains it (h2r 0.185 ≈ analytic 0.159), tc 0.882, cc 0.882 → **scalar-inexpressible benchmark valid; learned-model testing finally askable** |
 
 ## What is proven (cumulative, honest)
 

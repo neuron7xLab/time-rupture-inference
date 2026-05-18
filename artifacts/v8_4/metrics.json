@@ -1,0 +1,16 @@
+{
+  "verdict": "GREEN",
+  "trigger_context_gap_ratio": 0.8823639283213114,
+  "carrier_controlled_gap_ratio": 0.8818701858247437,
+  "history_to_regime_distance": 0.18510321445298838,
+  "h2r_causal_min_analytic": 0.15877521830873326,
+  "analytic_attainable_at_0_35": true,
+  "empirical_near_analytic": true,
+  "h_trigger_mae_warm": 0.938462338549522,
+  "r_trigger_mae_warm": 0.7918823669571184,
+  "s_trigger_mae_warm": 7.977674918564434,
+  "trigger_count": 3600,
+  "structural_ok": true,
+  "deterministic_replay_hash": "335c8da0699277a907e916efbd489b718ae527efff3a84267c932ff5c86f2dd1",
+  "no_learned_model_run": true
+}

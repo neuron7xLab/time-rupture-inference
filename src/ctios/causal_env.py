@@ -36,7 +36,15 @@ class _HiddenCausalState:
 
     __slots__ = ("tau0", "tau1", "t_star", "sigma", "vol_mult", "_rng")
 
-    def __init__(self, tau0, tau1, t_star, sigma, vol_mult, seed):
+    def __init__(
+        self,
+        tau0: float,
+        tau1: float,
+        t_star: int,
+        sigma: float,
+        vol_mult: float,
+        seed: int,
+    ) -> None:
         self.tau0 = tau0
         self.tau1 = tau1
         self.t_star = t_star
@@ -125,7 +133,7 @@ class CausalEnvironment:
         return self._h.t_star
 
     def hidden_provenance(self) -> dict[str, str]:
-        def h(v) -> str:
+        def h(v: float | int) -> str:
             return hashlib.sha256(f"{v}:{self.seed}:{self.mode}".encode()).hexdigest()
 
         return {

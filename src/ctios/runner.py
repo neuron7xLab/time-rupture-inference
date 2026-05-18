@@ -27,17 +27,23 @@ from ctios.agents import (
 )
 from ctios.contract import EVAL_HORIZON, validate_window
 from ctios.env import Environment
-from ctios.gates import evaluate_gate
+from ctios.gates import GateResult, evaluate_gate
 from ctios.ledger import append, provenance
 from ctios.metrics import Metrics, compute_metrics
 from ctios.utils import ROOT, git_commit_epoch, jdump
 
 
 def _load(name: str) -> dict[str, Any]:
-    return yaml.safe_load((ROOT / "configs" / name).read_text())
+    data: dict[str, Any] = yaml.safe_load((ROOT / "configs" / name).read_text())
+    return data
 
 
-def _build_agents(env: Environment, ecfg: dict, acfg: dict, tau0: float) -> dict[str, Agent]:
+def _build_agents(
+    env: Environment,
+    ecfg: dict[str, Any],
+    acfg: dict[str, Any],
+    tau0: float,
+) -> dict[str, Agent]:
     prior = float(acfg["prior"])
     agents: dict[str, Agent] = {
         "last_interval": LastIntervalAgent(prior),
@@ -329,7 +335,9 @@ def _write_csv(rows: list[dict[str, Any]]) -> None:
         w.writerows(rows)
 
 
-def _write_plots(trace: dict[str, np.ndarray], t_star: int, agg: dict) -> None:
+def _write_plots(
+    trace: dict[str, np.ndarray], t_star: int, agg: dict[str, dict[str, float]]
+) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -356,7 +364,15 @@ def _write_plots(trace: dict[str, np.ndarray], t_star: int, agg: dict) -> None:
     plt.close()
 
 
-def _write_release(gate, agg, per_delta, wr_inj, wr_base, neuro_ok, prov) -> None:
+def _write_release(
+    gate: GateResult,
+    agg: dict[str, dict[str, float]],
+    per_delta: dict[float, dict[str, dict[str, float]]],
+    wr_inj: float,
+    wr_base: float,
+    neuro_ok: dict[str, bool],
+    prov: dict[str, Any],
+) -> None:
     p = ROOT / "evidence" / "release_gate.md"
     L = [
         "# CTI-OS Proof-of-Life v3 — Release Gate",
@@ -399,7 +415,12 @@ def _write_release(gate, agg, per_delta, wr_inj, wr_base, neuro_ok, prov) -> Non
     p.write_text("\n".join(L))
 
 
-def _write_honest_failures(gate, agg, ablation_ok, neuro_ok) -> None:
+def _write_honest_failures(
+    gate: GateResult,
+    agg: dict[str, dict[str, float]],
+    ablation_ok: bool,
+    neuro_ok: dict[str, bool],
+) -> None:
     p = ROOT / "evidence" / "honest_failures.md"
     o = ["# Honest failures register — CTI-OS proof-of-life v3", ""]
     if gate.green:

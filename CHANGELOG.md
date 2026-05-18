@@ -3,6 +3,29 @@
 All notable changes to this project. Format: falsification lineage —
 every RED is preserved, never rewritten.
 
+## [0.1.1] — 2026-05-18
+
+Production-hardening cycle. **Zero behaviour change**: v4 byte-identical
+(`learned 0.8830 / injected 8.0028 / oracle 0.7933`), v5 `gain 0.8680`.
+
+### Added
+- `mypy --strict` clean on `src/ctios` (16 files); enforced via
+  `[tool.mypy]` + CI step + 3.11/3.12 matrix.
+- `LearnedAgent` constructor guards: out-of-range gains/scales/horizons
+  now fail fast with `ValueError`.
+- Opt-in `anti_divergence` convergence guard (sign-flip gain damping).
+  **Default OFF by deliberate deviation from the proposed patch** —
+  enabling it changes the update law and would silently mutate the
+  frozen, tagged v4 number; it is a separate pre-registered improvement
+  line, never folded into the v4 baseline.
+- Multi-seed robustness for the overshoot regression (median late-regime
+  peak across a seed set, not a single fragile seed).
+- `requirements-lock.txt` (pinned), `.gitignore` cache/coverage entries.
+
+### Governance
+- Audit debts ledger `docs/AUDIT_DEBTS_2026-05-18.md` (closed vs still
+  open P2/P3, no rounding up).
+
 ## [0.1.0] — 2026-05-18
 
 First canonical release. Convergence of the full proof-of-life lineage

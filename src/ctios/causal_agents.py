@@ -27,6 +27,9 @@ class _Wrap:
     def update(self, observed_interval: float, action: str) -> None:
         self._la.update(observed_interval)
 
+    def select_action(self, previous_error: float | None) -> str:
+        raise NotImplementedError  # concrete subclasses define the policy
+
     def drift_flag(self) -> bool:
         return self._la.drift_flag()
 

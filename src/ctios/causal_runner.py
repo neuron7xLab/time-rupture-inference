@@ -18,9 +18,14 @@ from typing import Any
 import numpy as np
 import yaml
 
-from ctios.causal_agents import CausalLearnedAgent, NoActionAgent, RandomActionAgent
+from ctios.causal_agents import (
+    CausalLearnedAgent,
+    NoActionAgent,
+    RandomActionAgent,
+    _Wrap,
+)
 from ctios.causal_env import CausalEnvironment, CausalObservation
-from ctios.causal_gate import evaluate
+from ctios.causal_gate import CausalGate, evaluate
 from ctios.causal_metrics import causal_action_gain, run_metrics
 from ctios.contract import EVAL_HORIZON as EVAL_H
 from ctios.contract import N_STEPS, SIGMA, T_STAR, TAU0, validate_window
@@ -29,7 +34,7 @@ from ctios.utils import ROOT
 # v4/v5 share ONE invariant channel (ctios.contract). No magic literals.
 
 
-def _make_agent(kind: str, seed: int):
+def _make_agent(kind: str, seed: int) -> _Wrap:
     if kind == "no_action":
         return NoActionAgent()
     if kind == "random_action":
@@ -37,7 +42,7 @@ def _make_agent(kind: str, seed: int):
     return CausalLearnedAgent()
 
 
-def _run(env: CausalEnvironment, agent, n: int) -> dict[str, Any]:
+def _run(env: CausalEnvironment, agent: _Wrap, n: int) -> dict[str, Any]:
     env.reset()
     errs = np.empty(n)
     actions: list[str] = []
@@ -125,7 +130,7 @@ def main() -> int:
     kinds = ["causal_learned", "no_action", "random_action"]
     rows: list[dict[str, Any]] = []
     # post_mae[mode][kind][(delta,seed)] = value
-    pm: dict[str, dict[str, dict[tuple, float]]] = {
+    pm: dict[str, dict[str, dict[tuple[float, int], float]]] = {
         m: {k: {} for k in kinds} for m in ("interventional", "action_null")
     }
     replay_ok = True
@@ -312,7 +317,9 @@ def _env() -> dict[str, str]:
     return e
 
 
-def _write_negative(gate, gain, gap, win_no, win_rnd) -> None:
+def _write_negative(
+    gate: CausalGate, gain: float, gap: float, win_no: float, win_rnd: float
+) -> None:
     p = ROOT / "evidence" / "NEGATIVE_RESULT_v5.md"
     p.write_text(
         "# NEGATIVE RESULT — v5 minimal causal-action (pinned, not erased)\n\n"

@@ -1,0 +1,46 @@
+# Audit: "Доказова часова адаптація без інфляції"
+
+Date: 2026-05-18 (UTC)
+Scope: full repository static + test audit
+
+## One-sentence problem statement
+Ensure adaptive interval learning remains evidence-grounded, reproducible, and resistant to metric/claim inflation under distribution shifts.
+
+## Findings and debt status
+
+### Closed in this patch
+1. **Hyperparameter contract debt (P1)**
+   - `LearnedAgent` accepted out-of-range gains/scales and negative horizons without explicit failure.
+   - **Fix:** constructor guards now enforce valid ranges and fail fast with `ValueError`.
+
+2. **Single-seed validation fragility (P1)**
+   - Anti-divergence regression test relied on a single deterministic seed, vulnerable to accidental pass/fail inversion.
+   - **Fix:** regression now evaluates a seed set and compares median late-regime peak error (robust central tendency).
+
+3. **Type-contract debt (P1, added)**
+   - `mypy --strict` was not met (16 errors). **Fix:** full annotation pass; strict enforced via `[tool.mypy]` + CI on 3.11/3.12.
+
+### Deliberate deviation from the proposed patch (integrity)
+- The proposed patch defaulted `anti_divergence=True`. That changes the
+  `LearnedAgent` update law and would have **silently mutated the frozen,
+  tagged, released v4 number** (`0.8830`) — exactly the silent-baseline-
+  drift / pseudo-GREEN class eliminated in prior cycles. **Resolution:**
+  the mechanism is implemented but defaults **OFF**; it is opt-in and
+  must earn its place through its own pre-registered improvement lineage,
+  not by folding into the frozen baseline. Frozen v4 attestation holds.
+
+### Still open (recommended next)
+1. **Config/logic separation debt (P2)**
+   - Anti-divergence defaults are coded in Python, not surfaced in YAML experiment config for sweep governance.
+2. **Property-based stress debt (P2)**
+   - No Hypothesis-style tests over shift magnitude/noise/warmup that assert bounded adaptation regret.
+3. **Artifact contract debt (P3)**
+   - No dedicated machine-readable invariants file (`invariants.yaml`) despite invariant-heavy methodology.
+
+## Checklist mapping (condensed)
+- PRE-WORK: mostly satisfied; explicit falsifier contracts exist in `prereg/`.
+- MATH: partially satisfied; numeric validation exists via tests, but magic thresholds still largely heuristic.
+- IMPLEMENTATION: improved (constructor contract + strict typing + less fragile tests).
+- VALIDATION: improved with multi-seed adversariality.
+- FALSIFICATION: partial; negative results documented, but broader confounder matrix can expand.
+- ARTIFACT/GOVERNANCE: good evidence trail; recommend adding invariants artifact (P3, open).

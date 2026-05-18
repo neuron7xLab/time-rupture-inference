@@ -19,9 +19,10 @@
 
 <br>
 
-[![version](https://img.shields.io/badge/version-0.1.0-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
 [![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-28_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![tests](https://img.shields.io/badge/tests-66_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
 [![lineage](https://img.shields.io/badge/lineage-2_RED_preserved-FF0033?style=for-the-badge&labelColor=000000)](evidence/)
 [![license](https://img.shields.io/badge/license-MIT-0000FF?style=for-the-badge&labelColor=000000)](LICENSE)

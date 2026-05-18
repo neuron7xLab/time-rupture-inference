@@ -131,6 +131,10 @@ class LearnedAgent(_Base):
       * update      : online error-driven correction
       * drift       : Page-Hinkley on error -> transient high-gain recovery
       * post_shift  : whether updates are allowed to continue after warmup
+      * anti_divergence : OPT-IN local gain damping on oscillating/sign-
+        flipping error. Default OFF — enabling it changes the update law
+        and therefore the FROZEN v4 number; it is a separate pre-registered
+        improvement line, never folded silently into the v4 baseline.
     """
 
     name = "learned_full"
@@ -149,7 +153,20 @@ class LearnedAgent(_Base):
         use_drift: bool = True,
         post_shift_update: bool = True,
         warmup: int = 60,
+        anti_divergence: bool = False,
+        min_gain_scale: float = 0.35,
     ):
+        if not 0.0 < base_gain <= 1.0:
+            raise ValueError("base_gain must be in (0, 1]")
+        if not 0.0 < boost_gain <= 1.0:
+            raise ValueError("boost_gain must be in (0, 1]")
+        if boost_steps < 0:
+            raise ValueError("boost_steps must be >= 0")
+        if warmup < 0:
+            raise ValueError("warmup must be >= 0")
+        if not 0.0 < min_gain_scale <= 1.0:
+            raise ValueError("min_gain_scale must be in (0, 1]")
+
         self.base_gain = base_gain
         self.boost_gain = boost_gain
         self.boost_steps = boost_steps
@@ -166,6 +183,9 @@ class LearnedAgent(_Base):
         self.use_drift = use_drift
         self.post_shift_update = post_shift_update
         self.warmup = warmup
+        self.anti_divergence = anti_divergence
+        self.min_gain_scale = min_gain_scale
+        self._prev_err = 0.0
 
     def predict(self) -> float:
         self._pred = self._m if self.use_memory else self._last
@@ -203,13 +223,27 @@ class LearnedAgent(_Base):
             gain = self.boost_gain
             self._boost_left -= 1
 
+        # Opt-in convergence guard: if error flips sign and grows, damp
+        # gain to avoid overshoot-driven divergence around a new regime.
+        if self.anti_divergence:
+            prev_mag = abs(self._prev_err)
+            curr_mag = abs(err)
+            if self._prev_err * err < 0.0 and curr_mag > prev_mag:
+                if prev_mag > 1e-9:
+                    scale = max(self.min_gain_scale, min(1.0, prev_mag / curr_mag))
+                else:
+                    scale = self.min_gain_scale
+                gain *= scale
+
         self._m += gain * err
+        self._prev_err = err
 
 
 def make_ablations(prior: float) -> dict[str, LearnedAgent]:
-    return {
-        "learned_no_update": LearnedAgent(prior=prior, use_update=False),
-        "learned_no_drift": LearnedAgent(prior=prior, use_drift=False),
-        "learned_no_memory": LearnedAgent(prior=prior, use_memory=False),
-        "learned_frozen_post_shift": LearnedAgent(prior=prior, post_shift_update=False),
+    variants: dict[str, dict[str, bool]] = {
+        "learned_no_update": {"use_update": False},
+        "learned_no_drift": {"use_drift": False},
+        "learned_no_memory": {"use_memory": False},
+        "learned_frozen_post_shift": {"post_shift_update": False},
     }
+    return {name: LearnedAgent(prior=prior, **kw) for name, kw in variants.items()}

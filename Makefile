@@ -2,7 +2,7 @@ PY := python3
 export PYTHONPATH := src
 
 .PHONY: setup prereg test run-baselines run-learned run-falsification ledger gate automate all \
-        v7-prereg-check v7-cpu-smoke v7-artifact-check gcp-doctor gcp-dry-run gcp-cpu-run gcp-cleanup
+        v7-prereg-check v7-cpu-smoke v7-artifact-check v7-verdict gcp-doctor gcp-dry-run gcp-cpu-run gcp-cleanup
 
 setup:
 	$(PY) -m pip install -q numpy matplotlib pyyaml pytest
@@ -41,6 +41,9 @@ v7-cpu-smoke:
 
 v7-artifact-check:
 	$(PY) scripts/check_artifacts.py
+
+v7-verdict:
+	$(PY) scripts/v7_verdict.py
 
 gcp-doctor:
 	@bash scripts/gcp/doctor.sh

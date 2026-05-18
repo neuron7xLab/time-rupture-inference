@@ -14,11 +14,11 @@ import check_artifacts as ca  # noqa: E402
 GOOD = [
     {"model": "heuristic_v4", "seed": 0, "shift": 7.0, "post_shift_mae": 0.9,
      "recovery_steps": 12.0, "calibration_error": 0.1},
-    {"model": "gru_small", "seed": 0, "shift": 7.0, "post_shift_mae": 0.8,
+    {"model": "esn_small", "seed": 0, "shift": 7.0, "post_shift_mae": 0.8,
      "recovery_steps": 10.0, "calibration_error": 0.1},
     {"model": "linear_ssm_small", "seed": 0, "shift": 7.0, "post_shift_mae": 0.8,
      "recovery_steps": 10.0, "calibration_error": 0.1},
-    {"model": "baseline_mlp_or_rnn", "seed": 0, "shift": 7.0, "post_shift_mae": 1.0,
+    {"model": "ar_baseline", "seed": 0, "shift": 7.0, "post_shift_mae": 1.0,
      "recovery_steps": 14.0, "calibration_error": 0.2},
 ]
 
@@ -42,7 +42,7 @@ def _write(tmp: Path, rows: list[dict]) -> None:
 def test_valid_fixture_passes(tmp_path, monkeypatch):
     _write(tmp_path, [dict(r) for r in GOOD])
     monkeypatch.setattr(ca, "CFG", {"artifact_dir": "art", "models": [
-        "heuristic_v4", "gru_small", "linear_ssm_small", "baseline_mlp_or_rnn"]})
+        "heuristic_v4", "esn_small", "linear_ssm_small", "ar_baseline"]})
     assert ca.check() == []
 
 
@@ -51,7 +51,7 @@ def test_missing_field_fails(tmp_path, monkeypatch):
     del bad[0]["post_shift_mae"]
     _write(tmp_path, bad)
     monkeypatch.setattr(ca, "CFG", {"artifact_dir": "art", "models": [
-        "heuristic_v4", "gru_small", "linear_ssm_small", "baseline_mlp_or_rnn"]})
+        "heuristic_v4", "esn_small", "linear_ssm_small", "ar_baseline"]})
     assert ca.check()
 
 
@@ -60,7 +60,7 @@ def test_nan_metric_fails(tmp_path, monkeypatch):
     bad[1]["post_shift_mae"] = float("nan")
     _write(tmp_path, bad)
     monkeypatch.setattr(ca, "CFG", {"artifact_dir": "art", "models": [
-        "heuristic_v4", "gru_small", "linear_ssm_small", "baseline_mlp_or_rnn"]})
+        "heuristic_v4", "esn_small", "linear_ssm_small", "ar_baseline"]})
     assert any("non-finite" in p for p in ca.check())
 
 
@@ -69,5 +69,5 @@ def test_wrong_model_name_fails(tmp_path, monkeypatch):
     bad[0]["model"] = "rogue_model"
     _write(tmp_path, bad)
     monkeypatch.setattr(ca, "CFG", {"artifact_dir": "art", "models": [
-        "heuristic_v4", "gru_small", "linear_ssm_small", "baseline_mlp_or_rnn"]})
+        "heuristic_v4", "esn_small", "linear_ssm_small", "ar_baseline"]})
     assert any("unknown models" in p for p in ca.check())

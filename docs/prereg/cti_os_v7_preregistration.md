@@ -3,6 +3,17 @@
 **Status:** infrastructure-ready; scientific run NOT yet executed.
 **Phase 1 policy:** CPU-only, no GPU, no paid cloud.
 
+> **Pre-run model-definition correction (2026-05-18, before any full
+> grid + before observing results).** The implemented learned candidates
+> are numpy reservoir-readout recurrent learners with online-learned
+> readouts: `esn_small` (echo-state-style) and `linear_ssm_small`
+> (learned linear state-space). They are **not** a back-prop-trained
+> GRU. To avoid a mislabeled-instrument verdict, model names are
+> corrected to match the implementation **before** the run; thresholds,
+> environment, seeds, and the decision rule are unchanged. A
+> back-prop-trained GRU is a separate, later pre-registered lineage.
+> Honest scoping, not a post-hoc tweak.
+
 ## Hypothesis
 A learned sequence model (small GRU and/or small linear state-space
 model) achieves lower post-shift error than (a) the frozen v4 heuristic
@@ -17,8 +28,8 @@ advantage). The null is the default; it is rejected only by artifacted,
 reproducible evidence.
 
 ## Model candidates
-`heuristic_v4` (reference, not the claim) · `gru_small` ·
-`linear_ssm_small` · `baseline_mlp_or_rnn` (from-scratch conventional).
+`heuristic_v4` (reference, not the claim) · `esn_small` ·
+`linear_ssm_small` · `ar_baseline` (from-scratch conventional).
 
 ## Baselines
 v4 heuristic (frozen, byte-identical) and the from-scratch conventional

@@ -17,9 +17,9 @@ def test_config_loads_and_ids():
 def test_required_model_names_present():
     assert set(CFG["models"]) == {
         "heuristic_v4",
-        "gru_small",
+        "esn_small",
         "linear_ssm_small",
-        "baseline_mlp_or_rnn",
+        "ar_baseline",
     }
 
 

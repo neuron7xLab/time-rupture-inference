@@ -158,6 +158,7 @@ class LearnedAgent(_Base):
         self._boost_left = 0
         self._n = 0
         self._drift = False
+        self._ph_armed = False
         self.use_memory = use_memory
         self.use_update = use_update
         self.use_drift = use_drift
@@ -182,10 +183,18 @@ class LearnedAgent(_Base):
         if not self.post_shift_update and self._n > self.warmup:
             return
 
-        if self.use_drift and self._ph.update(err):
-            self._drift = True
-            self._boost_left = self.boost_steps
-            self._ph.reset()
+        # Arm Page-Hinkley only AFTER warmup and re-baseline it on the
+        # converged-error regime, so the cold-start transient (prior far
+        # from the true interval) cannot poison the drift baseline.
+        # (v1 RED root cause — see evidence/NEGATIVE_RESULT_v1.md.)
+        if self.use_drift and self._n > self.warmup:
+            if not self._ph_armed:
+                self._ph.reset()
+                self._ph_armed = True
+            elif self._ph.update(err):
+                self._drift = True
+                self._boost_left = self.boost_steps
+                self._ph.reset()
 
         gain = self.base_gain
         if self._boost_left > 0:

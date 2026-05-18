@@ -1,0 +1,9 @@
+{
+  "expected_trigger_probability": 0.08333333333333333,
+  "expected_trigger_count_per_seed": 50,
+  "expected_trigger_count_total_grid": 1500,
+  "expected_same_observation_different_future_rate": 1.0,
+  "expected_aliasing_rate": 0.08333333333333333,
+  "minimum_required_trigger_count": 300,
+  "frequency_precheck_passed": true
+}

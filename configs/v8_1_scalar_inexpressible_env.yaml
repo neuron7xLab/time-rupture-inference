@@ -1,0 +1,22 @@
+# v8.1 scalar-inexpressible env (Construction B: generator-guaranteed
+# alias schedule). All pinned BEFORE the diagnostic run.
+mu: 10.0
+sigma: 1.0
+delta: 8.0
+n_steps: 600
+seed_count: 30
+period: 12          # one aliased 4-step block per `period` steps
+short_thresh: 8.0   # categorization (obs < => short)
+long_thresh: 12.0   # categorization (obs > => long)
+# Construction B: at each scheduled slot the observable window is FORCED
+# to (short, short, long); the next step is shifted by sign(z)*delta with
+# z hidden and flipped once at n_steps//2. Frequency is exact (schedule),
+# not stochastic — derived in scripts/derive_v8_1_trigger_frequency.py.
+
+# GREEN gates (pinned)
+gap_min: 0.25
+history_close_frac: 0.15
+# precheck pinned minimums
+min_trigger_count_total: 300
+min_aliasing_rate: 0.05
+min_same_obs_diff_future_rate: 0.05

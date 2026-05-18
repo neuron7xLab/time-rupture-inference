@@ -117,18 +117,20 @@ def _make(model: str, seed: int) -> Any:
     raise ValueError(f"unknown model {model!r}")
 
 
-def _drive(model_name: str, agent: Any, stream: np.ndarray, t_star: int) -> dict[str, float]:
+def _drive(agent: Any, stream: np.ndarray, t_star: int) -> dict[str, float]:
     n = len(stream)
     ae = np.empty(n)
+    # Consistent last-valid imputation for ALL models (no agent
+    # introspection): a masked step feeds the last observed interval
+    # uniformly, so partial observability cannot unfairly bias one model.
+    last_valid = 1.0
     for k in range(n):
         p = float(agent.predict())
         obs = stream[k]
-        target = agent.__dict__.get("last", 1.0) if np.isnan(obs) else float(obs)
-        ae[k] = abs(target - p)
-        if model_name == "heuristic_v4":
-            agent.update(target)
-        else:
-            agent.update(obs)
+        x = last_valid if np.isnan(obs) else float(obs)
+        ae[k] = abs(x - p)
+        agent.update(x)
+        last_valid = x
     post = ae[t_star:]
     pre = ae[:t_star]
     band = 1.5 * float(np.mean(pre)) if pre.size else 1.0
@@ -165,7 +167,7 @@ def main() -> int:
         for seed in seeds:
             stream = _env_stream(seed, n, shift, np.random.default_rng(seed))
             for mdl in models:
-                m = _drive(mdl, _make(mdl, seed), stream, t_star)
+                m = _drive(_make(mdl, seed), stream, t_star)
                 rows.append({"model": mdl, "seed": seed, "shift": shift, **m})
 
     # fail-closed numeric validation

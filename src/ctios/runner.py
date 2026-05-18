@@ -276,6 +276,8 @@ def main() -> int:
 
     # aggregate over the whole grid for the headline
     agg = _grid_mean(per_delta_agg)
+    if grid_total == 0:  # fail-loud, not ZeroDivisionError (project ethos)
+        raise SystemExit("FAIL: zero grid cells — check n_seeds / shift_deltas")
     wr_inj = grid_wins_inj / grid_total
     wr_base = grid_wins_base / grid_total
     ablation_ok = all(

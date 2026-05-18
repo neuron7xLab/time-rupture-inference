@@ -113,7 +113,7 @@
     {
       "license": "MIT",
       "path": "scripts/run_v7_cpu.py",
-      "sha256": "931162b82bc27ed90d17ecc4455aac94a54a3e6f44e816387db0b5da02fa676a",
+      "sha256": "283039b07b003a94ce37f81e3328bbdbad5ca258c20e749bab0dc3ec69a9ec2e",
       "spdx_header": true
     },
     {
@@ -215,7 +215,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/runner.py",
-      "sha256": "7c9e5d0c4a5fd687e539baa6a57c1d80e000bddd4b0a0753796a415276e2db82",
+      "sha256": "a774a2b263134e48fe2f236bdf358a6bbd5c57332991b968efbbf5ba8d6c930b",
       "spdx_header": true
     },
     {

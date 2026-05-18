@@ -8,4 +8,7 @@ runs/*
 !runs/.gitkeep
 artifacts/v7/*
 artifacts/gcp/*
+artifacts/v8/*
+artifacts/v8_1/*
+artifacts/v8_2/*
 !artifacts/**/.gitkeep

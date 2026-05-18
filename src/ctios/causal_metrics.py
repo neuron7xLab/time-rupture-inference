@@ -8,7 +8,8 @@ from typing import TypedDict
 
 import numpy as np
 
-from ctios.contract import validate_aligned_lengths, validate_window
+from ctios.contract import RECOVERY_ROLL_WINDOW, validate_aligned_lengths, validate_window
+from ctios.series import rolling_mean_prefix
 
 
 class RunMetrics(TypedDict):
@@ -38,7 +39,7 @@ def run_metrics(
     aue = float(np.sum(post))
 
     band = 1.5 * pre_mae
-    roll = _rolling(post, 20)
+    roll = rolling_mean_prefix(post, RECOVERY_ROLL_WINDOW)
     rec = np.where(roll <= band)[0]
     adapt = float(rec[0]) if rec.size else float("inf")
 
@@ -69,13 +70,3 @@ def causal_action_gain(post_mae_action_null: float, post_mae_interventional: flo
     """Positive => acting (in interventional mode) helped vs the same agent
     when its actions were inert (action_null)."""
     return post_mae_action_null - post_mae_interventional
-
-
-def _rolling(x: np.ndarray, w: int) -> np.ndarray:
-    if x.size == 0:
-        return x
-    w = min(w, x.size)
-    c = np.cumsum(np.insert(x, 0, 0.0))
-    out = (c[w:] - c[:-w]) / w
-    head = np.array([np.mean(x[: i + 1]) for i in range(w - 1)])
-    return np.concatenate([head, out])

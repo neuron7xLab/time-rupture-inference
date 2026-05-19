@@ -1,0 +1,19 @@
+{
+  "pr": "M",
+  "security_policy": {
+    "file": "SECURITY.md",
+    "status": "PRESENT",
+    "fake_contact": false,
+    "placeholder": false,
+    "supported_versions": "0.1.x / Python 3.11-3.13",
+    "reporting": "GitHub Private Vulnerability Reporting (if enabled) else SECURITY:-titled issue + request private channel; no fake email/PGP",
+    "response_target_days": 14
+  },
+  "structural_gaps": {
+    "GAP_1_INDEPENDENT_REPRODUCTION": "OPEN",
+    "GAP_2_DOMAIN_BREADTH": "OPEN",
+    "machine_guarded": true,
+    "ready_blocked_while_open": true
+  },
+  "readiness_unchanged": "CONDITIONALLY_READY_SUPPLY_CHAIN_HARDENED"
+}

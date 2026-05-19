@@ -52,8 +52,10 @@
 | test_report.py | ARTIFACT_TEST |
 | test_runner_mode.py | KILL_TEST |
 | test_scalar_inexpressibility_env.py | ARTIFACT_TEST |
+| test_security_policy.py | ARTIFACT_TEST |
 | test_series.py | KILL_TEST |
 | test_spec_compiler.py | KILL_TEST |
+| test_structural_gaps.py | KILL_TEST |
 | test_surface_claim_hardening.py | CLAIM_BOUNDARY_TEST |
 | test_test_value_audit.py | KILL_TEST |
 | test_v6_precision.py | KILL_TEST |

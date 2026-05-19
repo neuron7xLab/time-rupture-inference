@@ -1,0 +1,45 @@
+{
+  "repo": "neuron7xLab/time-rupture-inference",
+  "audit_type": "doc_trust_value_hardening",
+  "claim_count": 12,
+  "supported_by_evidence": 12,
+  "supported_by_external_source": 12,
+  "boundary_only": 2,
+  "downgraded": 2,
+  "deleted": 0,
+  "open_gaps_referenced": 1,
+  "files_scanned": [
+    "README.md",
+    "docs/SYSTEM_CARD.md",
+    "docs/CONTRIBUTION_CLAIMS.md",
+    "docs/SPEC.md",
+    "docs/REPRODUCIBILITY_CONTRACT.md",
+    "docs/FAILURE_TAXONOMY.md",
+    "docs/OPEN_STRUCTURAL_GAPS.md",
+    "docs/reports/LINEAGE_STATE.md",
+    "claims.yaml",
+    "scripts/claims_lint.py",
+    "pyproject.toml",
+    "evidence/release_gate.md"
+  ],
+  "source_count": 15,
+  "major_findings": [
+    "Core claim grammar (claim->falsifier->evidence->boundary) is already enforced by claims.yaml + claims_lint; this pass adds stable claim IDs and a source map on top, it does not invent new claims.",
+    "Two external-facing wordings carried prestige/marketing residue without a mechanism anchor and were downgraded (see evidence/CLAIM_DOWNGRADE_LEDGER.jsonl): README 'Conference-grade entry points' and SPEC.md 'frontier-lab rigor'; rigor is now shown by docs/REVIEW_PATH.md tracks, not asserted by a label.",
+    "Prediction-error / neuroscience language was already disclaimer-bounded in README/SPEC/SYSTEM_CARD; this pass binds it to RAO_BALLARD_1999 as INSPIRATION_ONLY with an explicit no-biological-fidelity boundary (TRI-CLAIM-009).",
+    "Supply-chain claims (PR K/L/N/O) are honest at Build L2 / LEVEL_1; bound to SLSA_SPEC + SPDX_SPEC with mandatory not-hermetic / not-L3 wording (TRI-CLAIM-008).",
+    "Two structural gaps (independent reproduction, domain breadth) remain OPEN and gate READY/PRODUCTIZABLE in code; mapped as NON_CLAIM_BOUNDARY / OPEN_GAP (TRI-CLAIM-010, TRI-CLAIM-012)."
+  ],
+  "must_not_claim": [
+    "cognition",
+    "consciousness",
+    "AGI / general intelligence",
+    "biological fidelity / brain equivalence",
+    "real-world validity",
+    "production readiness / productizable",
+    "learned-model superiority",
+    "hermetic or SLSA L3 supply chain",
+    "novelty of falsification, change detection, or online estimation"
+  ],
+  "value_lift_summary": "Every major external-facing claim resolves to a stable ID with in-repo evidence, a canonical source, an explicit boundary, or a tracked open gap; scripts/check_doc_trust.py blocks regressions in CI. No scientific claim is expanded."
+}

@@ -21,7 +21,7 @@
 
 [![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
 [![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-391_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![tests](https://img.shields.io/badge/tests-403_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
 [![lineage](https://img.shields.io/badge/lineage-all_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
@@ -151,7 +151,7 @@ src/ctios/   env · agents · drift · metrics · gates · ledger · runner · a
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       391 tests incl. no-leakage, shuffle kill-control, contract
+tests/       403 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
 
@@ -165,7 +165,7 @@ TRI-Falsify is a falsification-first temporal inference and
 hypothesis-auditing apparatus. A pinned, hashed hypothesis runs
 through an adversarial battery into a sealed, reproducible verdict;
 on failure it auto-proposes a human-gated next experiment and never
-runs anything itself. Conference-grade entry points:
+runs anything itself. Reviewer entry points:
 
 - [`docs/REVIEWER_ONE_PAGER.md`](docs/REVIEWER_ONE_PAGER.md) — 60-second system identity.
 - [`docs/SYSTEM_CARD.md`](docs/SYSTEM_CARD.md) — abstraction, inputs/outputs, boundaries.
@@ -230,6 +230,19 @@ Claim boundary: a learned sequence model with a representational
 advantage on a harder task — NOT intelligence, NOT AGI, NOT cognition.
 <!-- claims:end -->
 
+
+## Reviewer map
+
+- Trust architecture: [`docs/TRUST_LAYER.md`](docs/TRUST_LAYER.md)
+- Reproduction contract: [`docs/REPRODUCIBILITY_CONTRACT.md`](docs/REPRODUCIBILITY_CONTRACT.md)
+- Claim/source matrix: [`docs/CLAIM_SOURCE_MATRIX.md`](docs/CLAIM_SOURCE_MATRIX.md)
+- Prior-art boundary map: [`docs/PRIOR_ART_BOUNDARY_MAP.md`](docs/PRIOR_ART_BOUNDARY_MAP.md)
+- Review paths: [`docs/REVIEW_PATH.md`](docs/REVIEW_PATH.md)
+- Value positioning: [`docs/VALUE_POSITIONING.md`](docs/VALUE_POSITIONING.md)
+- Open structural gaps: [`docs/OPEN_STRUCTURAL_GAPS.md`](docs/OPEN_STRUCTURAL_GAPS.md)
+
+Scientific claims are not expanded by citation; citations only map the
+apparatus to prior art and clarify boundaries.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/neuron7xLab/time-rupture-inference/main/.github/assets/divider.svg" width="100%">

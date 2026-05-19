@@ -77,6 +77,10 @@ exempt:
   # enumerated non-claim text, same rationale as claims_lint.py.
   - "src/ctios/design_lineage.py"
   - scripts/claims_lint.py
+  # Hold the forbidden-phrase lexicon as data (enforcement mechanism,
+  # not outward positioning) — same rationale as claims_lint.py.
+  - scripts/check_doc_trust.py
+  - scripts/build_doc_trust_audit.py
   - scripts/external_adversarial_demo.sh
   - tests/test_claims_lexicon.py
   - prereg/*

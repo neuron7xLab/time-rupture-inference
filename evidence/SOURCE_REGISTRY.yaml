@@ -1,0 +1,186 @@
+# Claim-support source registry (not a bibliography).
+# A source may exist here ONLY if it maps to >=1 claim_id or repo file.
+# Consumed by scripts/check_doc_trust.py + tests/test_doc_trust.py.
+# Tiers: CANONICAL (load-bearing prior art), SUPPORTING (maps a
+# mechanism), CONTEXT_ONLY (framing/contrast, never proof).
+sources:
+  - id: POPPER_FALSIFIABILITY
+    tier: CANONICAL
+    domain: philosophy_of_science
+    canonical_citation: "Popper, K. R. (1959/2002). The Logic of Scientific Discovery. Routledge."
+    url: "https://archive.org/details/logicofscientifi0000popp"
+    supports_claim_ids: [TRI-CLAIM-003, TRI-CLAIM-005, TRI-CLAIM-007]
+    supports_repo_files: [docs/SPEC.md, claims.yaml, prereg/]
+    allowed_use: "Frames the claim->falsifier->evidence->boundary grammar; a claim is admitted only because a pre-pinned kill-test ran and did not trigger."
+    forbidden_use: "Does not prove any TRI-Falsify result is true; falsifiability is a demarcation criterion, not a correctness proof."
+    why_this_source_matters: "The repository's entire admission grammar is Popperian; the dependency must be explicit, not implied."
+    what_this_source_does_not_justify: "Real-world validity, generalization, or that the apparatus itself is scientifically complete."
+    status: ACTIVE
+  - id: LAKATOS_RESEARCH_PROGRAMMES
+    tier: CANONICAL
+    domain: philosophy_of_science
+    canonical_citation: "Lakatos, I. (1970). Falsification and the Methodology of Scientific Research Programmes. In Lakatos & Musgrave (eds.), Criticism and the Growth of Knowledge. Cambridge University Press."
+    url: "https://doi.org/10.1017/CBO9781139171434.009"
+    supports_claim_ids: [TRI-CLAIM-003, TRI-CLAIM-012]
+    supports_repo_files: [docs/reports/LINEAGE_STATE.md, evidence/]
+    allowed_use: "Frames the preserved v1..v9 lineage as a progressive/degenerative research programme with sealed negatives, not a single experiment."
+    forbidden_use: "Does not prove the programme is progressive; that is a reading of the ledger, not a granted status."
+    why_this_source_matters: "Closure-before-restart and preserved-negative discipline are programme-level, not run-level; Lakatos names that unit."
+    what_this_source_does_not_justify: "That the line will converge, or that any open question is resolvable."
+    status: ACTIVE
+  - id: KUHN_PARADIGMS
+    tier: CONTEXT_ONLY
+    domain: philosophy_of_science
+    canonical_citation: "Kuhn, T. S. (1962/1970). The Structure of Scientific Revolutions. University of Chicago Press."
+    url: "https://archive.org/details/structureofscien0000kuhn"
+    supports_claim_ids: [TRI-CLAIM-003]
+    supports_repo_files: [docs/reports/LINEAGE_STATE.md]
+    allowed_use: "Contrast only: this apparatus is deliberately anti-paradigmatic — it preserves anomalies (REDs) instead of absorbing them."
+    forbidden_use: "Not an endorsement; Kuhn is cited to mark what the repo refuses, never as supporting evidence."
+    why_this_source_matters: "Pre-empts the misreading that preserved negatives are paradigm maintenance."
+    what_this_source_does_not_justify: "Anything; CONTEXT_ONLY sources never support a positive claim."
+    status: ACTIVE
+  - id: RAO_BALLARD_1999
+    tier: SUPPORTING
+    domain: predictive_coding
+    canonical_citation: "Rao, R. P. N. & Ballard, D. H. (1999). Predictive coding in the visual cortex. Nature Neuroscience, 2(1), 79-87."
+    url: "https://doi.org/10.1038/4580"
+    supports_claim_ids: [TRI-CLAIM-009]
+    supports_repo_files: [README.md, docs/SPEC.md, src/ctios/agents.py]
+    allowed_use: "Names the operational analogy: a learner updating from its own prediction error. Inspiration for the error->update loop only."
+    forbidden_use: "Does not imply biological fidelity, neural-equivalence, or that the repo models cortex."
+    why_this_source_matters: "The prediction-error framing is borrowed from this lineage; the debt must be explicit and bounded."
+    what_this_source_does_not_justify: "Any biological, cognitive, or brain-fidelity claim. The repo runs a scalar estimator, not a cortical model."
+    status: ACTIVE
+  - id: FRISTON_FREE_ENERGY
+    tier: CONTEXT_ONLY
+    domain: predictive_coding
+    canonical_citation: "Friston, K. (2010). The free-energy principle: a unified brain theory? Nature Reviews Neuroscience, 11(2), 127-138."
+    url: "https://doi.org/10.1038/nrn2787"
+    supports_claim_ids: [TRI-CLAIM-009]
+    supports_repo_files: [docs/MANUAL_AUTHOR_NOTES.md]
+    allowed_use: "Broad predictive-processing context only, to situate prediction-error language in a known theoretical family."
+    forbidden_use: "Never direct support. A broad theoretical framework is not evidence for a specific scalar estimator on a synthetic benchmark."
+    why_this_source_matters: "Reviewers will pattern-match prediction-error to free-energy; this entry bounds that association explicitly."
+    what_this_source_does_not_justify: "Any repo result, mechanism correctness, or biological interpretation."
+    status: ACTIVE
+  - id: KNILL_POUGET_BAYESIAN_BRAIN
+    tier: CONTEXT_ONLY
+    domain: predictive_coding
+    canonical_citation: "Knill, D. C. & Pouget, A. (2004). The Bayesian brain: the role of uncertainty in neural coding and computation. Trends in Neurosciences, 27(12), 712-719."
+    url: "https://doi.org/10.1016/j.tins.2004.10.007"
+    supports_claim_ids: [TRI-CLAIM-009]
+    supports_repo_files: [docs/PRIOR_ART_BOUNDARY_MAP.md]
+    allowed_use: "Context for treating uncertainty/error as the inference driver; analogy only."
+    forbidden_use: "Does not justify a Bayesian-brain claim; the repo implements no posterior over neural states."
+    why_this_source_matters: "Bounds the uncertainty-driven-adaptation analogy."
+    what_this_source_does_not_justify: "Biological coding claims or repo correctness."
+    status: ACTIVE
+  - id: PAGE_HINKLEY_TEST
+    tier: CANONICAL
+    domain: change_detection
+    canonical_citation: "Hinkley, D. V. (1971). Inference about the change-point from cumulative sum tests. Biometrika, 58(3), 509-523."
+    url: "https://doi.org/10.1093/biomet/58.3.509"
+    supports_claim_ids: [TRI-CLAIM-002, TRI-CLAIM-012]
+    supports_repo_files: [src/ctios/drift.py, src/ctios/change_detection.py]
+    allowed_use: "Prior art for the sequential change-point trigger the agent uses; the repo reuses, does not invent, online change detection."
+    forbidden_use: "The repo claims no novelty in change detection itself."
+    why_this_source_matters: "The drift trigger is a Page-Hinkley-class statistic; reusing established prior art is a strength to state plainly."
+    what_this_source_does_not_justify: "Superiority of the detector or generalization beyond the synthetic families."
+    status: ACTIVE
+  - id: CUSUM_PAGE_1954
+    tier: CANONICAL
+    domain: change_detection
+    canonical_citation: "Page, E. S. (1954). Continuous Inspection Schemes. Biometrika, 41(1/2), 100-115."
+    url: "https://doi.org/10.1093/biomet/41.1-2.100"
+    supports_claim_ids: [TRI-CLAIM-002]
+    supports_repo_files: [src/ctios/change_detection.py]
+    allowed_use: "Foundational CUSUM / sequential-analysis prior art for online rupture detection."
+    forbidden_use: "Not claimed as a contribution; cited to disclaim novelty."
+    why_this_source_matters: "Establishes that sequential detection long predates this repo."
+    what_this_source_does_not_justify: "Any empirical result here."
+    status: ACTIVE
+  - id: KALMAN_1960
+    tier: SUPPORTING
+    domain: online_estimation
+    canonical_citation: "Kalman, R. E. (1960). A New Approach to Linear Filtering and Prediction Problems. Journal of Basic Engineering, 82(1), 35-45."
+    url: "https://doi.org/10.1115/1.3662552"
+    supports_claim_ids: [TRI-CLAIM-012]
+    supports_repo_files: [docs/reports/LINEAGE_STATE.md]
+    allowed_use: "Prior art for online recursive estimation; explicitly the v6 RED tested precision-weighting (Kalman-class) and it did NOT beat the heuristic — cited to explain why no novelty is claimed there."
+    forbidden_use: "Does not imply the repo improves on Kalman filtering; v6 RED shows the opposite on this task."
+    why_this_source_matters: "A preserved negative is anchored to named prior art, not a strawman."
+    what_this_source_does_not_justify: "Estimator superiority of any kind."
+    status: ACTIVE
+  - id: MODEL_CARDS_2019
+    tier: CANONICAL
+    domain: ai_documentation
+    canonical_citation: "Mitchell, M. et al. (2019). Model Cards for Model Reporting. Proc. FAT* '19, 220-229. arXiv:1810.03993."
+    url: "https://doi.org/10.1145/3287560.3287596"
+    supports_claim_ids: [TRI-CLAIM-010]
+    supports_repo_files: [docs/SYSTEM_CARD.md]
+    allowed_use: "Documentation pattern for intended use, non-intended use, and limits — applied to an apparatus, not a model."
+    forbidden_use: "A model-card structure is a reporting discipline, not a quality seal; presence of a card is not evidence of correctness."
+    why_this_source_matters: "SYSTEM_CARD.md adopts this structure; the source must be named to avoid implying an original format."
+    what_this_source_does_not_justify: "That the system is safe, validated, or production-ready."
+    status: ACTIVE
+  - id: DATASHEETS_2018
+    tier: SUPPORTING
+    domain: ai_documentation
+    canonical_citation: "Gebru, T. et al. (2018/2021). Datasheets for Datasets. Communications of the ACM, 64(12), 86-92. arXiv:1803.09010."
+    url: "https://doi.org/10.1145/3458723"
+    supports_claim_ids: [TRI-CLAIM-001]
+    supports_repo_files: [docs/SPEC.md]
+    allowed_use: "Prior art for documenting a constructed instrument's provenance and intended scope (the synthetic rupture family)."
+    forbidden_use: "Does not validate the synthetic benchmark as real-world representative."
+    why_this_source_matters: "The benchmark is a constructed instrument; documenting it follows datasheet discipline."
+    what_this_source_does_not_justify: "External validity of the synthetic family."
+    status: ACTIVE
+  - id: NIST_AI_RMF_2023
+    tier: SUPPORTING
+    domain: ai_documentation
+    canonical_citation: "NIST (2023). Artificial Intelligence Risk Management Framework (AI RMF 1.0). NIST AI 100-1."
+    url: "https://doi.org/10.6028/NIST.AI.100-1"
+    supports_claim_ids: [TRI-CLAIM-007, TRI-CLAIM-010]
+    supports_repo_files: [docs/FAILURE_TAXONOMY.md, docs/OPEN_STRUCTURAL_GAPS.md]
+    allowed_use: "Risk-framing vocabulary (map/measure/manage) for the failure taxonomy and open-gap governance."
+    forbidden_use: "Conformance to a risk framework is not a safety claim; the repo claims no AI-safety result."
+    why_this_source_matters: "Aligns the failure taxonomy with an external risk vocabulary instead of an ad hoc one."
+    what_this_source_does_not_justify: "Any safety, assurance, or deployment claim."
+    status: ACTIVE
+  - id: SLSA_SPEC
+    tier: CANONICAL
+    domain: supply_chain
+    canonical_citation: "OpenSSF (2023). Supply-chain Levels for Software Artifacts (SLSA), specification v1.0."
+    url: "https://slsa.dev/spec/v1.0/"
+    supports_claim_ids: [TRI-CLAIM-008]
+    supports_repo_files: [docs/SLSA_LEVEL_DECLARATION.md, .github/workflows/release.yml]
+    allowed_use: "Defines the achieved Build L2 level (GitHub artifact attestation)."
+    forbidden_use: "Not SLSA L3; not hermetic; presence of attestation is not complete supply-chain security."
+    why_this_source_matters: "The release-trust claim must cite the exact level definition it maps to."
+    what_this_source_does_not_justify: "L3, hermeticity, or end-to-end supply-chain trust."
+    status: ACTIVE
+  - id: SPDX_SPEC
+    tier: CANONICAL
+    domain: supply_chain
+    canonical_citation: "Linux Foundation (2021). SPDX Specification v2.3; ISO/IEC 5962:2021."
+    url: "https://spdx.github.io/spdx-spec/v2.3/"
+    supports_claim_ids: [TRI-CLAIM-008]
+    supports_repo_files: [scripts/generate_sbom.py, sbom.spdx.json]
+    allowed_use: "The SBOM is emitted as SPDX-2.3 derived from the pinned lock; transparency format only."
+    forbidden_use: "An SBOM is supply-chain transparency, not a security guarantee or a no-vulnerability claim."
+    why_this_source_matters: "The SBOM claim must reference the exact specification it conforms to."
+    what_this_source_does_not_justify: "Dependency safety, hash-locking, or hermeticity."
+    status: ACTIVE
+  - id: GITHUB_ARTIFACT_ATTESTATION
+    tier: SUPPORTING
+    domain: supply_chain
+    canonical_citation: "GitHub (2024). Using artifact attestations to establish provenance for builds. GitHub Docs."
+    url: "https://docs.github.com/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds"
+    supports_claim_ids: [TRI-CLAIM-008]
+    supports_repo_files: [.github/workflows/release.yml, docs/RELEASE_VERIFICATION.md]
+    allowed_use: "The concrete mechanism behind the Build L2 attestation step."
+    forbidden_use: "Provenance attestation is not a guarantee the build is free of compromise."
+    why_this_source_matters: "Names the exact mechanism the release workflow uses."
+    what_this_source_does_not_justify: "Hermetic or L3 supply-chain claims."
+    status: ACTIVE

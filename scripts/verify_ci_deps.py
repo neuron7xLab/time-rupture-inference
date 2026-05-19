@@ -72,10 +72,24 @@ def audit() -> list[str]:
                 consumes_lock = True
             if any(tok in args for tok in _ALLOWED):
                 continue
+            # Narrow, documented exception: a RELEASE workflow may
+            # install a fully `name==version` PINNED release build
+            # tool (protocol allows a declared release dependency).
+            # Every package token must be == pinned; non-release
+            # workflows get no such allowance.
+            if "release" in wf.name:
+                toks = [
+                    t for t in args.split()
+                    if not t.startswith("-") and t not in ("pip", "python")
+                ]
+                toks = [t.strip('"').strip("'") for t in toks]
+                if toks and all(re.fullmatch(r"[\w.\-]+==[\w.\-]+", t)
+                                for t in toks):
+                    continue
             problems.append(
                 f"{wf.name}: loose pip install (not from "
-                f"requirements-ci.lock / -e . --no-deps): "
-                f"pip install {args}"
+                f"requirements-ci.lock / -e . --no-deps / pinned "
+                f"release tool): pip install {args}"
             )
     if _LOCK.exists() and not consumes_lock:
         problems.append("no workflow consumes requirements-ci.lock")

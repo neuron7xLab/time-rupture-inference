@@ -31,8 +31,21 @@ version can still be a compromised pinned version. Reaching
 clean venv (a separate deliberate step; blocked state recorded in
 `evidence/DEPENDENCY_HASH_LOCK_BLOCKED.json`).
 
+## Release build-tool exception (narrow, documented)
+
+The `release` workflow installs the PEP 517 build frontend as a fully
+`name==version` PINNED dependency (`build==1.5.0`) rather than from
+`requirements-ci.lock` (keeping the CI lock = the CI gate surface, not
+release tooling). `scripts/verify_ci_deps.py` permits this **only** in
+a release workflow and **only** when every token is `==`-pinned;
+non-release workflows get no such allowance. This is LEVEL_1 for the
+build tool too (pinned, not hash-locked); `build`'s own transitive
+deps are resolved by pip at release time and are not hash-locked
+(stated, not hidden).
+
 ## What IS proven
 
 CI cannot silently change a dependency version without a visible diff
 to `requirements-ci.lock`; `mypy`/`types-PyYAML` are declared, not
-smuggled; no gate workflow uses an unpinned package list.
+smuggled; no gate workflow uses an unpinned package list; the release
+build tool is version-pinned.

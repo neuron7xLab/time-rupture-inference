@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "9b40078cb3fc0fe87b14ef57dc1b779f8479f1c49a2c6ed8aa6f8c5088418cf6",
+      "sha256": "2b3fbddeef33b38217239ddd8089452f797f75b348fed44b3d1bfdd6c952e925",
       "spdx_header": "n/a"
     },
     {
@@ -160,6 +160,12 @@
     },
     {
       "license": "MIT",
+      "path": "scripts/audit_release_trust.py",
+      "sha256": "72255c9303f48704b92a1a3ff4bb6cbae54f1235d99f2605a679245079026582",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "scripts/audit_workflow_trust.py",
       "sha256": "cc91a08cd576137ed3bdd944d27610180bdb1d5acb1cce34b0f4d6e25230be7b",
       "spdx_header": true
@@ -180,6 +186,12 @@
       "license": "MIT",
       "path": "scripts/derive_v8_1_trigger_frequency.py",
       "sha256": "1d67b36874045490f859317879e61685d8661456b0472041221c76e23e2e8104",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/generate_sbom.py",
+      "sha256": "6fab40a6aa77bb23ea2accb1461c21703c235b5c7ad7193911c5e3fb03231f04",
       "spdx_header": true
     },
     {
@@ -245,7 +257,7 @@
     {
       "license": "MIT",
       "path": "scripts/verify_ci_deps.py",
-      "sha256": "61090114644c2f685d6a8b81895239234621e19b563f58a6327d33a2ce556408",
+      "sha256": "7951063dc248777a2e794a9b1e310de31df54f732961e3262b49fc6a383000b6",
       "spdx_header": true
     },
     {

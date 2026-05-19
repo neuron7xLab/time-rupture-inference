@@ -14,7 +14,7 @@ keywords = ["temporal-inference", "change-point", "falsification", "online-learn
 dependencies = ["numpy>=1.26", "matplotlib>=3.8", "pyyaml>=6.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.18", "types-PyYAML>=6.0"]
 
 [project.urls]
 Repository = "https://github.com/neuron7xLab/time-rupture-inference"
@@ -41,5 +41,10 @@ select = ["E", "F", "I", "UP", "B"]
 
 [tool.mypy]
 strict = true
-ignore_missing_imports = true
+# false: untyped third-party imports are an ERROR, not silently Any.
+# src/ctios imports only numpy (ships py.typed) and yaml (covered by
+# the declared types-PyYAML dev dep + mypy's built-in mapping). No
+# hand-written stub / mypy_path: that would shadow the maintained
+# stubs and drift. Verified `mypy --strict src/ctios` passes clean.
+ignore_missing_imports = false
 files = ["src/ctios"]

@@ -42,6 +42,8 @@ CRITICAL = [
     "scripts/audit_release_trust.py",
     "scripts/generate_sbom.py",
     "scripts/verify_scorecard_prerequisites.py",
+    "scripts/check_doc_trust.py",
+    "scripts/build_doc_trust_audit.py",
     "tools/check_verifier_manifest_static.py",
     ".github/workflows/ci.yml",
 ]

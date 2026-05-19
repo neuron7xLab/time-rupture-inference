@@ -3,6 +3,48 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — docs trust layer (claim/source/boundary gate)
+
+### VERIFIER_CHANGED
+
+`.github/workflows/ci.yml`
+
+### OLD_HASH
+
+`b6ccd5b14bd63304c7dba3437c490f02e70562f49fe2c6a7a943bd39e8d9ff91`
+(the NEW_HASH from the PR O entry below)
+
+### NEW_HASH
+
+`a797983a042941fc0bac5cf626b8ebb65197b7091c05aee2004d23a4a99a0e8c`
+
+### WHY_SAFE
+
+Strengthening only. ci.yml change: one new stdlib+yaml PR-blocking
+step in `proof-of-life` after the claim-lexicon lint —
+`build_doc_trust_audit.py --verify-only` then `check_doc_trust.py`
+(fails closed on a missing trust-layer file, an unknown source_id, an
+unsupported claim, an inspiration claim without its biological-fidelity
+boundary, a supply-chain claim without its not-hermetic/not-L3 ceiling,
+an unlinked open gap, a forbidden external phrase asserted outside a
+disclaimer, README bibliography bloat, or an over-long author note).
+No gate removed, no trigger/permission/SHA-pin change, no install
+loosened. The two new enforcement scripts
+(`scripts/check_doc_trust.py`, `scripts/build_doc_trust_audit.py`) are
+added to `verifier_manifest.lock` (more files protected, none
+unpinned) and are claims-lint-exempt by the same rationale as
+`scripts/claims_lint.py` (they hold the forbidden lexicon as data). No
+scientific claim expanded; no frozen metric/threshold/lineage touched.
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_doc_trust.py` (missing file / unknown source / unsupported
+claim / inspiration-without-boundary / supply-chain-without-ceiling /
+unlinked open-gap / forbidden-phrase / README-bibliography-bloat /
+author-note-overlength all rejected, live repo passes) + the doc-trust
+step as a CI gate + the verifier manifest gate (this NEW_HASH must
+match, and the two new pinned scripts' hashes must match the lock).
+
 ## Entry — PR O (supply-chain aggregate + Scorecard honesty)
 
 ### VERIFIER_CHANGED

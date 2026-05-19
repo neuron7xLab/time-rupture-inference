@@ -1,6 +1,6 @@
 # time-rupture-inference — Formal Specification
 
-Audience: an external evaluator at frontier-lab rigor. Every capability
+Audience: an external evaluator. Every capability
 is stated as **Claim → Falsifier → Evidence → Boundary**. Inverse
 argumentation: a claim is admitted only because its falsifier was run
 and did not trigger; the evidence is a reproducible artifact, not prose.

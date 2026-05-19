@@ -11,13 +11,13 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "7563b0ba6deb8af62194048f4ea83a235d71dd38fcb0bb2a803375449e78f4c6",
+      "sha256": "cc15d055d64b94d719d7f93cc4ae88f25b8326ba1b8d434d58ef5150a2271e7f",
       "spdx_header": "n/a"
     },
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "83193bca3890401eb9588c04cf839576773dcd087b3aeba229d745b972a81244",
+      "sha256": "a8b044690fb2cfc71dbe39ec385338acb68c1121fb7dd2decfb468c4c369de24",
       "spdx_header": "n/a"
     },
     {
@@ -172,8 +172,20 @@
     },
     {
       "license": "MIT",
+      "path": "scripts/build_doc_trust_audit.py",
+      "sha256": "0e1f36c5c37e4d3d0416c215ec0047c6b82cbc9d1f33ab7a1b789feae706e494",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "scripts/check_artifacts.py",
       "sha256": "b6466d30aef83297a31eef68c7286e30b9d97a7896b48b4d5b819caa561df05e",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/check_doc_trust.py",
+      "sha256": "280263c87c73484adc70348ebebe25c386e59b899572cca953b44ce960b73104",
       "spdx_header": true
     },
     {

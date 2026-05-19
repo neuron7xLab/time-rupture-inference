@@ -149,13 +149,13 @@
     {
       "license": "MIT",
       "path": "pyproject.toml",
-      "sha256": "b307acda16579a724abc522aecce84174514235383c97f81dce7ec843c44bd9c",
+      "sha256": "d0c575d95c1a158116caed91db2f7e600a6fe94397860d820af3ae4354fc6e12",
       "spdx_header": "n/a"
     },
     {
       "license": "MIT",
       "path": "requirements-lock.txt",
-      "sha256": "d476d282fb087f5fd91a13b5f6ca34998ebcef937c59438900c587774572e51d",
+      "sha256": "79eadcb19e8d84e68d730a60ffaf7d5a6e4bda4a9ae944032ff23b1a6ecb4895",
       "spdx_header": "n/a"
     },
     {

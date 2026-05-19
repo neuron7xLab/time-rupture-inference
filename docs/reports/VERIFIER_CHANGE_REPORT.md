@@ -3,6 +3,41 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — PR #38 (CI installs declared types-PyYAML)
+
+### VERIFIER_CHANGED
+
+`.github/workflows/ci.yml`
+
+### OLD_HASH
+
+`15e0ef3a03f0d31115ddb88c0493d81a5e58fc54e88d00e543fb006497a19bff`
+(the NEW_HASH from the PR K entry below)
+
+### NEW_HASH
+
+`0f01d7b40c90ee9681730e387678e8dbdb030387a5ba6eb1347a69361c9f752a`
+
+### WHY_SAFE
+
+Strengthening / consistency only. With `ignore_missing_imports=false`
+(this PR), `mypy --strict src/ctios` requires the `types-PyYAML`
+stubs. `types-PyYAML` is a declared dev dependency, but the loose
+`pip install` lines in the `gate` and external-adversarial jobs did
+not install it, so CI mypy broke. The change appends `types-PyYAML`
+to those loose installs (and v7-readiness.yml, unpinned) so CI
+actually installs the dependency the project declares. No gate
+removed, no trigger changed, no permission widened, SHA pins / verifier
+step / mypy-strict step untouched. CI now installs *more* of the
+declared toolchain, never less.
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_ci_mypy_explicit.py` (explicit `mypy --strict src/ctios`,
+no bare mypy) + the `gate` job's own `mypy --strict src/ctios` step
+(red without types-PyYAML, as observed on PR #38 run 1) + the verifier
+manifest gate (this entry's NEW_HASH must match).
+
 ## Entry — PR K (workflow SHA pinning + least-privilege)
 
 ### VERIFIER_CHANGED

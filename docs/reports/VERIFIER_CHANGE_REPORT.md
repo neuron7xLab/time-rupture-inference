@@ -3,6 +3,48 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — generated source mirror + complementary claim-source gate
+
+### VERIFIER_CHANGED
+
+`.github/workflows/ci.yml`, `scripts/build_doc_trust_audit.py`
+
+### OLD_HASH
+
+- ci.yml `38eed815f7d53f1b0273034c39f8457a584f25dff5bcd43ddb16e9ed93493eb8`
+- build_doc_trust_audit.py `f7578555d61a097c30d380901cb3b1f5ec35f8de5b3dd72bc660275eff963585`
+
+### NEW_HASH
+
+- ci.yml `46f9d3771d67b2f405a6f1c57de548b91f78774951a1bdbb103f5272c3dba552`
+- build_doc_trust_audit.py `70a230c8322b564de3b8cbe51124e05d4533c1c7a3ec121d086316cfe8dcafc7`
+
+### WHY_SAFE
+
+Strengthening only. `build_doc_trust_audit.py` now also renders
+`docs/SOURCE_REGISTRY.md` deterministically from
+`evidence/SOURCE_REGISTRY.yaml` and `--verify-only` fails closed on
+mirror drift (the human mirror can no longer diverge from the machine
+source of truth — a previously logged debt, now closed). `ci.yml`
+adds one stdlib step `python scripts/check_doc_claim_sources.py`
+inside the existing documentation trust gate: a flagged prior-art /
+standards term in a positioning doc must be accounted for in
+`docs/REFERENCES.md`, plus a forbidden-phrase-outside-disclaimer
+scan — strictly more fail-closed coverage, none removed. No
+trigger/permission/SHA-pin/install change, no gate removed. The new
+`scripts/check_doc_claim_sources.py` is pinned in
+`verifier_manifest.lock` and claims-lint-exempt (holds the lexicon as
+data). No scientific claim expanded; no frozen metric/threshold/
+lineage touched.
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_doc_claim_sources.py` (missing required doc / unmapped
+term / forbidden-phrase-outside-disclaimer rejected, disclaimer-wrapped
+allowed, live repo passes) + `build_doc_trust_audit.py --verify-only`
+mirror-drift check + the documentation trust gate + the verifier
+manifest gate (these NEW_HASHes must match).
+
 ## Entry — trust-layer hardening (real parser + ≥20 claims)
 
 ### VERIFIER_CHANGED

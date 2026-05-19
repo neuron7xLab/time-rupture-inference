@@ -3,6 +3,46 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — PR O (supply-chain aggregate + Scorecard honesty)
+
+### VERIFIER_CHANGED
+
+`.github/workflows/ci.yml`
+
+### OLD_HASH
+
+`e6d42bf2884a54b16ec1353268ea1f6e2b468c103b487e6c880f5c5065d2014c`
+(the NEW_HASH from the PR L entry below)
+
+### NEW_HASH
+
+`b6ccd5b14bd63304c7dba3437c490f02e70562f49fe2c6a7a943bd39e8d9ff91`
+
+### WHY_SAFE
+
+Strengthening only. ci.yml change: one new stdlib-only PR-blocking
+step in `proof-of-life` after the existing trust audits —
+`verify_scorecard_prerequisites.py` then
+`python -m ctios.supply_chain_audit` (fail-closed aggregate over the
+verifier/workflow/dependency/release/SBOM/Scorecard-honesty roots).
+No gate removed, no trigger/permission/SHA-pin change, no install
+loosened (still `-r requirements-ci.lock`). Additionally this PR
+**closes a logged debt**: the trust scripts (`audit_workflow_trust`,
+`verify_ci_deps`, `audit_release_trust`, `generate_sbom`,
+`verify_scorecard_prerequisites`) and `src/ctios/supply_chain_audit.py`
+are now pinned in `verifier_manifest.lock` — strictly more files
+protected, none unpinned. Honest level unchanged and not inflated
+(`SUPPLY_CHAIN_CONSISTENT_FAIL_CLOSED`; not hermetic, not
+hash-locked, not SLSA L3, Scorecard NOT_RUN).
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_supply_chain_audit.py` (fabricated Scorecard score /
+RUN-without-artifact / missing status / single-root failure all
+rejected, live repo passes) + the aggregate as a CI gate + the
+verifier manifest gate (this NEW_HASH must match, and the newly
+pinned trust scripts' hashes must match their lock entries).
+
 ## Entry — PR L (CI consumes pinned lock + dep-trust gate)
 
 ### VERIFIER_CHANGED

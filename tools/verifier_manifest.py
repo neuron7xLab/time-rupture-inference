@@ -36,6 +36,12 @@ CRITICAL = [
     "src/ctios/mechanism_inventory.py",
     "src/ctios/test_value_audit.py",
     "src/ctios/deep_adversarial_probes.py",
+    "src/ctios/supply_chain_audit.py",
+    "scripts/audit_workflow_trust.py",
+    "scripts/verify_ci_deps.py",
+    "scripts/audit_release_trust.py",
+    "scripts/generate_sbom.py",
+    "scripts/verify_scorecard_prerequisites.py",
     "tools/check_verifier_manifest_static.py",
     ".github/workflows/ci.yml",
 ]

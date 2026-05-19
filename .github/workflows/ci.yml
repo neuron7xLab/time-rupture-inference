@@ -32,6 +32,10 @@ jobs:
         run: python scripts/audit_workflow_trust.py
       - name: dependency trust audit (CI consumes pinned lock, stdlib)
         run: python scripts/verify_ci_deps.py
+      - name: supply-chain trust aggregate (fail-closed, stdlib)
+        run: |
+          python scripts/verify_scorecard_prerequisites.py
+          PYTHONPATH=src python -m ctios.supply_chain_audit
       - run: pip install -q -r requirements-ci.lock
       - name: lint
         run: ruff check src tests scripts

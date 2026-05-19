@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "2b3fbddeef33b38217239ddd8089452f797f75b348fed44b3d1bfdd6c952e925",
+      "sha256": "7563b0ba6deb8af62194048f4ea83a235d71dd38fcb0bb2a803375449e78f4c6",
       "spdx_header": "n/a"
     },
     {
@@ -258,6 +258,12 @@
       "license": "MIT",
       "path": "scripts/verify_ci_deps.py",
       "sha256": "7951063dc248777a2e794a9b1e310de31df54f732961e3262b49fc6a383000b6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/verify_scorecard_prerequisites.py",
+      "sha256": "1c0f5a01f251db0e971a4ca575c4e663d2a9ad520724bb74a4763df744399fed",
       "spdx_header": true
     },
     {
@@ -546,6 +552,12 @@
       "license": "MIT",
       "path": "src/ctios/spec_compiler.py",
       "sha256": "3fe87484f6388af7c38c03a2332cb081f83012eb36358a0b134868aaac4630a6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/supply_chain_audit.py",
+      "sha256": "9fe472dbd196c9c63608c1b3e1bfaf8d07366e98c163c583e2d3cb787425c8e7",
       "spdx_header": true
     },
     {

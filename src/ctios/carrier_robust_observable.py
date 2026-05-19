@@ -26,8 +26,12 @@ from ctios.benchmark_families import (
     NullNoRuptureFamily,
     SingleRuptureGaussianFamily,
 )
+from ctios.change_detection import (
+    first_crossing,
+    median_mad_contrast,
+    quantile_calibrated_threshold,
+)
 from ctios.falsify import HypothesisSpec, Verdict, falsify
-from ctios.predictive_simulation import RuptureStream
 
 _ROOT = Path(__file__).resolve().parents[2]
 _W_SHORT = 60
@@ -40,35 +44,21 @@ _CAL_NULL = range(100, 116)
 _EVAL = range(0, 12)
 
 
+# The #28 observable, expressed via the shared primitive
+# (byte-identical: median/MAD wide two-window contrast).
+_CONTRAST = median_mad_contrast(_W_SHORT, _W_BASE)
+
+
 def _contrast(obs: np.ndarray) -> np.ndarray:
-    """|median(short) - median(base)| / (pooled_MAD + eps). A wide
-    median is robust to a bounded additive low-frequency carrier while
-    preserving a level step. Index < warmup is 0."""
-    n = obs.size
-    s = np.zeros(n, dtype=np.float64)
-    for t in range(_WARMUP, n):
-        short = obs[t - _W_SHORT:t]
-        base = obs[t - _W_BASE - _W_SHORT:t - _W_SHORT]
-        ms, mb = np.median(short), np.median(base)
-        mad = 0.5 * (
-            np.median(np.abs(short - ms)) + np.median(np.abs(base - mb))
-        )
-        s[t] = abs(ms - mb) / (mad + _EPS)
-    return s
+    return _CONTRAST(np.asarray(obs, dtype=np.float64))
 
 
 def _first_cross(obs: np.ndarray, lam: float) -> int:
-    s = _contrast(np.asarray(obs, dtype=np.float64))
-    idx = np.flatnonzero(s > lam)
-    return int(idx[0]) if idx.size else -1
+    return first_crossing(_contrast(obs), lam)
 
 
 def calibrate_lambda(alpha: float = ALPHA) -> float:
-    peaks = [
-        float(np.max(_contrast(RuptureStream.make_null(s).obs)))
-        for s in _CAL_NULL
-    ]
-    return float(np.quantile(peaks, 1.0 - alpha))
+    return quantile_calibrated_threshold(_CONTRAST, _CAL_NULL, alpha)
 
 
 class CarrierRobustDetector:

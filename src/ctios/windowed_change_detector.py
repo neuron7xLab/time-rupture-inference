@@ -19,6 +19,11 @@ from pathlib import Path
 
 import numpy as np
 
+from ctios.change_detection import (
+    first_crossing,
+    mean_std_contrast,
+    quantile_calibrated_threshold,
+)
 from ctios.falsify import HypothesisSpec, Verdict, falsify
 from ctios.predictive_simulation import RuptureStream
 
@@ -35,35 +40,21 @@ _EVAL_RUPT = range(0, 12)
 _EVAL_NULL = range(200, 212)
 
 
+# The #26 observable, expressed via the shared primitive (byte-identical
+# behaviour — the duplicated body is gone, the essence remains).
+_CONTRAST = mean_std_contrast(_W_SHORT, _W_BASE)
+
+
 def _contrast(obs: np.ndarray) -> np.ndarray:
-    """S_t = |mean(short) - mean(base)| / (pooled_std + eps).
-    Stationary under null (two windows of the same process); spikes
-    when a regime boundary falls between the windows. Index < warmup
-    is 0 (insufficient history)."""
-    n = obs.size
-    s = np.zeros(n, dtype=np.float64)
-    for t in range(_WARMUP, n):
-        short = obs[t - _W_SHORT:t]
-        base = obs[t - _W_BASE - _W_SHORT:t - _W_SHORT]
-        pooled = np.sqrt(0.5 * (short.var() + base.var()))
-        s[t] = abs(short.mean() - base.mean()) / (pooled + _EPS)
-    return s
+    return _CONTRAST(obs)
 
 
 def _first_cross(obs: np.ndarray, lam: float) -> int:
-    s = _contrast(obs)
-    idx = np.flatnonzero(s > lam)
-    return int(idx[0]) if idx.size else -1
+    return first_crossing(_CONTRAST(obs), lam)
 
 
 def calibrate_lambda(alpha: float = ALPHA) -> float:
-    """λ = (1-α) empirical quantile of per-stream max contrast over the
-    held-out null calibration seeds. Fixed rule, no hand-tuning."""
-    peaks = [
-        float(np.max(_contrast(RuptureStream.make_null(s).obs)))
-        for s in _CAL_NULL
-    ]
-    return float(np.quantile(peaks, 1.0 - alpha))
+    return quantile_calibrated_threshold(_CONTRAST, _CAL_NULL, alpha)
 
 
 class WindowedDetector:

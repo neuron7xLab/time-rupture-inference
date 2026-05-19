@@ -1,0 +1,5 @@
+# CI dependency surface (intent). The pinned, resolved set CI actually
+# installs is requirements-ci.lock (no hashes -> LEVEL_1, not
+# hash-locked). Regenerate the lock deliberately, never by raw freeze
+# of a polluted env. See docs/DEPENDENCY_TRUST_CONTRACT.md.
+-e .[dev]

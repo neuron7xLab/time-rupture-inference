@@ -17,6 +17,7 @@
 | test_causal_runner.py | KILL_TEST |
 | test_change_detection.py | CONTRACT_TEST |
 | test_change_detection_arc.py | ARTIFACT_TEST |
+| test_ci_deps_contract.py | ARTIFACT_TEST |
 | test_ci_mypy_explicit.py | ARTIFACT_TEST |
 | test_claims_lexicon.py | CLAIM_BOUNDARY_TEST |
 | test_claims_lint_scope.py | CLAIM_BOUNDARY_TEST |

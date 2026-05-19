@@ -1,0 +1,6 @@
+{
+  "hermeticity_level": "LEVEL_1_PINNED_NO_HASHES",
+  "hash_lock_blocked": true,
+  "exact_blocker": "requirements-ci.lock is a deliberate pinned set with no per-package --hash entries; pip --require-hashes is therefore impossible. Generating hashes needs pip-compile --generate-hashes from a clean venv including the editable project build, which is a separate deliberate step (LEVEL_2). Not done here; not claimed.",
+  "claim": "pinned versions only; NOT hash-locked, NOT hermetic, NOT supply-chain-sealed"
+}

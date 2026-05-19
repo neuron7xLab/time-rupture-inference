@@ -23,6 +23,7 @@ Computed by `python -m ctios.mechanism_inventory`. Every CORE_MECHANISM must hav
 | src/ctios/code_quality_audit.py | REPRODUCIBILITY_GUARD | test_code_quality_audit.py |
 | src/ctios/contract.py | CLAIM_BOUNDARY | test_agents.py |
 | src/ctios/deep_adversarial_probes.py | ADVERSARIAL_PROBE | test_deep_adversarial_probes.py |
+| src/ctios/design_lineage.py | REPRODUCIBILITY_GUARD | test_design_lineage.py |
 | src/ctios/drift.py | CORE_MECHANISM | test_core_contract_audit.py |
 | src/ctios/env.py | CORE_MECHANISM | test_agents.py |
 | src/ctios/external_validation.py | FALSIFIER | test_external_validation_tamper.py |
@@ -48,7 +49,7 @@ Computed by `python -m ctios.mechanism_inventory`. Every CORE_MECHANISM must hav
 | src/ctios/series.py | CORE_MECHANISM | test_series.py |
 | src/ctios/spec_cli.py | REVIEWER_SURFACE | test_spec_compiler.py |
 | src/ctios/spec_compiler.py | CORE_MECHANISM | test_report.py |
-| src/ctios/test_value_audit.py | CORE_MECHANISM | test_test_value_audit.py |
+| src/ctios/test_value_audit.py | REPRODUCIBILITY_GUARD | test_test_value_audit.py |
 | src/ctios/utils.py | CORE_MECHANISM | test_core_contract_audit.py |
 | src/ctios/v6_precision.py | FALSIFIER | test_core_contract_audit.py |
 | src/ctios/windowed_change_detector.py | CORE_MECHANISM | test_change_detection.py |

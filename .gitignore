@@ -31,3 +31,4 @@ docs/reports/DEEP_MECHANISM_AUDIT_REPORT.md
 evidence/DESIGN_LINEAGE.json
 evidence/WORKFLOW_TRUST_AUDIT.json
 evidence/DEPENDENCY_TRUST_AUDIT.json
+evidence/RELEASE_TRUST_AUDIT.json

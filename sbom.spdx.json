@@ -1,0 +1,291 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "comment": "Generated from requirements-ci.lock (pinned, LEVEL_1, no hashes). Source commit recorded in documentNamespace.",
+  "creationInfo": {
+    "created": "2026-05-19T11:21:02Z",
+    "creators": [
+      "Tool: ctios-generate_sbom",
+      "Organization: neuron7xLab"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentDescribes": [
+    "SPDXRef-Package-time-rupture-inference"
+  ],
+  "documentNamespace": "https://github.com/neuron7xLab/time-rupture-inference/sbom/03a6b1c50086f2972d4eaf91752f25c32fd043cb",
+  "name": "time-rupture-inference-SBOM",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-time-rupture-inference",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "time-rupture-inference",
+      "supplier": "Organization: neuron7xLab",
+      "versionInfo": "0.1.1"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-PyYAML",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "PyYAML",
+      "versionInfo": "6.0.3"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-contourpy",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "contourpy",
+      "versionInfo": "1.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cycler",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "cycler",
+      "versionInfo": "0.12.1"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fonttools",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "fonttools",
+      "versionInfo": "4.62.1"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-iniconfig",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "iniconfig",
+      "versionInfo": "2.3.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-kiwisolver",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "kiwisolver",
+      "versionInfo": "1.5.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-matplotlib",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "matplotlib",
+      "versionInfo": "3.10.8"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-mypy",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "mypy",
+      "versionInfo": "1.18.2"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-mypy-extensions",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "mypy_extensions",
+      "versionInfo": "1.1.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-numpy",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "numpy",
+      "versionInfo": "2.4.3"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-packaging",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "packaging",
+      "versionInfo": "23.2"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pillow",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "pillow",
+      "versionInfo": "12.2.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pluggy",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "pluggy",
+      "versionInfo": "1.6.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pyparsing",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "pyparsing",
+      "versionInfo": "3.1.1"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pytest",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "pytest",
+      "versionInfo": "8.4.2"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-python-dateutil",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "python-dateutil",
+      "versionInfo": "2.8.2"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ruff",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "ruff",
+      "versionInfo": "0.14.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-six",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "six",
+      "versionInfo": "1.16.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-types-PyYAML",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "types-PyYAML",
+      "versionInfo": "6.0.12.20250915"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-typing-extensions",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "name": "typing_extensions",
+      "versionInfo": "4.15.0"
+    }
+  ],
+  "relationships": [
+    {
+      "relatedSpdxElement": "SPDXRef-Package-PyYAML",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-contourpy",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-cycler",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-fonttools",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-iniconfig",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-kiwisolver",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-matplotlib",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-mypy",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-mypy-extensions",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-numpy",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-packaging",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-pillow",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-pluggy",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-pyparsing",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-pytest",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-python-dateutil",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-ruff",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-six",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-types-PyYAML",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-typing-extensions",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-time-rupture-inference"
+    }
+  ],
+  "spdxVersion": "SPDX-2.3"
+}

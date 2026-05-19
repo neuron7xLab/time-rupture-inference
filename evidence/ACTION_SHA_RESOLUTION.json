@@ -19,6 +19,12 @@
       "tag": "v4",
       "resolved_sha": "ea165f8d65b6e75b540449e92b4886f43607fa02",
       "source_ref": "refs/tags/v4"
+    },
+    {
+      "action": "actions/attest-build-provenance",
+      "tag": "v2",
+      "resolved_sha": "e8998f949152b193b063cb0ec769d69d929409be",
+      "source_ref": "refs/tags/v2"
     }
   ]
 }

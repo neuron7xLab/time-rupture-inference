@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: MIT
+# External reviewer packet — REDACTED SKELETON TEMPLATE.
+# Copy this file, fill ONLY the shape of your hypothesis. The private
+# mechanism, dataset, and theorem text NEVER go here — they live in a
+# local opaque probe you implement on your own machine.
+# <!-- claims:disclaimer -->
+# This template enumerates forbidden inferences as a hard negative
+# boundary; it makes no positive claim about any system.
+# <!-- claims:end -->
+
+hypothesis_id: external_redacted_demo
+
+claim: >-
+  A privately-defined estimator separates from a stated baseline on a
+  pinned metric — structure only, mechanism withheld.
+
+null: >-
+  The estimator does not separate from the baseline on the pinned
+  metric.
+
+assumptions:
+  - The mechanism is supplied as a LOCAL opaque probe, never disclosed.
+  - The estimator receives only the observation stream.
+
+variables:
+  - name: manipulated_factor
+    role: manipulated
+    description: abstract name only; realization stays private
+  - name: measured_outcome
+    role: measured
+    description: the scalar the local probe exposes as the falsifier surface
+  - name: degenerate_control
+    role: control
+    description: must fail the falsifiers (discriminative gate)
+
+falsifiers:
+  - metric: measured_outcome
+    op: "<="
+    threshold_key: ceiling
+    threshold: 1.0          # placeholder; pin before any real run
+  - metric: separation
+    op: ">="
+    threshold_key: min_sep
+    threshold: 0.10         # placeholder; pin before any real run
+
+# <!-- claims:disclaimer -->
+forbidden_inferences:
+  - No cognition, consciousness, intelligence, or AGI is claimed.
+  - No biological-fidelity or brain-equivalence is claimed.
+  - No theory of time is claimed.
+  - A survived check does NOT prove the private theorem.
+  - No real-world validity is claimed.
+# <!-- claims:end -->
+
+evidence_requirements:
+  - artifact: sealed_verdict_json
+    description: verdict + battery + spec sha256, sanitized
+  - artifact: pinned_spec_sha256
+    description: deterministic hash over claim + falsifiers + boundary
+
+human_review_required: true
+commit_private_content: false
+reviewer_notes: "kept OUTSIDE the repository by the collaborator"
+
+next_experiment_policy:
+  auto_run: false
+  tighten_surviving_checks: true
+  loosen_failed_checks: false
+  failed_boundary_becomes_focus: true
+
+# NEVER-SHARE (must not appear anywhere in this file or any artifact):
+#   private mechanism, raw/derived dataset, strategy, theorem content,
+#   any numeric realization that reconstructs the mechanism.

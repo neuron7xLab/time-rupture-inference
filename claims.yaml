@@ -64,6 +64,7 @@ scan_globs:
   - "scripts/**/*.py"
   - "scripts/**/*.sh"
   - ".github/workflows/**/*.yml"
+  - "release/**/*.md"
 # Internal audit / RCA / critique / limitation / prereg-negation docs
 # are *evidence about the risk*, not outward positioning — they exist
 # to enumerate the boundary and are exempt by the same rationale as
@@ -90,4 +91,13 @@ exempt:
   - "docs/INDI_LIMITATIONS.md"
   - "docs/CONTRIBUTION_CLAIMS.md"
   - "docs/ADVERSARIAL_PORTABILITY_REPORT.md"
+  - "docs/EXTERNAL_VALIDATION_PROTOCOL.md"
+  - "docs/CODE_QUALITY_AUDIT.md"
+  - "docs/FRONTIER_READINESS_REPORT.md"
+  - "docs/NO_AUTHOR_REQUIRED_REVIEW.md"
   - "docs/reports/*"
+  # Release-pack boundary/risk docs enumerate forbidden inferences as a
+  # hard negative boundary — evidence about scope, not positioning.
+  - "release/**/CLAIM_BOUNDARY.md"
+  - "release/**/RESIDUAL_RISKS.md"
+  - "release/**/EXPECTED_OUTPUTS.md"

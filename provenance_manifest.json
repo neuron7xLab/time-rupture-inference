@@ -11,13 +11,13 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "670edb108d42833a19e1bab70bbe172420881bc7c50d11f5253432f825bfe04f",
+      "sha256": "6d112959b4104a45dc828a4b3bc08444e2109e023d7c78be29d213760e88362d",
       "spdx_header": "n/a"
     },
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "6a9cd25b077696f74d3c3d821ed25acc2864a06cea3bbc2bc8aaa68e08c7d077",
+      "sha256": "8d001089f4dbec3d6368e4479df91967a91b9addc4c8974ddcb7042c6b6963e7",
       "spdx_header": "n/a"
     },
     {
@@ -432,6 +432,12 @@
       "license": "MIT",
       "path": "src/ctios/predictive_simulation.py",
       "sha256": "c3eb099cfa9e1f53ca4f2cb59b1a61e8dc3a30360a74719b56b5f4899790ef46",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/readiness_score.py",
+      "sha256": "bbc3cce5da98ec44fd87f868b6308f2ec1b99374deb80d9ea1418ea6db7ea374",
       "spdx_header": true
     },
     {

@@ -19,3 +19,6 @@ prereg/NEXT_*.yaml
 evidence/WINDOWED_OOD_BOUNDARY_MAP.json
 evidence/PORTFOLIO_FALSIFIER_MAP.json
 evidence/CHANGE_DETECTION_ARC.json
+evidence/REVIEWER_ATTACK_RESULT.json
+docs/reports/REVIEWER_ATTACK_REPORT.md
+external_reviewer_packet/

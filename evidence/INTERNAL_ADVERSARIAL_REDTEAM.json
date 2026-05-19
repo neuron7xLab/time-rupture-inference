@@ -1,0 +1,45 @@
+{
+  "all_roles_clean": true,
+  "breached_roles": [],
+  "gap_1_status": "OPEN \u2014 unchanged by construction; this artifact is self-produced and cannot close it",
+  "generated_utc": "2026-05-19T16:58:23Z",
+  "independent_validation": false,
+  "note": "Self-simulation finds defects; it does not certify independence. Multi-role recursion raises internal rigor only. External author-absent reproduction remains required.",
+  "roles": [
+    {
+      "breach": false,
+      "detail": "7 passed in 0.33s",
+      "probe": "planted-violation lexicon/scope tests",
+      "role": "ATTACKER"
+    },
+    {
+      "breach": false,
+      "detail": "49 passed in 0.29s",
+      "probe": "gate-mutation-rejection tests",
+      "role": "SKEPTIC"
+    },
+    {
+      "breach": false,
+      "detail": "claims_lint='CLAIMS LINT \u2014 PASS (138 files clean)' nonclaim_blocks=True",
+      "probe": "no self-eval-as-evidence: claims-lint + non-claim blocks present",
+      "role": "ILYA"
+    },
+    {
+      "breach": false,
+      "detail": "both_open=True structural_gaps_test='5 passed in 0.10s'",
+      "probe": "claim-boundary: GAP_1+GAP_2 OPEN, no READY leak",
+      "role": "DARIO"
+    },
+    {
+      "breach": false,
+      "detail": {
+        "pytest": "PASS",
+        "ruff": "PASS"
+      },
+      "independent": false,
+      "probe": "locally-runnable repro (NON-INDEPENDENT)",
+      "role": "REPRODUCER-SIMULANT"
+    }
+  ],
+  "tier": "INTERNAL_ADVERSARIAL"
+}

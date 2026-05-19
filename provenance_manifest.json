@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "593860a5eb5675ca35d8c446f50e09a526cbf87ad35aaec3f485ccfff08a0991",
+      "sha256": "55e4acf995eddb0209c40f3da3296a07385d2b9e398c2da2743c91a39ac55336",
       "spdx_header": "n/a"
     },
     {
@@ -222,6 +222,12 @@
       "license": "MIT",
       "path": "scripts/generate_sbom.py",
       "sha256": "6fab40a6aa77bb23ea2accb1461c21703c235b5c7ad7193911c5e3fb03231f04",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/internal_adversarial_redteam.py",
+      "sha256": "35dd3f7061c45fd0bf41f8c9976d95b87db3eaee19f4bc3ee554954f4b277e8c",
       "spdx_header": true
     },
     {

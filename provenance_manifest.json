@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "6d37b55fd9d438c16dbbd93476c2def9697214f9a61ff21898b9f72e3d70fa95",
+      "sha256": "21f60dca7070a5a8cecca07cacf07048bfc9950f0a4b6b126160f05021c153ca",
       "spdx_header": "n/a"
     },
     {
@@ -335,7 +335,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/artifact_assertions.py",
-      "sha256": "9d604a0f1949988ee9e594c8f1696c3516a428a5fe5a4d0712a0b32514909f6e",
+      "sha256": "ee69b00294b73a0766b6e48d40f8ee5eb2bd6b4e57eaa857239ec5b7e0beef31",
       "spdx_header": true
     },
     {

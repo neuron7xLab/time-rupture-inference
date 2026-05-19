@@ -67,6 +67,21 @@ reproduction command, a passing `provenance_attest` (sha256 + SPDX),
 and the byte-identical frozen runner outputs. Evidence is an artifact,
 not a sentence.
 
+## Archive freshness boundary (scoped, honest)
+
+Artifact-freshness verification (`ctios.artifact_assertions`,
+`commit_key`) needs a resolvable reference commit. It resolves from
+**git HEAD** (a clone) or, in a provenance-stripped archive, a
+committed **`evidence/SOURCE_COMMIT`** pin written by the release
+packaging step. A hand-zipped tree with `.git` removed **and** no
+`SOURCE_COMMIT` pin **fails closed** — freshness is reported
+`UNVERIFIABLE`, never silently passed. A zero / placeholder commit is
+stale in every environment. So "reproducible from a clean archive" is
+scoped to a clone or a release archive carrying the provenance pin;
+it is *not* claimed for an arbitrary provenance-stripped zip, by
+design, and that path fails loudly rather than inheriting a false
+"fresh" status.
+
 ## What does not count as evidence
 
 A fluent argument that the claim is true; a benchmark score with no

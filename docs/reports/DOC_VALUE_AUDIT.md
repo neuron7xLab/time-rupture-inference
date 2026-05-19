@@ -6,7 +6,7 @@ Generated from `evidence/DOC_TRUST_AUDIT.json` by `scripts/build_doc_trust_audit
 - sources mapped: **16**
 - boundary/inspiration claims: **6**
 - open gaps referenced: **2**
-- downgraded (logged): **2**
+- downgraded (logged): **3**
 
 ## Findings
 

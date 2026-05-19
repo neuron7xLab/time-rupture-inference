@@ -17,3 +17,4 @@ evidence/NEGATIVE_FALSIFY_*.md
 evidence/ADVERSARIAL_PORTABILITY_*.json
 prereg/NEXT_*.yaml
 evidence/WINDOWED_OOD_BOUNDARY_MAP.json
+evidence/PORTFOLIO_FALSIFIER_MAP.json

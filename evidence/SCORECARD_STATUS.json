@@ -1,0 +1,10 @@
+{
+  "tool": "OpenSSF Scorecard",
+  "status": "NOT_RUN",
+  "score": null,
+  "scorecard_json": null,
+  "tool_version": null,
+  "reason": "OpenSSF Scorecard requires live GitHub API network access (repo metadata, branch-protection, dependency graph). The project operating contract (CLAUDE.md) imposes a hard 'No network in CI/tests' invariant; the in-gate supply-chain audit is therefore offline-only and CANNOT execute Scorecard. Running it would either violate the offline invariant or fabricate a score. It is recorded NOT_RUN, not PASS.",
+  "honest_position": "No Scorecard number is claimed anywhere. If Scorecard is ever run, it must be out-of-band (a separate non-gate, network-permitted workflow or a maintainer's machine), and this file must then be replaced with status RUN carrying a real tool_version + a committed scorecard_json artifact path produced by that run.",
+  "recorded_by": "scripts/verify_scorecard_prerequisites.py contract"
+}

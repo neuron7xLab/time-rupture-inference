@@ -1,0 +1,78 @@
+# Test Value Audit (generated)
+
+`python -m ctios.test_value_audit`. WEAK_OR_DECORATIVE tests must not be cited as proof of correctness.
+
+| test file | class |
+|---|---|
+| test_adversarial_probes.py | ARTIFACT_TEST |
+| test_agent.py | KILL_TEST |
+| test_agents.py | KILL_TEST |
+| test_artifact_assertions.py | KILL_TEST |
+| test_automation_gateway.py | ARTIFACT_TEST |
+| test_benchmark_families.py | KILL_TEST |
+| test_calibrated_change_detector.py | ARTIFACT_TEST |
+| test_carrier_robust_observable.py | ARTIFACT_TEST |
+| test_causal_agents.py | CONTRACT_TEST |
+| test_causal_env.py | ARTIFACT_TEST |
+| test_causal_runner.py | KILL_TEST |
+| test_change_detection.py | CONTRACT_TEST |
+| test_change_detection_arc.py | ARTIFACT_TEST |
+| test_claims_lexicon.py | CLAIM_BOUNDARY_TEST |
+| test_claims_lint_scope.py | CLAIM_BOUNDARY_TEST |
+| test_code_quality_audit.py | CONTRACT_TEST |
+| test_contract_invariant.py | KILL_TEST |
+| test_core_contract_audit.py | KILL_TEST |
+| test_deep_adversarial_probes.py | CONTRACT_TEST |
+| test_env_determinism.py | CONTRACT_TEST |
+| test_external_validation_status.py | KILL_TEST |
+| test_external_validation_tamper.py | KILL_TEST |
+| test_falsification_battery.py | CONTRACT_TEST |
+| test_falsifier_battery_v2.py | CLAIM_BOUNDARY_TEST |
+| test_falsify_engine.py | KILL_TEST |
+| test_governance_surface.py | KILL_TEST |
+| test_human_gate.py | KILL_TEST |
+| test_leakage_hardening.py | CLAIM_BOUNDARY_TEST |
+| test_mechanism_inventory.py | CONTRACT_TEST |
+| test_metrics.py | ARTIFACT_TEST |
+| test_no_leakage.py | CLAIM_BOUNDARY_TEST |
+| test_opaque_probe.py | KILL_TEST |
+| test_oracle_hierarchy.py | ARTIFACT_TEST |
+| test_portfolio_falsifier.py | ARTIFACT_TEST |
+| test_predictive_simulation.py | CLAIM_BOUNDARY_TEST |
+| test_property_bounded_adaptation.py | CONTRACT_TEST |
+| test_provenance.py | ARTIFACT_TEST |
+| test_readiness_score.py | ARTIFACT_TEST |
+| test_readme_sync.py | ARTIFACT_TEST |
+| test_redacted_io.py | KILL_TEST |
+| test_redacted_spec.py | KILL_TEST |
+| test_replay_hash.py | ARTIFACT_TEST |
+| test_report.py | ARTIFACT_TEST |
+| test_runner_mode.py | KILL_TEST |
+| test_scalar_inexpressibility_env.py | ARTIFACT_TEST |
+| test_series.py | KILL_TEST |
+| test_spec_compiler.py | KILL_TEST |
+| test_surface_claim_hardening.py | CLAIM_BOUNDARY_TEST |
+| test_test_value_audit.py | KILL_TEST |
+| test_v6_precision.py | KILL_TEST |
+| test_v7_artifact_schema.py | ARTIFACT_TEST |
+| test_v7_config.py | ARTIFACT_TEST |
+| test_v7_diagnostics.py | CONTRACT_TEST |
+| test_v8_1_oracle_hierarchy.py | ARTIFACT_TEST |
+| test_v8_1_scalar_inexpressibility_structure.py | ARTIFACT_TEST |
+| test_v8_1_trigger_frequency.py | KILL_TEST |
+| test_v8_2_artifact_schema.py | ARTIFACT_TEST |
+| test_v8_2_carrier_decomposition.py | ARTIFACT_TEST |
+| test_v8_2_no_learned_model.py | ARTIFACT_TEST |
+| test_v8_2_trigger_scoped_metrics.py | CONTRACT_TEST |
+| test_v8_2_verdict_not_ci_gate.py | CLAIM_BOUNDARY_TEST |
+| test_v8_3_causal_bound.py | KILL_TEST |
+| test_v8_3_correct_history_oracle.py | ARTIFACT_TEST |
+| test_v8_3_no_learned_model.py | ARTIFACT_TEST |
+| test_v8_4_causal_bound_warm.py | KILL_TEST |
+| test_v8_4_env_structure.py | ARTIFACT_TEST |
+| test_v8_4_no_learned_model.py | ARTIFACT_TEST |
+| test_v9_learned_contract.py | CONTRACT_TEST |
+| test_windowed_change_detector.py | ARTIFACT_TEST |
+| test_windowed_detector_ood.py | ARTIFACT_TEST |
+
+weak_or_decorative: (none)

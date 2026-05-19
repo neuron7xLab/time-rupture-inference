@@ -22,3 +22,9 @@ evidence/CHANGE_DETECTION_ARC.json
 evidence/REVIEWER_ATTACK_RESULT.json
 docs/reports/REVIEWER_ATTACK_REPORT.md
 external_reviewer_packet/
+evidence/CODE_QUALITY_AUDIT_RESULT.json
+evidence/MECHANISM_INVENTORY.json
+evidence/TEST_VALUE_AUDIT.json
+evidence/DEEP_MECHANISM_AUDIT_RESULT.json
+docs/reports/CODE_QUALITY_AUDIT_REPORT.md
+docs/reports/DEEP_MECHANISM_AUDIT_REPORT.md

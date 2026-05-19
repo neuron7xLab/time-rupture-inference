@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "6d112959b4104a45dc828a4b3bc08444e2109e023d7c78be29d213760e88362d",
+      "sha256": "d575dba96ea7bed4eb3c1e762fae1fda075ae2956c02ee280946e50ea44ea210",
       "spdx_header": "n/a"
     },
     {
@@ -280,6 +280,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/artifact_assertions.py",
+      "sha256": "9d604a0f1949988ee9e594c8f1696c3516a428a5fe5a4d0712a0b32514909f6e",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/automation.py",
       "sha256": "aca7672111e44a876c0413e82b4f3960f2aae5dd9ad56765d547d93bc29de742",
       "spdx_header": true
@@ -346,8 +352,20 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/code_quality_audit.py",
+      "sha256": "18f56c3cced422d7fd2f5ce44e10389449eae939bf1775b3bca3e8b5d0270ebd",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/contract.py",
       "sha256": "eeb0de7cb039fb470f0e61001bbe34ece1588a7fd0def8c7951f57fca4c74227",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/deep_adversarial_probes.py",
+      "sha256": "56eca4a04c506d28d9e4e6cb3fca0152c6c81bd4dfeac6b45c8143fb20c87c55",
       "spdx_header": true
     },
     {
@@ -360,6 +378,12 @@
       "license": "MIT",
       "path": "src/ctios/env.py",
       "sha256": "d936795dde01a6ebf97f574aa2914e6e8da225f042c6415be62d75c52d626597",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/external_validation.py",
+      "sha256": "18c9d16abd31757b2495d9d7fd5a0d61ac00235716d38e9b5ae82ed9b0d4de2c",
       "spdx_header": true
     },
     {
@@ -406,6 +430,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/mechanism_inventory.py",
+      "sha256": "98766f9d634ec10f4f108afc06ddb161f890a5d472cb88a943b9a68cd6bf42a9",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/metrics.py",
       "sha256": "391784683c96b448d17730f88437038984c16313361abc48f910c30fd79fbf14",
       "spdx_header": true
@@ -437,7 +467,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/readiness_score.py",
-      "sha256": "bbc3cce5da98ec44fd87f868b6308f2ec1b99374deb80d9ea1418ea6db7ea374",
+      "sha256": "0729ba8a71f1da06f544cf087d5eb09e39aa730ea47f6b7e2bd030ae70c262e1",
       "spdx_header": true
     },
     {
@@ -486,6 +516,12 @@
       "license": "MIT",
       "path": "src/ctios/spec_compiler.py",
       "sha256": "3fe87484f6388af7c38c03a2332cb081f83012eb36358a0b134868aaac4630a6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/test_value_audit.py",
+      "sha256": "d8ec5c853271b55ce240b79a32e1f5cc760122ec896d3d4b031f743e5cd18ec5",
       "spdx_header": true
     },
     {

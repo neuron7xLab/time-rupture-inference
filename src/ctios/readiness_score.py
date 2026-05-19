@@ -71,9 +71,16 @@ def compute_readiness(
     external_use_cases: int = 0,
     productizable_requested: bool = False,
     status_path: Path | None = None,
+    bundle_path: Path | None = None,
 ) -> Readiness:
-    st = _load_status(status_path)
-    real_run = bool(st.get("real_external_collaborator_run", False))
+    from ctios.external_validation import real_external_run_attested
+
+    # A real run is attested ONLY by a valid proof bundle, never by the
+    # status flag alone (anti-tamper).
+    _load_status(status_path)
+    real_run = real_external_run_attested(
+        status_path=status_path, bundle_path=bundle_path
+    )
 
     blocking: list[str] = []
     if not real_run:

@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExternalValidationBundle",
+  "description": "A real external collaborator run is proven ONLY by a bundle with every field below. A flipped status JSON without this bundle never upgrades the claim.",
+  "type": "object",
+  "required": [
+    "reviewer_id",
+    "reviewer_pubkey_sha256",
+    "timestamp_utc",
+    "repo_commit",
+    "spec_sha256",
+    "verdict_sha256",
+    "no_leakage_attestation",
+    "command_transcript_sha256"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "reviewer_id": {"type": "string", "minLength": 3},
+    "reviewer_pubkey_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "timestamp_utc": {"type": "string", "minLength": 19},
+    "repo_commit": {"type": "string", "minLength": 7},
+    "spec_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "verdict_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "no_leakage_attestation": {"const": true},
+    "command_transcript_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

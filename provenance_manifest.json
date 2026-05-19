@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "745e56de83ba3ccbf71d6e570242aa398400f950707fadb3155168db77ce9d20",
+      "sha256": "fa46da93f6ac7b5eed72631dbcf23dc70f85da4278600888671c46f177f3d11c",
       "spdx_header": "n/a"
     },
     {
@@ -161,7 +161,7 @@
     {
       "license": "MIT",
       "path": "scripts/audit_workflow_trust.py",
-      "sha256": "699cf025bfcdf0486991d2562c20a34829ea577cf8a9a80e3fcabc43ec13b3c8",
+      "sha256": "cc91a08cd576137ed3bdd944d27610180bdb1d5acb1cce34b0f4d6e25230be7b",
       "spdx_header": true
     },
     {

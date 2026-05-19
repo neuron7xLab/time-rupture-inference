@@ -11,6 +11,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from ctios import artifact_assertions as aa  # noqa: E402
 from ctios.artifact_assertions import (  # noqa: E402
     ArtifactError,
     assert_artifact,
@@ -50,6 +51,43 @@ def test_stale_commit_artifact_rejected(tmp_path):
     p.write_text(json.dumps({"commit": "0" * 40, "ok": True}))
     with pytest.raises(ArtifactError, match="stale"):
         assert_artifact(p, required=["ok"], commit_key="commit")
+
+
+def test_stale_commit_rejected_even_without_git(tmp_path, monkeypatch):
+    # ZIP / provenance-stripped: git HEAD unavailable. A zero commit
+    # must STILL be rejected — the old code skipped the check here
+    # (fail-open), letting "clean ZIP reproducible" stand falsely.
+    monkeypatch.setattr(aa, "_head", lambda: "")
+    monkeypatch.setattr(aa, "_ROOT", tmp_path)  # no SOURCE_COMMIT pin
+    p = tmp_path / "c.json"
+    p.write_text(json.dumps({"commit": "0" * 40, "ok": True}))
+    with pytest.raises(ArtifactError, match="stale"):
+        assert_artifact(p, required=["ok"], commit_key="commit")
+
+
+def test_real_commit_unverifiable_without_git_or_pin_fails(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(aa, "_head", lambda: "")
+    monkeypatch.setattr(aa, "_ROOT", tmp_path)
+    p = tmp_path / "c.json"
+    p.write_text(json.dumps({"commit": "a" * 40, "ok": True}))
+    with pytest.raises(ArtifactError, match="UNVERIFIABLE"):
+        assert_artifact(p, required=["ok"], commit_key="commit")
+
+
+def test_source_commit_pin_enables_zip_freshness(tmp_path, monkeypatch):
+    monkeypatch.setattr(aa, "_head", lambda: "")
+    monkeypatch.setattr(aa, "_ROOT", tmp_path)
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "evidence" / "SOURCE_COMMIT").write_text("a" * 40 + "\n")
+    fresh = tmp_path / "ok.json"
+    fresh.write_text(json.dumps({"commit": "a" * 40, "ok": True}))
+    assert_artifact(fresh, required=["ok"], commit_key="commit")
+    stale = tmp_path / "stale.json"
+    stale.write_text(json.dumps({"commit": "b" * 40, "ok": True}))
+    with pytest.raises(ArtifactError, match="stale"):
+        assert_artifact(stale, required=["ok"], commit_key="commit")
 
 
 def test_valid_artifact_accepted(tmp_path):

@@ -10,11 +10,17 @@ previous commit). These are the checks the shell gates call so that
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
 
 _ROOT = Path(__file__).resolve().parents[2]
+
+# A zero / placeholder commit is the canonical "stale / replayed /
+# never-bound" marker — stale in EVERY environment, git or not. Never
+# environment-gated.
+_PLACEHOLDER_COMMIT = re.compile(r"^0{7,40}$")
 
 
 class ArtifactError(AssertionError):
@@ -56,18 +62,53 @@ def assert_schema(obj: dict[str, Any], required: list[str], path: Path) -> None:
         raise ArtifactError(f"{path}: missing keys {missing}")
 
 
+def _reference_commit() -> tuple[str, str]:
+    """Resolve the commit this tree was cut from. git HEAD first; in a
+    provenance-stripped archive, a committed ``evidence/SOURCE_COMMIT``
+    pin (written by the release packaging step). ``("", "none")`` only
+    when NEITHER is available — which is itself an honest, hard state,
+    never a silent pass."""
+    head = _head()
+    if head:
+        return head, "git-HEAD"
+    pin = _ROOT / "evidence" / "SOURCE_COMMIT"
+    if pin.exists():
+        v = pin.read_text().strip()
+        if v:
+            return v, "SOURCE_COMMIT-pin"
+    return "", "none"
+
+
 def assert_fresh_for_commit(
     obj: dict[str, Any], path: Path, key: str = "commit"
 ) -> None:
-    """The artifact must record the CURRENT HEAD. A value from a
-    previous commit (stale / replayed) is rejected."""
-    head = _head()
-    val = str(obj.get(key, ""))
-    if not head:
-        return  # not a git checkout — skip, do not falsely fail
-    if val[:12] != head[:12] and val != head:
+    """The artifact must record the commit this tree was cut from. A
+    value from a previous commit (stale / replayed) is rejected.
+
+    Fail-closed in EVERY environment:
+      * a zero/placeholder commit is stale regardless of git presence;
+      * if no reference commit can be resolved (no git, no pin) the
+        freshness of a real commit is UNVERIFIABLE — that is a hard
+        error, not a skipped check. A provenance-stripped ZIP cannot
+        silently inherit the "fresh" claim.
+    """
+    val = str(obj.get(key, "")).strip()
+    if not val or _PLACEHOLDER_COMMIT.match(val):
         raise ArtifactError(
-            f"{path}: stale artifact — {key}={val!r} != HEAD {head[:12]!r}"
+            f"{path}: stale artifact — {key}={val!r} is an empty / "
+            f"placeholder commit (never bound to a real revision)"
+        )
+    ref, src = _reference_commit()
+    if not ref:
+        raise ArtifactError(
+            f"{path}: artifact freshness UNVERIFIABLE — no git HEAD "
+            f"and no evidence/SOURCE_COMMIT pin; a provenance-stripped "
+            f"archive cannot assert {key} freshness (fail-closed)"
+        )
+    if val[:12] != ref[:12] and val != ref:
+        raise ArtifactError(
+            f"{path}: stale artifact — {key}={val!r} != "
+            f"{src} {ref[:12]!r}"
         )
 
 

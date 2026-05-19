@@ -3,6 +3,48 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — artifact-freshness fail-closed (ZIP provenance hole)
+
+### VERIFIER_CHANGED
+
+`src/ctios/artifact_assertions.py`
+
+### OLD_HASH
+
+`9d604a0f1949988ee9e594c8f1696c3516a428a5fe5a4d0712a0b32514909f6e`
+
+### NEW_HASH
+
+`ee69b00294b73a0766b6e48d40f8ee5eb2bd6b4e57eaa857239ec5b7e0beef31`
+
+### WHY_SAFE
+
+Pure strengthening — closes a real fail-OPEN hole an external
+reviewer found. Old `assert_fresh_for_commit` did
+`if not head: return` (no git checkout → freshness check SKIPPED),
+so a provenance-stripped ZIP silently inherited "fresh" and
+`test_stale_commit_artifact_rejected` did not get its reject. New
+behaviour, fail-closed in every environment: a zero/placeholder
+commit is stale regardless of git; the reference commit resolves from
+git HEAD OR a committed `evidence/SOURCE_COMMIT` pin; if neither
+resolves, a real commit's freshness is `UNVERIFIABLE` → hard error,
+never a silent pass. Strictly more rejections, none removed; the
+`commit_key=None` callers (`ctios.artifact_assertions.main`,
+deep-mechanism audit step) are unaffected. No frozen
+metric/threshold/lineage touched; no scientific claim expanded; the
+"clean archive reproducible" claim is now honestly scoped in
+`docs/REPRODUCIBILITY_CONTRACT.md` + logged in
+`evidence/CLAIM_DOWNGRADE_LEDGER.jsonl`.
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_artifact_assertions.py`
+(`test_stale_commit_rejected_even_without_git`,
+`test_real_commit_unverifiable_without_git_or_pin_fails`,
+`test_source_commit_pin_enables_zip_freshness`, original
+`test_stale_commit_artifact_rejected`) + the verifier manifest gate
+(this NEW_HASH must match).
+
 ## Entry — generated source mirror + complementary claim-source gate
 
 ### VERIFIER_CHANGED

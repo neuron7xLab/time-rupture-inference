@@ -1,0 +1,53 @@
+{
+  "branch": "main",
+  "commit": "491592e5c125a737655ac7cae53e02a416743f27",
+  "detail": "5 workflows completed success",
+  "expected_workflows": [
+    "conference-smoke",
+    "gate",
+    "indi-demo-gate",
+    "platform-demo",
+    "v7-readiness"
+  ],
+  "fetched_utc": "2026-05-19T15:04:09Z",
+  "note": "Witnessed snapshot at fetched_utc. SUCCESS requires every expected workflow completed+success on this exact commit; absence of a run is NOT success (fail-closed).",
+  "reverify": "gh run list --branch main --limit 20 --json databaseId,name,conclusion,headSha --jq '.[]|select(.headSha==\"491592e5c125a737655ac7cae53e02a416743f27\")'",
+  "runs": [
+    {
+      "conclusion": "success",
+      "name": "conference-smoke",
+      "run_id": "26105427329",
+      "status": "completed",
+      "url": "https://github.com/neuron7xLab/time-rupture-inference/actions/runs/26105427329"
+    },
+    {
+      "conclusion": "success",
+      "name": "gate",
+      "run_id": "26105427325",
+      "status": "completed",
+      "url": "https://github.com/neuron7xLab/time-rupture-inference/actions/runs/26105427325"
+    },
+    {
+      "conclusion": "success",
+      "name": "indi-demo-gate",
+      "run_id": "26105427324",
+      "status": "completed",
+      "url": "https://github.com/neuron7xLab/time-rupture-inference/actions/runs/26105427324"
+    },
+    {
+      "conclusion": "success",
+      "name": "platform-demo",
+      "run_id": "26105427656",
+      "status": "completed",
+      "url": "https://github.com/neuron7xLab/time-rupture-inference/actions/runs/26105427656"
+    },
+    {
+      "conclusion": "success",
+      "name": "v7-readiness",
+      "run_id": "26105427327",
+      "status": "completed",
+      "url": "https://github.com/neuron7xLab/time-rupture-inference/actions/runs/26105427327"
+    }
+  ],
+  "state": "SUCCESS"
+}

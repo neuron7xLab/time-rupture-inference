@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "21f60dca7070a5a8cecca07cacf07048bfc9950f0a4b6b126160f05021c153ca",
+      "sha256": "593860a5eb5675ca35d8c446f50e09a526cbf87ad35aaec3f485ccfff08a0991",
       "spdx_header": "n/a"
     },
     {
@@ -192,6 +192,12 @@
       "license": "MIT",
       "path": "scripts/check_doc_trust.py",
       "sha256": "49f46fff592159c7d152a83cd9fcd7b669ef535e2636f32d08de6e58df803254",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/ci_evidence_seal.py",
+      "sha256": "0717d29022291b470655a8955b128bf21a728b4fdecfddd066c565c5dd3eae9b",
       "spdx_header": true
     },
     {

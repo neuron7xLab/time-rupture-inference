@@ -3,6 +3,39 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — PR L (CI consumes pinned lock + dep-trust gate)
+
+### VERIFIER_CHANGED
+
+`.github/workflows/ci.yml`
+
+### OLD_HASH
+
+`0f01d7b40c90ee9681730e387678e8dbdb030387a5ba6eb1347a69361c9f752a`
+(the NEW_HASH from the PR #38 entry below)
+
+### NEW_HASH
+
+`e6d42bf2884a54b16ec1353268ea1f6e2b468c103b487e6c880f5c5065d2014c`
+
+### WHY_SAFE
+
+Strengthening. ci.yml changes: (1) every loose `pip install <names>`
+replaced with `pip install -r requirements-ci.lock` (pinned set);
+(2) a new stdlib-only PR-blocking step `python scripts/verify_ci_deps.py`
+added before install. Determinism increases (no silent version
+substitution); no gate removed, no trigger/permission/SHA-pin change,
+verifier + workflow-trust + mypy-strict steps untouched. Honest level
+LEVEL_1_PINNED_NO_HASHES — not hash-locked, not hermetic (stated in
+docs/DEPENDENCY_TRUST_CONTRACT.md).
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_ci_deps_contract.py` (loose install / missing lock /
+undeclared mypy / fake hash-lock all rejected; live repo passes) +
+`scripts/verify_ci_deps.py` as a CI gate + the verifier manifest gate
+(this NEW_HASH must match).
+
 ## Entry — PR #38 (CI installs declared types-PyYAML)
 
 ### VERIFIER_CHANGED

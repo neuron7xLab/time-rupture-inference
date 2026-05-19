@@ -1,0 +1,7 @@
+{
+  "status": "EXTERNAL_RUN_PENDING",
+  "simulated_external_pack_passed": true,
+  "real_external_collaborator_run": false,
+  "claim_upgrade_allowed": false,
+  "note": "READY is forbidden until real_external_collaborator_run is true. A simulated/mock probe does NOT satisfy this. Updated only from a returned EXTERNAL_REVIEW_FORM with attached sanitized verdict artifacts."
+}

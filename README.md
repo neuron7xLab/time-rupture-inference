@@ -8,20 +8,20 @@
 
 <br><br>
 
-<img src="https://readme-typing-svg.demolab.com/?lines=error+updates+the+model+%C2%B7+the+model+survives+the+rupture;every+RED+preserved+%C2%B7+no+threshold+tuned+to+green;30+seeds+%C3%97+3+shifts+%C2%B7+win-rate+1.000+vs+injected+%26+naive;falsifier+pinned+before+the+run+or+it+does+not+count;prediction-error+temporal+adaptation+%E2%80%94+proven%2C+scoped%2C+frozen&font=JetBrains+Mono&size=18&pause=1800&color=00FF66&center=true&vCenter=true&width=820&height=46" alt="tagline" />
+<img src="https://readme-typing-svg.demolab.com/?lines=error+updates+the+model+%C2%B7+the+model+survives+the+rupture;every+RED+preserved+%C2%B7+no+threshold+tuned+to+green;30+seeds+%C3%97+3+shifts+%C2%B7+win-rate+1.000+vs+injected+%26+naive;falsifier+pinned+before+the+run+or+it+does+not+count;prediction-error+temporal+adaptation+%E2%80%94+scoped%2C+frozen%2C+falsifier-pinned&font=JetBrains+Mono&size=18&pause=1800&color=00FF66&center=true&vCenter=true&width=820&height=46" alt="tagline" />
 
 <br>
 
 # `t i m e   r u p t u r e   i n f e r e n c e`
 
-***A learned temporal model that survives a hidden regime change — or fails loudly.***
+***A scalar prediction-error estimator that survives a hidden regime change — or fails loudly.***
 ***Falsification-first. Every negative result is kept, not erased.***
 
 <br>
 
 [![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
 [![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-267_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![tests](https://img.shields.io/badge/tests-281_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
 [![lineage](https://img.shields.io/badge/lineage-all_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
@@ -39,7 +39,7 @@
 </div>
 
 <p align="center">
-  <code>error → update → prediction → action → causal change of the future</code>
+  <code>error → update → prediction → action → next-state estimate</code>
 </p>
 
 <p align="center">
@@ -58,7 +58,7 @@ S(t) → O(t) → B(t) → P(S(t+Δ)) → E(t) → U(t) → S(t+1)
 state   obs    belief  prediction  error   update
 ```
 
-## What is proven — and what is not
+## What is established — and what is not
 
 <!-- claims:disclaimer -->
 > **Allowed claim.** The learned agent adapts to hidden temporal regime
@@ -151,7 +151,7 @@ src/ctios/   env · agents · drift · metrics · gates · ledger · runner · a
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       267 tests incl. no-leakage, shuffle kill-control, contract
+tests/       281 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
 

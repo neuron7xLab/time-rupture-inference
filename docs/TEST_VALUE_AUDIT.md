@@ -73,6 +73,8 @@
 | test_v8_4_env_structure.py | ARTIFACT_TEST |
 | test_v8_4_no_learned_model.py | ARTIFACT_TEST |
 | test_v9_learned_contract.py | CONTRACT_TEST |
+| test_verifier_capture_resistance.py | CLAIM_BOUNDARY_TEST |
+| test_verifier_manifest.py | ARTIFACT_TEST |
 | test_windowed_change_detector.py | ARTIFACT_TEST |
 | test_windowed_detector_ood.py | ARTIFACT_TEST |
 

@@ -1,0 +1,21 @@
+{
+  "purpose": "Phase 0 baseline that SHOULD have preceded the ci.yml edit in PR #34. Recorded now as honest closure of a skipped pre-gate; this snapshot is the state at PR #34 merge (commit d597270 / ci.yml hash below) before this PR's mypy hardening.",
+  "commit_at_pr34_merge": "d597270",
+  "commit_this_pr_base": "d5972700c34f457583e343509faf04850dcea850",
+  "python": "3.12.3",
+  "workflow_files": [
+    "ci.yml", "conference-smoke.yml", "indi-demo-gate.yml",
+    "platform-demo.yml", "v7-readiness.yml"
+  ],
+  "ci_yml_sha256_before_this_pr": "0e48ffecb41851154c789b2c64c11b56edb9aaa09dd333d84e53881fbe9a882b",
+  "loose_pip_install_lines_in_ci": 2,
+  "fetch_depth_zero_occurrences": 2,
+  "setup_python_cache_enabled": false,
+  "mypy_invocation_in_ci": "bare `mypy` (config-dependent) — fixed in this PR to `mypy --strict src/ctios`",
+  "lock_files_present": ["requirements-lock.txt"],
+  "node_deprecation_annotations_measured": false,
+  "node_deprecation_note": "not fetched; no FORCE_NODE env added (verification-first)",
+  "verifier_manifest_pins": 13,
+  "external_validation_status": "EXTERNAL_RUN_PENDING",
+  "honesty": "This artifact is produced AFTER the CI change it should have preceded. It is logged as a closed shortcut, not pretended to be a true pre-change snapshot."
+}

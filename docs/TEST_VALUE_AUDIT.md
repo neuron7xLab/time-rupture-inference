@@ -78,5 +78,6 @@
 | test_verifier_manifest.py | ARTIFACT_TEST |
 | test_windowed_change_detector.py | ARTIFACT_TEST |
 | test_windowed_detector_ood.py | ARTIFACT_TEST |
+| test_workflow_trust.py | CLAIM_BOUNDARY_TEST |
 
 weak_or_decorative: (none)

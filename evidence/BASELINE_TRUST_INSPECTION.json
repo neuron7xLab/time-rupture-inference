@@ -1,0 +1,18 @@
+{
+  "pr": "K",
+  "base_commit": "bf70c2c901ddd091ee5a7c4bef935ec9b724cd19",
+  "inspected_utc": "2026-05-19",
+  "ground_truth_recheck": {
+    "ci_actions_were_tag_pinned": true,
+    "ci_loose_pip_install_present": true,
+    "mypy_declared_in_dev_deps": false,
+    "SECURITY_md_present": false,
+    "release_workflow_present": false,
+    "requirements_ci_lock_present": false,
+    "sbom_present": false,
+    "release_attestation_present": false,
+    "real_external_collaborator_run": false
+  },
+  "deviation_from_protocol_assumptions": "none — all ground-truth facts confirmed as stated",
+  "incident_note": "entire ~/Desktop/DATA workspace was moved to Trash at 2026-05-19T11:45:45 mid-PR-K and fully restored from Trash with PR K WIP intact; GitHub remote (main bf70c2c) was never at risk."
+}

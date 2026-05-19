@@ -73,6 +73,9 @@ scan_globs:
 exempt:
   - claims.yaml
   - CLAUDE.md
+  # Generator of the (exempt) design-lineage boundary doc: it holds the
+  # enumerated non-claim text, same rationale as claims_lint.py.
+  - "src/ctios/design_lineage.py"
   - scripts/claims_lint.py
   - scripts/external_adversarial_demo.sh
   - tests/test_claims_lexicon.py
@@ -95,6 +98,10 @@ exempt:
   - "docs/CODE_QUALITY_AUDIT.md"
   - "docs/FRONTIER_READINESS_REPORT.md"
   - "docs/NO_AUTHOR_REQUIRED_REVIEW.md"
+  - "docs/DESIGN_LINEAGE_BRAIN_TO_MECHANISM.md"
+  - "docs/DECORATION_QUARANTINE_REPORT.md"
+  - "docs/MECHANISM_INVENTORY.md"
+  - "docs/TEST_VALUE_AUDIT.md"
   - "docs/reports/*"
   # Release-pack boundary/risk docs enumerate forbidden inferences as a
   # hard negative boundary — evidence about scope, not positioning.

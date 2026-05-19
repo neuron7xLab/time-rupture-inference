@@ -23,6 +23,7 @@
 | test_contract_invariant.py | KILL_TEST |
 | test_core_contract_audit.py | KILL_TEST |
 | test_deep_adversarial_probes.py | CONTRACT_TEST |
+| test_design_lineage.py | ARTIFACT_TEST |
 | test_env_determinism.py | CONTRACT_TEST |
 | test_external_validation_status.py | KILL_TEST |
 | test_external_validation_tamper.py | KILL_TEST |

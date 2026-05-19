@@ -32,7 +32,7 @@ _RULES: list[tuple[str, str]] = [
     (r"falsif|_battery|readiness_score|external_validation|"
      r"v6_precision", FALSIFIER),
     (r"artifact_assertions|provenance|code_quality_audit|"
-     r"mechanism_inventory", REPRO),
+     r"mechanism_inventory|design_lineage|test_value_audit", REPRO),
     (r"claims|contract", BOUNDARY),
     (r"report|change_detection_arc", EVIDENCE),
     (r"runner|env|agent|drift|metric|gate|series|ledger|"

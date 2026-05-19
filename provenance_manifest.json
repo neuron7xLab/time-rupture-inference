@@ -11,13 +11,13 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "d575dba96ea7bed4eb3c1e762fae1fda075ae2956c02ee280946e50ea44ea210",
+      "sha256": "89be13a22038c936fb13c95550b4238989dc7bb8280075ffeff54f1ff3e5bc8c",
       "spdx_header": "n/a"
     },
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "8d001089f4dbec3d6368e4479df91967a91b9addc4c8974ddcb7042c6b6963e7",
+      "sha256": "83193bca3890401eb9588c04cf839576773dcd087b3aeba229d745b972a81244",
       "spdx_header": "n/a"
     },
     {
@@ -370,6 +370,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/design_lineage.py",
+      "sha256": "226afda26bc4bba9652052d8aad8dcc4cfa6cf4ee193a355cdb371f88f46426a",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/drift.py",
       "sha256": "52cb812dd9cbd2644e90f085c5f81bdd7c26087ec89161ae59fe07d6914deec6",
       "spdx_header": true
@@ -431,7 +437,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/mechanism_inventory.py",
-      "sha256": "98766f9d634ec10f4f108afc06ddb161f890a5d472cb88a943b9a68cd6bf42a9",
+      "sha256": "20bebb62c660a862aec8b24120100898a061426c662593ffecb46be29c8a5480",
       "spdx_header": true
     },
     {

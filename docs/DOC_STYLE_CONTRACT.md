@@ -35,8 +35,9 @@ enforced by `scripts/check_doc_trust.py` and
 <!-- claims:end -->
 8. **README stays lean.** It carries a small Reviewer map and the
    one-sentence citation-scope note — never a long bibliography.
-9. **Author notes stay human.** `docs/MANUAL_AUTHOR_NOTES.md` is under
-   900 words, sober, no motivational language.
+9. **Author notes stay human.** `docs/MANUAL_REVIEW_NOTES.md` (the
+   single handcrafted note) is under 900 words, sober, no
+   motivational language.
 10. **Downgrades are recorded, not silent.** Every deleted or softened
     external-facing wording gets one line in
     `evidence/CLAIM_DOWNGRADE_LEDGER.jsonl`.

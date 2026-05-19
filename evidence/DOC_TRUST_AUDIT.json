@@ -1,13 +1,13 @@
 {
   "repo": "neuron7xLab/time-rupture-inference",
   "audit_type": "doc_trust_value_hardening",
-  "claim_count": 12,
-  "supported_by_evidence": 12,
-  "supported_by_external_source": 12,
-  "boundary_only": 2,
+  "claim_count": 23,
+  "supported_by_evidence": 23,
+  "supported_by_external_source": 23,
+  "boundary_only": 6,
   "downgraded": 2,
   "deleted": 0,
-  "open_gaps_referenced": 1,
+  "open_gaps_referenced": 2,
   "files_scanned": [
     "README.md",
     "docs/SYSTEM_CARD.md",
@@ -22,13 +22,12 @@
     "pyproject.toml",
     "evidence/release_gate.md"
   ],
-  "source_count": 15,
+  "source_count": 16,
   "major_findings": [
-    "Core claim grammar (claim->falsifier->evidence->boundary) is already enforced by claims.yaml + claims_lint; this pass adds stable claim IDs and a source map on top, it does not invent new claims.",
-    "Two external-facing wordings carried prestige/marketing residue without a mechanism anchor and were downgraded (see evidence/CLAIM_DOWNGRADE_LEDGER.jsonl): README 'Conference-grade entry points' and SPEC.md 'frontier-lab rigor'; rigor is now shown by docs/REVIEW_PATH.md tracks, not asserted by a label.",
-    "Prediction-error / neuroscience language was already disclaimer-bounded in README/SPEC/SYSTEM_CARD; this pass binds it to RAO_BALLARD_1999 as INSPIRATION_ONLY with an explicit no-biological-fidelity boundary (TRI-CLAIM-009).",
-    "Supply-chain claims (PR K/L/N/O) are honest at Build L2 / LEVEL_1; bound to SLSA_SPEC + SPDX_SPEC with mandatory not-hermetic / not-L3 wording (TRI-CLAIM-008).",
-    "Two structural gaps (independent reproduction, domain breadth) remain OPEN and gate READY/PRODUCTIZABLE in code; mapped as NON_CLAIM_BOUNDARY / OPEN_GAP (TRI-CLAIM-010, TRI-CLAIM-012)."
+    "Every external-facing claim carries a stable TRI-CLAIM-0NN ID parsed and class-checked by scripts/check_doc_trust.py; no scientific claim is expanded.",
+    "Source registry uses the full schema (id/tier/citation/url/domain/supports_claim_ids/supports_repo_files/allowed_use/forbidden_use/boundary/status) and stays in sync with docs/REFERENCES.md (gate-enforced).",
+    "Prediction-error language is bound INSPIRATION_ONLY with an explicit no-biological-fidelity boundary; supply-chain claims carry the not-hermetic / not-SLSA-L3 ceiling.",
+    "Two structural gaps (independent reproduction, domain breadth) remain OPEN and block READY/PRODUCTIZABLE in code."
   ],
   "must_not_claim": [
     "cognition",

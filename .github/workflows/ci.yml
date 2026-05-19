@@ -43,7 +43,7 @@ jobs:
         run: mypy --strict src/ctios
       - name: claim-lexicon lint (audit P1 — no interpretation inflation)
         run: python scripts/claims_lint.py
-      - name: doc trust gate (claim/source/boundary, stdlib+yaml)
+      - name: documentation trust gate (claim/source/boundary, stdlib+yaml)
         run: |
           python scripts/build_doc_trust_audit.py --verify-only
           python scripts/check_doc_trust.py

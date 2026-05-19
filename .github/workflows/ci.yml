@@ -21,6 +21,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: verifier trust boundary (independent root, stdlib-only)
+        run: |
+          python tools/check_verifier_manifest_static.py --repo .
+          python tools/verifier_manifest.py
       - run: pip install -q numpy matplotlib pyyaml pytest ruff mypy
       - name: lint
         run: ruff check src tests scripts

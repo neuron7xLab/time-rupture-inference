@@ -28,8 +28,8 @@ jobs:
       - run: pip install -q numpy matplotlib pyyaml pytest ruff mypy
       - name: lint
         run: ruff check src tests scripts
-      - name: type (mypy --strict)
-        run: mypy
+      - name: type (mypy --strict, explicit target — not config-dependent)
+        run: mypy --strict src/ctios
       - name: claim-lexicon lint (audit P1 — no interpretation inflation)
         run: python scripts/claims_lint.py
       - name: provenance attestation (audit P1 #3 — internal layer)

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "b57d95373a462db2a42f3bef10d7c9c8c665c1b4433afa881807f1cc73da1344",
+      "sha256": "670edb108d42833a19e1bab70bbe172420881bc7c50d11f5253432f825bfe04f",
       "spdx_header": "n/a"
     },
     {
@@ -299,7 +299,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/carrier_robust_observable.py",
-      "sha256": "7508e32fcdc6f5ceb12f5bcdb93aebd43e456407fae7319f2d1774b2b2cccb69",
+      "sha256": "dc3db69b25192f525ef33351accca5929a4cbf4c96431b42b4410b34e167d165",
       "spdx_header": true
     },
     {
@@ -330,6 +330,18 @@
       "license": "MIT",
       "path": "src/ctios/causal_runner.py",
       "sha256": "783311e1e7ae213ce465c9c3d6d169608715009a9b2682a1c2b8233dc7432eea",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/change_detection.py",
+      "sha256": "6b0c260cbd48f67ad196003f16a03d24c98f42e5e0f05657bd0388f801b34965",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/change_detection_arc.py",
+      "sha256": "621d0b0c7f4646ec43cd74ed39a44267e0dce4c07b8fb35804a04cd4d12c298a",
       "spdx_header": true
     },
     {
@@ -485,7 +497,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/windowed_change_detector.py",
-      "sha256": "b3e38757fca8f103e901ca6d2baea1cd00687109a0f4f76b56349bca426836a9",
+      "sha256": "e6e1f4488b2682e3f7a3a7c2c6a037423a2f63539bb4495a7ebe710570181b92",
       "spdx_header": true
     },
     {

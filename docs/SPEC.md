@@ -125,6 +125,23 @@ context `z` aliasing identical observation windows to opposite futures.
 - **Boundary.** A discipline primitive that prevents self-deception; it
   does not generate truth, and it never auto-runs the next experiment.
 
+### S8 — Change-detection arc (THE DISCIPLINE APPLIED TO ITSELF)
+
+- **Claim.** A held-out-null-calibrated two-window contrast detects a
+  hidden regime rupture from the observation alone — established by a
+  six-experiment pinned arc, not a single run.
+- **Falsifier.** Any threshold edited after a result; a GREEN whose
+  negative control passes; a detect-everything fake reaching a clean
+  pass; the shared primitive drifting a sealed number.
+- **Evidence.** `RED RED GREEN PARTIAL GREEN PARTIAL` (#24–#29), every
+  falsifier pinned before its run, every verdict sealed
+  (`docs/reports/*`); the distilled primitive `ctios.change_detection`
+  reproduces all sealed numbers byte-identically (guarded);
+  `ctios.change_detection_arc` runs the whole arc in one command.
+- **Boundary.** Synthetic families only. One characterized open
+  residual (a location statistic cannot separate a stationary bimodal
+  mixture from a shift). No generalization or real-world claim.
+
 ## 4. Inverse argument (why the surviving claims stand)
 
 S1 would be false if a scalar heuristic were not near-oracle — it is

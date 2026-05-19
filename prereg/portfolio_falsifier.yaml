@@ -1,0 +1,112 @@
+# SPDX-License-Identifier: MIT
+# PINNED before the verdict run. Lineage #29: arc-closure. Scores the
+# #28 carrier-robust detector across the FULL 7-family portfolio as ONE
+# sealed verdict. Expected behaviour per family is derived from each
+# family's admissible_claim_boundary, NOT from the detector. No
+# threshold edited after results. Pre-spec measurement informed which
+# metrics are gatable vs report-only; the THRESHOLDS below are fixed a
+# priori (alpha=0.10 false-alarm, tau=0.50 detection) — the same bounds
+# used in #25..#28, not fitted to observed values.
+
+hid: portfolio_falsifier
+
+# 1. FALSIFICATION ANCHOR
+# This fails if: the carrier-robust detector does not detect the three
+# single-changepoint rupture families at >= tau, OR it false-alarms on
+# a TRUE no-rupture family (rupture=False) above alpha, OR a degenerate
+# fake passes the gated checks.
+# Tested by: one pinned run, 12 seeds/family, calib lambda from the #28
+# rule (Gaussian held-out null seeds 100..115).
+falsification_anchor: >-
+  the consolidated claim is FALSE if any gated rupture family detect <
+  tau, or any true-no-rupture family false-alarm > alpha, or a fake
+  passes both gate classes.
+
+# 2. OPERATIONAL BOUNDARY
+# GATED (falsifiable core):
+#   detect (>= tau) on the families with a single t_star changepoint:
+#     single_rupture_gaussian, heavy_tail_rupture,
+#     carrier_confounded_rupture.
+#   false-alarm (<= alpha) on the TRUE no-rupture families
+#     (metadata rupture == False): null_no_rupture, multimodal_interval.
+# REPORT-ONLY (no clean single changepoint -> not gatable honestly):
+#   multi_regime_rupture, contextual_rupture (fire-rate mapped only).
+operational_boundary: >-
+  gate detection on 3 single-changepoint families and false-alarm on 2
+  true-no-rupture families; 2 multi/contextual families report-only.
+
+# 3. VERDICT METRICS (pre-registered)
+metrics:
+  calib_lambda:               {dir: report_only, threshold: null, window: "gaussian null calib 100..115", agg: quantile}
+  gaussian_detect_rate:       {dir: higher_better, threshold: 0.50, window: "12 seeds, [t*,t*+0.2n]", agg: mean}
+  heavytail_detect_rate:      {dir: higher_better, threshold: 0.50, window: "12 seeds, [t*,t*+0.2n]", agg: mean}
+  carrier_detect_rate:        {dir: higher_better, threshold: 0.50, window: "12 seeds, [t*,t*+0.2n]", agg: mean}
+  null_false_alarm:           {dir: lower_better, threshold: 0.10, window: "12 seeds, true no-rupture", agg: mean}
+  multimodal_false_alarm:     {dir: lower_better, threshold: 0.10, window: "12 seeds, true no-rupture", agg: mean}
+  always_fake_blocked:        {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  never_fake_blocked:         {dir: higher_better, threshold: 1.0, window: "adversarial", agg: bool}
+  leakage:                    {dir: lower_better, threshold: 0.0, window: "structural", agg: max}
+  portfolio_map_emitted:      {dir: higher_better, threshold: 1.0, window: "7 families", agg: bool}
+
+thresholds:
+  min_gaussian_detect: 0.50
+  min_heavytail_detect: 0.50
+  min_carrier_detect: 0.50
+  max_null_fa: 0.10
+  max_multimodal_fa: 0.10
+  min_always_blocked: 1.0
+  min_never_blocked: 1.0
+  max_leakage: 0.0
+  min_portfolio_map: 1.0
+
+checks:
+  - {metric: gaussian_detect_rate,   op: ">=", threshold_key: min_gaussian_detect}
+  - {metric: heavytail_detect_rate,  op: ">=", threshold_key: min_heavytail_detect}
+  - {metric: carrier_detect_rate,    op: ">=", threshold_key: min_carrier_detect}
+  - {metric: null_false_alarm,       op: "<=", threshold_key: max_null_fa}
+  - {metric: multimodal_false_alarm, op: "<=", threshold_key: max_multimodal_fa}
+  - {metric: always_fake_blocked,    op: ">=", threshold_key: min_always_blocked}
+  - {metric: never_fake_blocked,     op: ">=", threshold_key: min_never_blocked}
+  - {metric: leakage,                op: "<=", threshold_key: max_leakage}
+  - {metric: portfolio_map_emitted,  op: ">=", threshold_key: min_portfolio_map}
+
+claim: >-
+  The #28 carrier-robust detector, scored once across the 7-family
+  portfolio, detects every single-changepoint rupture family (incl.
+  carrier and heavy-tail) AND does not false-alarm on any true
+  no-rupture family, while degenerate fakes cannot.
+"null": >-
+  Some rupture family is missed, or a true no-rupture family
+  false-alarms, or a fake passes the gates.
+
+assumptions:
+  - Detector sees only the observation stream.
+  - calib lambda from the #28 Gaussian held-out null rule.
+  - Synthetic families, deterministic per seed, numpy-only, offline.
+
+variables:
+  - carrier_robust_detector (the #28 candidate)
+  - always_fire_fake (adversarial)
+  - never_fire_fake (adversarial)
+
+# 4. ADVERSARIAL NULL
+adversarial_null: >-
+  AlwaysFire fails every no-rupture false-alarm gate; NeverFire fails
+  every detection gate. Each fails >=1 gated check.
+
+# 5. CLAIM BOUNDARY (enumerated)
+forbidden_claims:
+  - NOT a model of brain, neurons, or biological cognition.
+  - NOT consciousness, sentience, intelligence, or AGI.
+  - NOT a universal theory of time or perception.
+  - NOT a proof of any private theorem.
+  - GREEN means portfolio-consolidated detection on SYNTHETIC families
+    only; no real-world or generalization claim.
+
+# 6. MINIMAL KILL TEST
+kill_test: >-
+  always-fire fake must fail null_false_alarm AND multimodal_false_alarm;
+  the verdict over it must NOT be GREEN.
+claim_boundary: >-
+  A consolidated portfolio characterization on synthetic families; not
+  biology, cognition, AGI, or theory of time.

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "de4571a7fc09b8efc644fcecca724f69027790e47f6d84443a882ed194d4dfee",
+      "sha256": "b57d95373a462db2a42f3bef10d7c9c8c665c1b4433afa881807f1cc73da1344",
       "spdx_header": "n/a"
     },
     {
@@ -102,6 +102,12 @@
       "license": "MIT",
       "path": "prereg/falsifier_contract.yaml",
       "sha256": "af63fdb264ee789b7eadaa9debd616a979f5f2636fe469fed3663b129dd0d7f1",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/portfolio_falsifier.yaml",
+      "sha256": "7115cbc7a57c2a6c1ba3f8aab3a3fbcd074743db45e27bd9d1ac82f747e4f152",
       "spdx_header": "n/a"
     },
     {
@@ -402,6 +408,12 @@
       "license": "MIT",
       "path": "src/ctios/platform_demo.py",
       "sha256": "5e10aa30616d796553d55ca750cc6bdc36de9115d54cf19b0c57544210bbde73",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/portfolio_falsifier.py",
+      "sha256": "1df13921c64ffaf9dfa92c68e478dd970f90e964912c5bb62bb136761a042e0f",
       "spdx_header": true
     },
     {

@@ -49,12 +49,15 @@ python scripts/claims_lint.py
 python scripts/check_doc_trust.py
 python scripts/provenance_attest.py
 pytest tests -q
-python -m ctios.runner --mode full
+bash scripts/conference_smoke.sh
+PYTHONPATH=src python -m ctios.runner --mode full
+PYTHONPATH=src python -m ctios.causal_runner --mode full
 ```
 
-Expected: frozen `learned post_mae=0.8830 injected=8.0028
-oracle=0.7933`; claims lint, doc-trust, provenance pass; pytest passes
-or the failure is documented with the environment.
+Expected frozen, byte-identical: `learned post_mae=0.8830
+injected=8.0028 oracle=0.7933` and `gain=0.8680 null_gap=0.0000`;
+claims lint, doc-trust, provenance pass; pytest passes or the failure
+is documented with the environment.
 Expected failure mode: first-clone environment variance (Python/OS) —
 report it as a sealed negative, do not work around it.
 
@@ -66,18 +69,25 @@ Forbidden conclusion: *"The underlying hypothesis is true."*
 
 Goal: try to break the apparatus. Each task must fail closed.
 
-- Edit a README line to assert a forbidden position (e.g. an
-  unsupported general-intelligence claim) outside a disclaimer block →
-  run `python scripts/claims_lint.py` → expect non-zero exit.
-- Change a frozen expected number in a runner assertion → run
-  `python -m ctios.runner --mode full` → expect drift failure.
-- Corrupt a `source_id` in `docs/CLAIM_SOURCE_MATRIX.md` or delete a
-  source from `evidence/SOURCE_REGISTRY.yaml` → run
-  `python scripts/check_doc_trust.py` → expect fail-closed.
-- Set a structural gap to CLOSED without evidence, or add a READY
-  wording while a gap is OPEN → expect `tests/test_structural_gaps.py`
-  / `scripts/check_doc_trust.py` to fail.
-- Run `bash scripts/external_adversarial_demo.sh` (if present).
+Deliberate mutation tests (each must fail closed):
+
+1. **Change a forbidden claim.** Edit a README line to assert a
+   forbidden position (e.g. an unsupported general-intelligence claim)
+   outside a disclaimer block → `python scripts/claims_lint.py` →
+   expect non-zero exit.
+2. **Corrupt a `source_id`.** Rename a `source_id` in
+   `docs/CLAIM_SOURCE_MATRIX.md` to one absent from
+   `evidence/SOURCE_REGISTRY.yaml` (or delete that source) →
+   `python scripts/check_doc_trust.py` → expect fail-closed.
+3. **Remove an external gap.** Set `GAP_1`/`GAP_2` to CLOSED without
+   an evidence bundle, or add a readiness wording that must not pass
+   (`README`/docs) while a gap is OPEN →
+   `tests/test_structural_gaps.py` and `scripts/check_doc_trust.py`
+   must keep readiness/product language blocked (non-zero exit).
+4. **Drift a frozen number.** Change a frozen v4/v5 expected value →
+   `PYTHONPATH=src python -m ctios.runner --mode full` → expect drift
+   failure.
+- Also run `bash scripts/external_adversarial_demo.sh` (if present).
 
 Admissible conclusion: *"The apparatus resists selected classes of
 interpretive and documentation inflation."*

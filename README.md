@@ -21,7 +21,7 @@
 
 [![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
 [![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-403_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![tests](https://img.shields.io/badge/tests-409_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
 [![lineage](https://img.shields.io/badge/lineage-all_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
@@ -151,13 +151,27 @@ src/ctios/   env · agents · drift · metrics · gates · ledger · runner · a
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       403 tests incl. no-leakage, shuffle kill-control, contract
+tests/       409 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
 
 Formal specification (claim → falsifier → evidence → boundary):
 [`docs/SPEC.md`](docs/SPEC.md). Reproducible demonstration:
 [`docs/DEMO.md`](docs/DEMO.md).
+
+## Reviewer map
+
+- Trust architecture: [`docs/TRUST_LAYER.md`](docs/TRUST_LAYER.md)
+- Reproduction contract: [`docs/REPRODUCIBILITY_CONTRACT.md`](docs/REPRODUCIBILITY_CONTRACT.md)
+- Claim/source matrix: [`docs/CLAIM_SOURCE_MATRIX.md`](docs/CLAIM_SOURCE_MATRIX.md)
+- References (claim-mapped): [`docs/REFERENCES.md`](docs/REFERENCES.md)
+- Prior-art boundary map: [`docs/PRIOR_ART_BOUNDARY_MAP.md`](docs/PRIOR_ART_BOUNDARY_MAP.md)
+- Review paths: [`docs/REVIEW_PATH.md`](docs/REVIEW_PATH.md)
+- Value positioning: [`docs/VALUE_POSITIONING.md`](docs/VALUE_POSITIONING.md)
+- Open structural gaps: [`docs/OPEN_STRUCTURAL_GAPS.md`](docs/OPEN_STRUCTURAL_GAPS.md)
+
+Citations do not expand scientific claims; they only map boundaries,
+prior art, and reviewer context.
 
 ## System identity
 
@@ -230,19 +244,6 @@ Claim boundary: a learned sequence model with a representational
 advantage on a harder task — NOT intelligence, NOT AGI, NOT cognition.
 <!-- claims:end -->
 
-
-## Reviewer map
-
-- Trust architecture: [`docs/TRUST_LAYER.md`](docs/TRUST_LAYER.md)
-- Reproduction contract: [`docs/REPRODUCIBILITY_CONTRACT.md`](docs/REPRODUCIBILITY_CONTRACT.md)
-- Claim/source matrix: [`docs/CLAIM_SOURCE_MATRIX.md`](docs/CLAIM_SOURCE_MATRIX.md)
-- Prior-art boundary map: [`docs/PRIOR_ART_BOUNDARY_MAP.md`](docs/PRIOR_ART_BOUNDARY_MAP.md)
-- Review paths: [`docs/REVIEW_PATH.md`](docs/REVIEW_PATH.md)
-- Value positioning: [`docs/VALUE_POSITIONING.md`](docs/VALUE_POSITIONING.md)
-- Open structural gaps: [`docs/OPEN_STRUCTURAL_GAPS.md`](docs/OPEN_STRUCTURAL_GAPS.md)
-
-Scientific claims are not expanded by citation; citations only map the
-apparatus to prior art and clarify boundaries.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/neuron7xLab/time-rupture-inference/main/.github/assets/divider.svg" width="100%">

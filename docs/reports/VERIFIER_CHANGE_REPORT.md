@@ -3,6 +3,55 @@
 The verifier law (`docs/VERIFIER_TRUST_BOUNDARY.md`) requires this for
 any change to a pinned verifier file. Latest entry on top.
 
+## Entry — trust-layer hardening (real parser + ≥20 claims)
+
+### VERIFIER_CHANGED
+
+`.github/workflows/ci.yml`, `scripts/check_doc_trust.py`,
+`scripts/build_doc_trust_audit.py`
+
+### OLD_HASH
+
+- ci.yml `a797983a042941fc0bac5cf626b8ebb65197b7091c05aee2004d23a4a99a0e8c`
+- check_doc_trust.py `280263c87c73484adc70348ebebe25c386e59b899572cca953b44ce960b73104`
+- build_doc_trust_audit.py `0e1f36c5c37e4d3d0416c215ec0047c6b82cbc9d1f33ab7a1b789feae706e494`
+
+### NEW_HASH
+
+- ci.yml `38eed815f7d53f1b0273034c39f8457a584f25dff5bcd43ddb16e9ed93493eb8`
+- check_doc_trust.py `49f46fff592159c7d152a83cd9fcd7b669ef535e2636f32d08de6e58df803254`
+- build_doc_trust_audit.py `f7578555d61a097c30d380901cb3b1f5ec35f8de5b3dd72bc660275eff963585`
+
+### WHY_SAFE
+
+Strengthening only. `check_doc_trust.py` is rewritten from a
+presence-checker into a real row-by-row matrix parser with
+class-aware contracts (EMPIRICAL/REPRODUCIBILITY → runnable/artifact
+path; ENGINEERING → script/test/CI; GOVERNANCE → gate/linter/check;
+INSPIRATION → biological-fidelity boundary; SUPPLY_CHAIN →
+not-hermetic/not-SLSA-L3; OPEN_GAP → OPEN_STRUCTURAL_GAPS link),
+plus registry-schema completeness, registry↔matrix↔REFERENCES
+consistency, ≥20-claim floor, and a duplicate-manual-note guard —
+strictly more fail-closed conditions, none removed.
+`build_doc_trust_audit.py` now also emits the generated
+`docs/reports/DOC_VALUE_AUDIT.md` from the JSON (no hand-authored
+audit prose). `ci.yml` change is a step rename only
+(`doc trust gate` → `documentation trust gate`); no
+trigger/permission/SHA-pin/install change, no gate removed. No
+scientific claim expanded; no frozen metric/threshold/lineage
+touched. Both scripts remain claims-lint-exempt (they hold the
+forbidden lexicon as data).
+
+### TEST_THAT_WOULD_FAIL_IF_WEAKENED
+
+`tests/test_doc_trust.py` (unknown source / missing-evidence /
+empirical-without-runnable / inspiration-without-bio-boundary /
+supply-chain-without-ceiling / unlinked-open-gap / thin-matrix /
+forbidden-phrase / README-bibliography / review-note-overlength /
+duplicate-manual-note all rejected, live repo passes) + the
+documentation trust gate as a CI step + the verifier manifest gate
+(these NEW_HASHes must match).
+
 ## Entry — docs trust layer (claim/source/boundary gate)
 
 ### VERIFIER_CHANGED

@@ -1,6 +1,7 @@
-# Manual Author Notes
+# Manual Review Notes
 
-A short, handwritten layer. Not generated filler, not an academic
+The single handcrafted author layer (canonical; supersedes the former
+`MANUAL_AUTHOR_NOTES.md`). Not generated filler, not an academic
 costume. Read it as the reasoning behind the apparatus, not a pitch.
 
 ## 1. Why I built this artifact

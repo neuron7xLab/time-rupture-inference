@@ -22,6 +22,29 @@ _MATRIX = _ROOT / "docs" / "CLAIM_SOURCE_MATRIX.md"
 _REG = _ROOT / "evidence" / "SOURCE_REGISTRY.yaml"
 _AUDIT = _ROOT / "evidence" / "DOC_TRUST_AUDIT.json"
 _LEDGER = _ROOT / "evidence" / "CLAIM_DOWNGRADE_LEDGER.jsonl"
+_VALUE_MD = _ROOT / "docs" / "reports" / "DOC_VALUE_AUDIT.md"
+
+_MUST_NOT = [
+    "cognition", "consciousness", "AGI / general intelligence",
+    "biological fidelity / brain equivalence", "real-world validity",
+    "production readiness / productizable", "learned-model superiority",
+    "hermetic or SLSA L3 supply chain",
+    "novelty of falsification, change detection, or online estimation",
+]
+_FINDINGS = [
+    "Every external-facing claim carries a stable TRI-CLAIM-0NN ID "
+    "parsed and class-checked by scripts/check_doc_trust.py; no "
+    "scientific claim is expanded.",
+    "Source registry uses the full schema (id/tier/citation/url/"
+    "domain/supports_claim_ids/supports_repo_files/allowed_use/"
+    "forbidden_use/boundary/status) and stays in sync with "
+    "docs/REFERENCES.md (gate-enforced).",
+    "Prediction-error language is bound INSPIRATION_ONLY with an "
+    "explicit no-biological-fidelity boundary; supply-chain claims "
+    "carry the not-hermetic / not-SLSA-L3 ceiling.",
+    "Two structural gaps (independent reproduction, domain breadth) "
+    "remain OPEN and block READY/PRODUCTIZABLE in code.",
+]
 
 _FILES_SCANNED = [
     "README.md",
@@ -63,9 +86,8 @@ def build() -> dict[str, object]:
         1 for _ in _LEDGER.read_text().splitlines() if _.strip()
     )
     reg = yaml.safe_load(_REG.read_text())
-    prior = json.loads(_AUDIT.read_text())
-    must_not = prior["must_not_claim"]
-    major = prior.get("major_findings", [])
+    must_not = _MUST_NOT
+    major = _FINDINGS
     return {
         "repo": "neuron7xLab/time-rupture-inference",
         "audit_type": "doc_trust_value_hardening",
@@ -104,7 +126,34 @@ def main(argv: list[str] | None = None) -> int:
         print("DOC TRUST AUDIT — OK (committed matches live trust layer)")
         return 0
     _AUDIT.write_text(json.dumps(cur, indent=2) + "\n")
-    print(f"DOC_TRUST_AUDIT.json written ({cur['claim_count']} claims)")
+    _VALUE_MD.parent.mkdir(parents=True, exist_ok=True)
+    md = [
+        "# Documentation Value Audit (generated)",
+        "",
+        "Generated from `evidence/DOC_TRUST_AUDIT.json` by "
+        "`scripts/build_doc_trust_audit.py`. Do not hand-edit; edit "
+        "the trust layer and regenerate.",
+        "",
+        f"- claims parsed: **{cur['claim_count']}**",
+        f"- sources mapped: **{cur['source_count']}**",
+        f"- boundary/inspiration claims: **{cur['boundary_only']}**",
+        f"- open gaps referenced: **{cur['open_gaps_referenced']}**",
+        f"- downgraded (logged): **{cur['downgraded']}**",
+        "",
+        "## Findings",
+        "",
+        *[f"- {f}" for f in _FINDINGS],
+        "",
+        "## Must not claim",
+        "",
+        *[f"- {m}" for m in _MUST_NOT],
+        "",
+    ]
+    _VALUE_MD.write_text("\n".join(md))
+    print(
+        f"DOC_TRUST_AUDIT.json + DOC_VALUE_AUDIT.md written "
+        f"({cur['claim_count']} claims)"
+    )
     return 0
 
 

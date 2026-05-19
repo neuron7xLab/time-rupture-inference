@@ -46,6 +46,7 @@ jobs:
       - name: documentation trust gate (claim/source/boundary, stdlib+yaml)
         run: |
           python scripts/build_doc_trust_audit.py --verify-only
+          python scripts/check_doc_claim_sources.py
           python scripts/check_doc_trust.py
       - name: provenance attestation (audit P1 #3 — internal layer)
         run: python scripts/provenance_attest.py

@@ -23,6 +23,7 @@ _REG = _ROOT / "evidence" / "SOURCE_REGISTRY.yaml"
 _AUDIT = _ROOT / "evidence" / "DOC_TRUST_AUDIT.json"
 _LEDGER = _ROOT / "evidence" / "CLAIM_DOWNGRADE_LEDGER.jsonl"
 _VALUE_MD = _ROOT / "docs" / "reports" / "DOC_VALUE_AUDIT.md"
+_MIRROR = _ROOT / "docs" / "SOURCE_REGISTRY.md"
 
 _MUST_NOT = [
     "cognition", "consciousness", "AGI / general intelligence",
@@ -111,9 +112,50 @@ def build() -> dict[str, object]:
     }
 
 
+def render_mirror() -> str:
+    """docs/SOURCE_REGISTRY.md, deterministically from the YAML —
+    single source of truth, cannot drift."""
+    reg = yaml.safe_load(_REG.read_text())
+    head = (
+        "<!-- GENERATED from evidence/SOURCE_REGISTRY.yaml by\n"
+        "     scripts/build_doc_trust_audit.py. Do not hand-edit; "
+        "edit the YAML\n     and regenerate "
+        "(scripts/build_doc_trust_audit.py --verify-only\n"
+        "     fails closed on drift). -->\n"
+        "# Source Registry (claim-support, not a bibliography)\n\n"
+        "A source appears here only if it maps to >=1 `claim_id` or "
+        "repo file.\nNo prestige padding, no citation laundering. "
+        "Machine source of truth:\n`evidence/SOURCE_REGISTRY.yaml`. "
+        "Tiers: **CANONICAL** /\n**SUPPORTING** / **CONTEXT_ONLY**. "
+        "Claim numbers are the\n`TRI-CLAIM-0NN` suffix in "
+        "`docs/CLAIM_SOURCE_MATRIX.md`.\n\n"
+        "| id | tier | domain | supports | boundary |\n"
+        "|---|---|---|---|---|\n"
+    )
+    rows = []
+    for s in reg.get("sources", []):
+        cids = ",".join(
+            str(c).replace("TRI-CLAIM-", "")
+            for c in s.get("supports_claim_ids", [])
+        )
+        rows.append(
+            f"| {s['id']} | {s['tier']} | {s['domain']} | {cids} | "
+            f"{s['boundary']} |"
+        )
+    tail = (
+        "\n\nFull citations, URLs, allowed/forbidden use are in\n"
+        "`evidence/SOURCE_REGISTRY.yaml`; the rendered human "
+        "bibliography is\n`docs/REFERENCES.md`. A source cannot be "
+        "added unless it maps to at\nleast one `claim_id` or repo "
+        "file.\n"
+    )
+    return head + "\n".join(rows) + tail
+
+
 def main(argv: list[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     cur = build()
+    mirror = render_mirror()
     if "--verify-only" in argv:
         committed = json.loads(_AUDIT.read_text())
         drift = [
@@ -122,6 +164,12 @@ def main(argv: list[str] | None = None) -> int:
         ]
         if drift:
             print(f"DOC TRUST AUDIT — FAIL (drift: {drift})")
+            return 1
+        if _MIRROR.read_text() != mirror:
+            print(
+                "DOC TRUST AUDIT — FAIL (docs/SOURCE_REGISTRY.md "
+                "drifted from evidence/SOURCE_REGISTRY.yaml)"
+            )
             return 1
         print("DOC TRUST AUDIT — OK (committed matches live trust layer)")
         return 0
@@ -150,9 +198,10 @@ def main(argv: list[str] | None = None) -> int:
         "",
     ]
     _VALUE_MD.write_text("\n".join(md))
+    _MIRROR.write_text(mirror)
     print(
-        f"DOC_TRUST_AUDIT.json + DOC_VALUE_AUDIT.md written "
-        f"({cur['claim_count']} claims)"
+        f"DOC_TRUST_AUDIT.json + DOC_VALUE_AUDIT.md + "
+        f"SOURCE_REGISTRY.md written ({cur['claim_count']} claims)"
     )
     return 0
 

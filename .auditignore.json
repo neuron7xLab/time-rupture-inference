@@ -1,0 +1,9 @@
+[
+  {
+    "path": "src/ctios/code_quality_audit.py",
+    "rule": "todo_markers",
+    "reason": "Policy checker intentionally contains TODO token regex literals.",
+    "owner": "core-infra@example.com",
+    "expires_utc": "2099-12-31"
+  }
+]

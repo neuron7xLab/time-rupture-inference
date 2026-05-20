@@ -25,4 +25,4 @@ jobs:
       - name: type adaptive state slice
         run: mypy --strict src/ctios/nctp_state
       - name: run adaptive state smoke
-        run: python tools/nctp_state_smoke.py
+        run: PYTHONPATH=src python tools/nctp_state_smoke.py

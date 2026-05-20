@@ -37,6 +37,8 @@ git push origin --delete pr-50/external-reproduction-bundle-intake-clean
 
 ### P1: post-merge verification seal
 
+The short local seal below is a maintenance smoke surface only. It does **not** claim full CI parity.
+
 ```bash
 git fetch --prune origin
 git switch main
@@ -49,16 +51,61 @@ bash scripts/conference_smoke.sh
 bash scripts/indi_demo.sh
 ```
 
-Pass condition:
+Pass condition for the short seal:
 
 ```text
-Local main reproduces the same verification surface expected from CI.
+Local main passes the selected maintenance smoke checks needed before starting additional operator work.
 ```
 
-Fail condition:
+Fail condition for the short seal:
 
 ```text
 Any local drift, missing provenance entry, README count mismatch, or demo gate failure blocks further promotion work.
+```
+
+### P1-full: CI-parity verification seal
+
+Use this when the operator wants to reproduce the required hard gate surface from `.github/workflows/ci.yml` before trusting a merge candidate.
+
+The CI job runs the proof-of-life surface on Python 3.11 and Python 3.12. For true parity, repeat the commands below under both versions.
+
+```bash
+git fetch --prune origin
+git switch main
+git pull --ff-only origin main
+
+python tools/check_verifier_manifest_static.py --repo .
+python tools/verifier_manifest.py
+python scripts/audit_workflow_trust.py
+python scripts/verify_ci_deps.py
+python scripts/verify_scorecard_prerequisites.py
+PYTHONPATH=src python -m ctios.supply_chain_audit
+
+pip install -q -r requirements-ci.lock
+ruff check src tests scripts
+mypy --strict src/ctios
+python scripts/claims_lint.py
+
+python scripts/build_doc_trust_audit.py --verify-only
+python scripts/check_doc_claim_sources.py
+python scripts/check_doc_trust.py
+python scripts/provenance_attest.py
+
+PYTHONPATH=src pytest tests -q
+PYTHONPATH=src python -m ctios.runner --mode full
+bash scripts/external_adversarial_demo.sh
+```
+
+Pass condition for CI parity:
+
+```text
+The commands above pass under the same Python versions used by CI, and the GitHub PR checks are green.
+```
+
+Fail condition for CI parity:
+
+```text
+Any verifier trust, workflow trust, dependency trust, supply-chain, lint, type, claim, documentation, provenance, test, release-gate, or external-adversarial failure blocks merge readiness.
 ```
 
 ## Experimental adapter status

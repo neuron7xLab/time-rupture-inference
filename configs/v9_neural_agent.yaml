@@ -1,0 +1,5 @@
+seed: 7
+d_model: 16
+lr: 0.01
+use_prev_error: true
+max_history: 256

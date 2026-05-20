@@ -1,0 +1,19 @@
+claim: >
+  A small neural temporal adapter is introduced and tested as a candidate agent substrate
+  inside the existing deterministic verification system.
+
+forbidden_claims:
+  - intelligence
+  - cognition
+  - AGI
+  - brain_simulation
+  - biological_time_perception
+
+negative_result_is_valid: true
+
+primary_metric: post_shift_mae
+secondary_metric: neural_minus_scalar_mae
+
+decision_rule: >
+  Report neural vs scalar baseline comparison without capability-upgrade claims.
+  RED or worse-than-baseline outcomes remain valid and must be preserved.

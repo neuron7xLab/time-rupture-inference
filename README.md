@@ -14,14 +14,14 @@
 
 # `t i m e   r u p t u r e   i n f e r e n c e`
 
-***A scalar prediction-error estimator that survives a hidden regime change — or fails loudly.***
-***Falsification-first. Every negative result is kept, not erased.***
+***A scalar prediction-error estimator for hidden regime-change evaluation.***
+***Falsification-first. Negative results are preserved as artifacts.***
 
 <br>
 
 [![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
 [![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-437_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
+[![tests](https://img.shields.io/badge/tests-458_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
 [![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
 [![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
 [![lineage](https://img.shields.io/badge/lineage-all_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
@@ -105,17 +105,15 @@ defect.
 | exp_smoothing / moving_avg / last | 0.94 – 1.14 | naive baselines |
 | injected (τ₀ hard-wired) | 8.003 | strawman, must fail |
 
-Win-rate vs injected **1.000** · vs best naive **1.000** · on every shift.
-Ablation proves the drift mechanism necessary. Four neuroplasticity-like
-markers (synaptic / homeostatic / neuromodulation / extinction) are
-**measured**, never asserted.
+Aggregate metrics are reported from the pinned evaluation grid; interpretation is bounded by preregistered claim scope.
+Ablation results and diagnostic markers are reported as bounded empirical measurements within this synthetic benchmark.
 
 ## Falsification lineage — every RED kept
 
 | tag | verdict | what it records |
 |---|---|---|
 | `cti-os-v1-RED` | 🔴 | drift detector poisoned by cold-start |
-| `cti-os-v2-GREEN` | 🟢 | base proof of life |
+| `cti-os-v2-GREEN` | 🟢 | baseline gate pass |
 | `cti-os-v3-RED` | 🔴 | two new controls mis-specified |
 | `cti-os-v4-GREEN` | 🟢 | doctoral critique closed → `v0.1.0` |
 | v5 (PR #1) | 🟢 | minimal causal-action: gain 0.868, action_null 0.000 |
@@ -151,7 +149,7 @@ src/ctios/   env · agents · drift · metrics · gates · ledger · runner · a
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       437 tests incl. no-leakage, shuffle kill-control, contract
+tests/       458 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
 

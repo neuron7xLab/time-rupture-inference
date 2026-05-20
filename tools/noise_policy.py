@@ -43,6 +43,13 @@ def load_policy_file(path: Path) -> list[dict]:
     return data
 
 
+def _all_matching_files(summary: dict, rule: str) -> list[tuple[str, int]]:
+    rule_summary = summary["matches"][rule]
+    if "files" in rule_summary:
+        return [(str(rel), int(count)) for rel, count in rule_summary["files"]]
+    return [(str(rel), int(count)) for rel, count in rule_summary["top_files"]]
+
+
 def evaluate_policy(summary: dict, allowlist: list[dict], current_date: str | None = None) -> dict:
     now = current_date or datetime.now(UTC).strftime("%Y-%m-%d")
     violations: list[str] = []
@@ -54,7 +61,7 @@ def evaluate_policy(summary: dict, allowlist: list[dict], current_date: str | No
 
     for rule in ("todo_markers", "ai_disclaimer"):
         unauthorized_files = []
-        for rel, _count in summary["matches"][rule]["top_files"]:
+        for rel, _count in _all_matching_files(summary, rule):
             if not rel.startswith("src/"):
                 continue
             if (rel, rule) not in allowances:
@@ -62,4 +69,8 @@ def evaluate_policy(summary: dict, allowlist: list[dict], current_date: str | No
         if unauthorized_files:
             violations.append(f"unsanctioned {rule} in src files: {sorted(set(unauthorized_files))}")
 
-    return {"status": "RED" if violations else "GREEN", "violations": violations, "allowlist_entries": len(allowlist)}
+    return {
+        "status": "RED" if violations else "GREEN",
+        "violations": violations,
+        "allowlist_entries": len(allowlist),
+    }

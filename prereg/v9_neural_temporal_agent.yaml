@@ -6,6 +6,7 @@ forbidden_claims:
   - cognition
   - AGI
   - brain simulation
+  - biological time perception
 success_criteria:
   - post_shift_mae below scalar learned
   - win_rate_above_scalar

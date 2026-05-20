@@ -88,3 +88,15 @@ agent:
 
 falsify:
 	$(PY) -m ctios.falsify_cli
+
+.PHONY: noise-audit
+NOISE_AUDIT_DATE ?= $(shell date -u +%F)
+OUTPUT_DIR := evidence/noise_hygiene
+
+noise-audit:
+	@mkdir -p $(OUTPUT_DIR)
+	python tools/noise_audit.py \
+		--enforce \
+		--output $(OUTPUT_DIR)/latest.json \
+		--snapshot-tag $(NOISE_AUDIT_DATE) \
+		--policy-file .auditignore.json

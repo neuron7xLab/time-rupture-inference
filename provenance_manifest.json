@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "c12580994eab31002b207cfe795fe2278e6dec60d47c65e4153969698f3ac5cd",
+      "sha256": "9b51735e5357495338476a3da15641cab54d8e674599a39378e5b5ebb8c33887",
       "spdx_header": "n/a"
     },
     {
@@ -76,6 +76,12 @@
     },
     {
       "license": "MIT",
+      "path": "configs/v9_neural_agent.yaml",
+      "sha256": "ef81714beedab04c84c90adefd5ca0018f09d3e094be195851af5a03efd5b428",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
       "path": "invariants.yaml",
       "sha256": "0a15dfb518f42ee98968480301fc0a4a6967c48d66b176dc23088aa054264fa0",
       "spdx_header": "n/a"
@@ -132,6 +138,12 @@
       "license": "MIT",
       "path": "prereg/v6_precision_weighting_preregistration.yaml",
       "sha256": "5da4c9231a0725242d19efba295933044904fbabeaba383e486401e7a301be9c",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "prereg/v9_neural_temporal_agent.yaml",
+      "sha256": "460979e1ade38c42b20ba13791f2018ef7d58c175d9a667f1647ae1f21da0786",
       "spdx_header": "n/a"
     },
     {
@@ -510,6 +522,18 @@
       "license": "MIT",
       "path": "src/ctios/metrics.py",
       "sha256": "391784683c96b448d17730f88437038984c16313361abc48f910c30fd79fbf14",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/neural_agent.py",
+      "sha256": "cb94640e7c3022e34146c58769d561631cddaea3d248eaf944e45409fa3b42c6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/neural_runner.py",
+      "sha256": "8d5a234e35264370186a5cdaf16256c13338ac8cf2e9003a57527e01c798fe6a",
       "spdx_header": true
     },
     {

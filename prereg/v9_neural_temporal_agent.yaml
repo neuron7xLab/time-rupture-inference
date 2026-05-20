@@ -1,0 +1,19 @@
+title: CTI-OS v9 neural temporal agent
+scope: hidden temporal-rupture adaptation benchmark
+allowed_claim: small neural temporal model is tested against scalar and naive baselines
+forbidden_claims:
+  - intelligence
+  - cognition
+  - AGI
+  - brain simulation
+  - biological time perception
+success_criteria:
+  - post_shift_mae below scalar learned
+  - win_rate_above_scalar
+  - false_alarms_not_worse
+  - detection_delay_not_worse
+  - no_leakage_pass
+  - deterministic_replay_pass
+  - ablation_memory_required
+  - min_grid: "30 seeds x 3 shifts"
+negative_result_is_valid: true

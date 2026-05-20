@@ -4,6 +4,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+from tools.noise_policy import evaluate_policy
+
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_RULES = [
     "ai_disclaimer",
@@ -32,6 +34,7 @@ def test_noise_audit_writes_expected_shape():
     assert data["generated_at_utc"] == "2026-05-20"
     assert data["files_scanned"] > 0
     assert sorted(data["matches"].keys()) == EXPECTED_RULES
+    assert "files" in data["matches"]["todo_markers"]
 
 
 def test_noise_audit_rejects_output_escape(tmp_path: Path):
@@ -49,6 +52,24 @@ def test_noise_audit_enforce_green_with_strict_allowlist():
         "2026-05-20",
     )
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_noise_policy_checks_all_src_matches_not_only_top_files():
+    top_files = [(f"docs/report_{i}.md", 50 - i) for i in range(20)]
+    summary = {
+        "matches": {
+            "todo_markers": {
+                "top_files": top_files,
+                "files": [*top_files, ("src/lower_ranked.py", 1)],
+            },
+            "ai_disclaimer": {"top_files": [], "files": []},
+        }
+    }
+
+    result = evaluate_policy(summary, allowlist=[], current_date="2026-05-20")
+
+    assert result["status"] == "RED"
+    assert "src/lower_ranked.py" in result["violations"][0]
 
 
 def test_noise_audit_enforce_red_without_policy_file():

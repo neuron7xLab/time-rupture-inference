@@ -15,7 +15,7 @@
 <p>
   <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/version-0.1.1-0A66FF?style=flat-square&labelColor=0A0A0A"></a>
   <a href="evidence/release_gate.md"><img alt="gate" src="https://img.shields.io/badge/gate-19/19_GREEN-00FF66?style=flat-square&labelColor=0A0A0A"></a>
-  <a href="tests/"><img alt="tests" src="https://img.shields.io/badge/tests-437_PASSING-00FF66?style=flat-square&labelColor=0A0A0A"></a>
+  <a href="tests/"><img alt="tests" src="https://img.shields.io/badge/tests-452_PASSING-00FF66?style=flat-square&labelColor=0A0A0A"></a>
   <a href="pyproject.toml"><img alt="mypy" src="https://img.shields.io/badge/mypy-strict-0A66FF?style=flat-square&labelColor=0A0A0A"></a>
   <a href="docs/reports/LINEAGE_STATE.md"><img alt="lineage" src="https://img.shields.io/badge/lineage-RED_preserved-FF0033?style=flat-square&labelColor=0A0A0A"></a>
 </p>
@@ -133,7 +133,7 @@ src/ctios/   env · agents · drift · metrics · gates · ledger · runner · a
 prereg/      preregistration.yaml · falsifier_contract.yaml · sha_pin.txt
 configs/     env · agents · metrics · experiment (the 30×3 grid)
 evidence/    ledger · negatives · v4 baseline lock · release gate
-tests/       451 tests incl. no-leakage, shuffle kill-control, contract
+tests/       452 tests incl. no-leakage, shuffle kill-control, contract
 invariants.yaml  machine-readable invariant register (enforced refs)
 ```
 

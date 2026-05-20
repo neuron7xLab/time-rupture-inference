@@ -11,8 +11,10 @@ whether a candidate bundle is well-formed enough for human review.
 from __future__ import annotations
 
 import argparse
+from datetime import UTC, datetime
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -23,6 +25,7 @@ DEFAULT_TEMPLATE = ROOT / "templates" / "EXTERNAL_VALIDATION_BUNDLE.example.json
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 COMMIT = re.compile(r"^[0-9a-f]{7,40}$")
+UTC_TIMESTAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$")
 AUTHOR_MARKERS = {"neuron7xlab", "neuron7x", "yaroslav", "vasylenko"}
 EXPECTED_METRICS = {
     "learned_post_mae": 0.8830,
@@ -59,6 +62,27 @@ def _is_author_marker(value: str) -> bool:
     return any(marker in v for marker in AUTHOR_MARKERS)
 
 
+def _commit_exists(commit: str) -> bool:
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", f"{commit}^{{commit}}"],
+        cwd=ROOT,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return result.returncode == 0
+
+
+def _valid_utc_timestamp(value: str) -> bool:
+    if not UTC_TIMESTAMP.match(value):
+        return False
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == UTC.utcoffset(None)
+
+
 def validate_bundle(
     path: Path,
     *,
@@ -93,11 +117,15 @@ def validate_bundle(
         if not HEX64.match(str(obj.get(key, ""))):
             errors.append(f"{key} must be a lowercase 64-hex sha256")
 
-    if not COMMIT.match(str(obj.get("repo_commit", ""))):
+    repo_commit = str(obj.get("repo_commit", ""))
+    if not COMMIT.match(repo_commit):
         errors.append("repo_commit must be a 7-40 char lowercase hex commit prefix/full sha")
+    elif not _commit_exists(repo_commit):
+        errors.append("repo_commit does not resolve to a commit in local git history")
 
-    if str(obj.get("timestamp_utc", "")).endswith("Z") is False:
-        errors.append("timestamp_utc must be UTC and end with Z")
+    timestamp_utc = str(obj.get("timestamp_utc", ""))
+    if not _valid_utc_timestamp(timestamp_utc):
+        errors.append("timestamp_utc must be full ISO-8601 UTC like YYYY-MM-DDTHH:MM:SSZ")
 
     if obj.get("no_leakage_attestation") is not True:
         errors.append("no_leakage_attestation must be exactly true")

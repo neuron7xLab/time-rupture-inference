@@ -1,0 +1,8 @@
+seed: 0
+steps: 600
+deltas: [7.0, 12.0, -5.0]
+agent:
+  type: neural_temporal_adapter
+  dim: 64
+  leak: 0.3
+  ridge: 0.01

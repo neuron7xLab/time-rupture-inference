@@ -1,0 +1,164 @@
+{
+  "generated_at_utc": "2026-05-20",
+  "files_scanned": 370,
+  "allowlist_count": 1,
+  "rules": [
+    {
+      "name": "todo_markers",
+      "pattern": "\\b(TODO|FIXME|HACK|XXX|TBD)\\b",
+      "rationale": "unresolved implementation markers"
+    },
+    {
+      "name": "ai_disclaimer",
+      "pattern": "(?i)(as an ai|language model|i cannot|i can't)",
+      "rationale": "LLM disclaimer traces"
+    },
+    {
+      "name": "brand_mentions",
+      "pattern": "(?i)\\b(chatgpt|claude\\.ai|copilot|anthropic|openai)\\b",
+      "rationale": "vendor/model mentions requiring context"
+    },
+    {
+      "name": "pseudo_markers",
+      "pattern": "(?i)\\b(pseudocode|placeholder|dummy|stub|mock|temporary|temp)\\b",
+      "rationale": "possible pseudo/non-production terms"
+    }
+  ],
+  "matches": {
+    "todo_markers": {
+      "total": 4,
+      "by_zone": {
+        "src": 0,
+        "tests": 4,
+        "docs": 0,
+        "scripts": 0,
+        "other": 0
+      },
+      "top_files": [
+        [
+          "tests/test_security_policy.py",
+          4
+        ]
+      ]
+    },
+    "ai_disclaimer": {
+      "total": 2,
+      "by_zone": {
+        "src": 0,
+        "tests": 0,
+        "docs": 2,
+        "scripts": 0,
+        "other": 0
+      },
+      "top_files": [
+        [
+          "docs/DEPENDENCY_TRUST_CONTRACT.md",
+          1
+        ],
+        [
+          "docs/INDI_EXECUTIVE_SUMMARY.md",
+          1
+        ]
+      ]
+    },
+    "brand_mentions": {
+      "total": 0,
+      "by_zone": {
+        "src": 0,
+        "tests": 0,
+        "docs": 0,
+        "scripts": 0,
+        "other": 0
+      },
+      "top_files": []
+    },
+    "pseudo_markers": {
+      "total": 29,
+      "by_zone": {
+        "src": 6,
+        "tests": 3,
+        "docs": 7,
+        "scripts": 4,
+        "other": 9
+      },
+      "top_files": [
+        [
+          "scripts/platform_demo.sh",
+          4
+        ],
+        [
+          "src/ctios/artifact_assertions.py",
+          3
+        ],
+        [
+          "docs/FRONTIER_READINESS_REPORT.md",
+          2
+        ],
+        [
+          "docs/REPRODUCIBILITY_CONTRACT.md",
+          2
+        ],
+        [
+          "examples/external_reviewer_packet_template.yaml",
+          2
+        ],
+        [
+          "examples/indi_redacted_temporal_hypothesis.yaml",
+          2
+        ],
+        [
+          "src/ctios/readiness_score.py",
+          2
+        ],
+        [
+          "SECURITY.md",
+          1
+        ],
+        [
+          "docs/AUDIT_META_ANALYSIS_2026-05-18.md",
+          1
+        ],
+        [
+          "docs/EXTERNAL_VALIDATION_PROTOCOL.md",
+          1
+        ],
+        [
+          "docs/reports/VERIFIER_CHANGE_REPORT.md",
+          1
+        ],
+        [
+          "evidence/POLICY_GAP_AUDIT.json",
+          1
+        ],
+        [
+          "evidence/external_validation_status.json",
+          1
+        ],
+        [
+          "pyproject.toml",
+          1
+        ],
+        [
+          "release/tri-falsify-review-pack-v0.2.0/RESIDUAL_RISKS.md",
+          1
+        ],
+        [
+          "src/ctios/platform_demo.py",
+          1
+        ],
+        [
+          "tests/test_opaque_probe.py",
+          1
+        ],
+        [
+          "tests/test_security_policy.py",
+          1
+        ],
+        [
+          "tests/test_verifier_capture_resistance.py",
+          1
+        ]
+      ]
+    }
+  }
+}

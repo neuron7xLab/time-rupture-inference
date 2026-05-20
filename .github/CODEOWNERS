@@ -1,0 +1,38 @@
+# CODEOWNERS
+#
+# Review ownership for repository governance, implementation, research,
+# evidence, and release surfaces. Repository rulesets should require CODEOWNER
+# review before changes to protected paths can merge.
+
+# Default owner for all changes.
+* @neuron7xLab
+
+# GitHub control plane.
+.github/ @neuron7xLab
+.github/workflows/ @neuron7xLab
+.github/CODEOWNERS @neuron7xLab
+
+# Trust and automation layer.
+scripts/ @neuron7xLab
+tools/ @neuron7xLab
+pyproject.toml @neuron7xLab
+requirements-lock.txt @neuron7xLab
+requirements-ci.lock @neuron7xLab
+provenance_manifest.json @neuron7xLab
+invariants.yaml @neuron7xLab
+claims.yaml @neuron7xLab
+
+# Scientific and implementation surface.
+src/ctios/ @neuron7xLab
+tests/ @neuron7xLab
+configs/ @neuron7xLab
+prereg/ @neuron7xLab
+
+# Review, publication, and evidence surface.
+docs/ @neuron7xLab
+evidence/ @neuron7xLab
+CITATION.cff @neuron7xLab
+README.md @neuron7xLab
+SECURITY.md @neuron7xLab
+CONTRIBUTING.md @neuron7xLab
+CODE_OF_CONDUCT.md @neuron7xLab

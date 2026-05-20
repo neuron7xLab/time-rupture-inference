@@ -1,0 +1,41 @@
+name: Governance change
+description: Propose a change to workflows, provenance, dependency policy, branch rules, or repository process.
+title: "governance: "
+labels: ["governance"]
+body:
+  - type: textarea
+    id: surface
+    attributes:
+      label: Repository surface
+      description: Which repository process or file group changes?
+      placeholder: workflows, provenance, dependency policy, docs gates, branch rules
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason
+      description: Why is this change necessary?
+    validations:
+      required: true
+  - type: textarea
+    id: invariant
+    attributes:
+      label: Invariant impact
+      description: Which invariant is added, preserved, or weakened?
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification plan
+      description: Exact checks required before merge.
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback plan
+      description: How to revert safely if this process change fails.
+    validations:
+      required: true

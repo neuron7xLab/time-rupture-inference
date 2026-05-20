@@ -1,0 +1,47 @@
+name: Research claim or boundary issue
+description: Propose, challenge, or clarify a claim boundary.
+title: "claim: "
+labels: ["claim-boundary"]
+body:
+  - type: textarea
+    id: claim
+    attributes:
+      label: Claim text
+      description: State the exact claim being proposed or challenged.
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Requested status
+      options:
+        - unsupported
+        - candidate
+        - bounded
+        - verified
+        - falsified
+        - quarantined
+        - deprecated
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or counterevidence
+      description: Paths, tests, evidence artifacts, logs, or source references.
+    validations:
+      required: true
+  - type: textarea
+    id: falsifier
+    attributes:
+      label: Falsification condition
+      description: What observation or test would make this claim fail?
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Boundary
+      description: What this claim does not establish.
+    validations:
+      required: true

@@ -24,7 +24,7 @@ def run_neural_attention_adapter(
     stream: np.ndarray,
     seed: int = 0,
     max_history: int = 256,
-) > dict[str, float | bool]:
+) -> dict[str, float | bool]:
     obs = validate_stream(stream)
     if max_history < 1:
         raise ValueError("max_history must be >= 1")
@@ -48,6 +48,7 @@ def run_neural_attention_adapter(
     post_slice = slice(post, len(obs))
     pred_arr = np.asarray(preds, dtype=float)
     baseline_arr = np.asarray(baseline_preds, dtype=float)
+    error_arr = np.asarray(errors, dtype=float)
     unc_arr = np.asarray(uncertainties, dtype=float)
     neural_mae = float(np.mean(np.abs(pred_arr[post_slice] - obs[post_slice])))
     scalar_mae = float(np.mean(np.abs(baseline_arr[post_slice] - obs[post_slice])))
@@ -57,7 +58,7 @@ def run_neural_attention_adapter(
         "scalar_baseline_post_shift_mae": scalar_mae,
         "neural_minus_scalar_mae": neural_mae - scalar_mae,
         "predictions_finite": bool(np.isfinite(pred_arr).all()),
-        "errors_finite": bool(np.isfinite(errors).all()),
+        "errors_finite": bool(np.isfinite(error_arr).all()),
         "uncertainty_finite": bool(np.isfinite(unc_arr).all()),
         "mean_uncertainty": mean_uncertainty,
         "uncertainty_calibration_ratio": float(neural_mae / (mean_uncertainty + 1e-12)),

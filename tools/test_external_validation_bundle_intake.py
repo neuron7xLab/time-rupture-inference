@@ -20,12 +20,20 @@ SCRIPT = ROOT / "tools" / "validate_external_validation_bundle.py"
 H = "a" * 64
 
 
+def _head_commit() -> str:
+    return subprocess.check_output(
+        ["git", "rev-parse", "--short=12", "HEAD"],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+
+
 def _bundle(tmp_path: Path, **overrides) -> Path:
     obj = {
         "reviewer_id": "external-team",
         "reviewer_pubkey_sha256": H,
         "timestamp_utc": "2026-05-20T00:00:00Z",
-        "repo_commit": "0a91f5e",
+        "repo_commit": _head_commit(),
         "spec_sha256": H,
         "verdict_sha256": H,
         "no_leakage_attestation": True,
@@ -72,7 +80,7 @@ def main() -> int:
         _assert(r.returncode == 1 and "example bundle is not evidence" in r.stderr, "example-as-evidence accepted")
 
         r = _run(ROOT / "templates" / "EXTERNAL_VALIDATION_BUNDLE.example.json", "--allow-example")
-        _assert(r.returncode == 0, "template maintenance mode failed")
+        _assert(r.returncode == 1 and "does not resolve" in r.stderr, "template fake commit accepted")
 
         r = _run(_bundle(tmp, reviewer_id="neuron7xLab"))
         _assert(r.returncode == 1 and "repository author" in r.stderr, "self-run accepted")
@@ -98,7 +106,16 @@ def main() -> int:
         _assert(r.returncode == 1 and "learned_post_mae drift" in r.stderr, "metric drift accepted")
 
         r = _run(_bundle(tmp, repo_commit="not-a-sha"))
-        _assert(r.returncode == 1 and "repo_commit" in r.stderr, "bad commit accepted")
+        _assert(r.returncode == 1 and "repo_commit" in r.stderr, "bad commit format accepted")
+
+        r = _run(_bundle(tmp, repo_commit="deadbee"))
+        _assert(r.returncode == 1 and "does not resolve" in r.stderr, "non-existent commit accepted")
+
+        r = _run(_bundle(tmp, timestamp_utc="Z"))
+        _assert(r.returncode == 1 and "ISO-8601 UTC" in r.stderr, "malformed timestamp accepted")
+
+        r = _run(_bundle(tmp, timestamp_utc="2026-05-20T00:00:00+00:00"))
+        _assert(r.returncode == 1 and "ISO-8601 UTC" in r.stderr, "non-Z timestamp accepted")
 
         r = _run(_bundle(tmp, no_leakage_attestation="true"))
         _assert(r.returncode == 1 and "no_leakage_attestation" in r.stderr, "string leakage flag accepted")

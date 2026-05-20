@@ -98,6 +98,8 @@ tools/**
 claims.yaml
 invariants.yaml
 provenance_manifest.json
+requirements-ci.lock
+requirements-lock.txt
 requirements*.txt
 pyproject.toml
 README.md
@@ -106,6 +108,8 @@ CONTRIBUTING.md
 CODE_OF_CONDUCT.md
 docs/governance/**
 ```
+
+`requirements-ci.lock` is listed explicitly because GitHub workflow jobs install CI dependencies from that file. It is a protected dependency-governance surface even though it does not end in `.txt`.
 
 ## Verification after enabling
 

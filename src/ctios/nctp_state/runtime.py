@@ -61,6 +61,27 @@ def _mean_abs(values: list[float]) -> float:
     return sum(abs(v) for v in values) / float(len(values))
 
 
+def _align_dt_to_horizons(dt: list[list[float]], horizon_count: int) -> list[list[float]]:
+    """Map input stream dt to horizon-length dt for TASK-03 scoring.
+
+    TASK-03 consumes a [B][H] elapsed-time signal. The prototype builder receives
+    stream dt as [B][T], so it preserves caller-provided timing by taking the most
+    recent horizon_count values. If fewer stream steps exist than horizons, the
+    earliest available dt is repeated on the left.
+    """
+
+    aligned: list[list[float]] = []
+    for row in dt:
+        if not row:
+            raise ValueError("dt rows must be non-empty")
+        if len(row) >= horizon_count:
+            aligned.append(row[-horizon_count:])
+            continue
+        pad = [row[0] for _ in range(horizon_count - len(row))]
+        aligned.append(pad + row)
+    return aligned
+
+
 def task01_multi_horizon_inference(
     x: list[list[list[float]]],
     dt: list[list[float]],
@@ -260,7 +281,7 @@ def build_prototype_inference_packet(
         state_t=state_t,
         state_prev=state_prev,
         sigma=sigma,
-        dt=[[1.0 for _ in horizons] for _ in range(b)],
+        dt=_align_dt_to_horizons(dt, len(horizons)),
         memory_conflict=conflict,
     )
 

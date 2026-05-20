@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: MIT
 import json
+import runpy
 import subprocess
 import sys
 from pathlib import Path
 
-from tools.noise_policy import evaluate_policy
-
 ROOT = Path(__file__).resolve().parents[1]
+evaluate_policy = runpy.run_path(str(ROOT / "tools" / "noise_policy.py"))["evaluate_policy"]
 EXPECTED_RULES = [
     "ai_disclaimer",
     "brand_mentions",

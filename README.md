@@ -6,45 +6,27 @@
   <img alt="time rupture inference" src="https://raw.githubusercontent.com/neuron7xLab/time-rupture-inference/main/.github/assets/banner-dark.svg" width="100%">
 </picture>
 
-<br><br>
-
-<img src="https://readme-typing-svg.demolab.com/?lines=error+updates+the+model+%C2%B7+the+model+survives+the+rupture;every+RED+preserved+%C2%B7+no+threshold+tuned+to+green;30+seeds+%C3%97+3+shifts+%C2%B7+win-rate+1.000+vs+injected+%26+naive;falsifier+pinned+before+the+run+or+it+does+not+count;prediction-error+temporal+adaptation+%E2%80%94+scoped%2C+frozen%2C+falsifier-pinned&font=JetBrains+Mono&size=18&pause=1800&color=00FF66&center=true&vCenter=true&width=820&height=46" alt="tagline" />
-
 <br>
 
-# `t i m e   r u p t u r e   i n f e r e n c e`
+<p>
+  <code>prediction-error temporal adaptation · hidden rupture · fail-closed evidence</code>
+</p>
 
-***A scalar prediction-error estimator that survives a hidden regime change — or fails loudly.***
-***Falsification-first. Every negative result is kept, not erased.***
+<p>
+  <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/version-0.1.1-0A66FF?style=flat-square&labelColor=0A0A0A"></a>
+  <a href="evidence/release_gate.md"><img alt="gate" src="https://img.shields.io/badge/gate-19/19_GREEN-00FF66?style=flat-square&labelColor=0A0A0A"></a>
+  <a href="tests/"><img alt="tests" src="https://img.shields.io/badge/tests-437_PASSING-00FF66?style=flat-square&labelColor=0A0A0A"></a>
+  <a href="pyproject.toml"><img alt="mypy" src="https://img.shields.io/badge/mypy-strict-0A66FF?style=flat-square&labelColor=0A0A0A"></a>
+  <a href="docs/reports/LINEAGE_STATE.md"><img alt="lineage" src="https://img.shields.io/badge/lineage-RED_preserved-FF0033?style=flat-square&labelColor=0A0A0A"></a>
+</p>
 
-<br>
-
-[![version](https://img.shields.io/badge/version-0.1.1-0000FF?style=for-the-badge&labelColor=000000)](CHANGELOG.md)
-[![gate](https://img.shields.io/badge/gate-19%2F19_green-00FF00?style=for-the-badge&labelColor=000000)](evidence/release_gate.md)
-[![tests](https://img.shields.io/badge/tests-437_passing-00FF00?style=for-the-badge&labelColor=000000)](tests/)
-[![mypy](https://img.shields.io/badge/mypy-strict-00FF00?style=for-the-badge&labelColor=000000)](pyproject.toml)
-[![grid](https://img.shields.io/badge/grid-30_seeds_%C3%97_3_shifts-0000FF?style=for-the-badge&labelColor=000000)](configs/experiment.yaml)
-[![lineage](https://img.shields.io/badge/lineage-all_preserved-FF0033?style=for-the-badge&labelColor=000000)](docs/reports/LINEAGE_STATE.md)
-[![license](https://img.shields.io/badge/license-MIT-0000FF?style=for-the-badge&labelColor=000000)](LICENSE)
-
-<br>
-
-[![Python 3.12](https://img.shields.io/badge/Python_3.11--3.13-0000FF?style=flat&logo=python&logoColor=white&labelColor=000000)](https://www.python.org/)
-[![NumPy](https://img.shields.io/badge/NumPy-FF0033?style=flat&logo=numpy&logoColor=white&labelColor=000000)](https://numpy.org/)
-[![pytest](https://img.shields.io/badge/pytest-00FF00?style=flat&logo=pytest&logoColor=white&labelColor=000000)](https://docs.pytest.org/)
-[![Ruff](https://img.shields.io/badge/Ruff-0000FF?style=flat&logo=ruff&logoColor=black&labelColor=000000)](https://docs.astral.sh/ruff/)
-[![CI](https://img.shields.io/badge/CI-fail--closed_gate-FF0033?style=flat&logo=githubactions&logoColor=white&labelColor=000000)](.github/workflows/ci.yml)
-[![Ukraine](https://img.shields.io/badge/%F0%9F%87%BA%F0%9F%87%A6-Poltava-0000FF?style=flat&labelColor=000000)](#)
+<p>
+  <sub>
+    <code>error → update → prediction → action → next-state estimate</code>
+  </sub>
+</p>
 
 </div>
-
-<p align="center">
-  <code>error → update → prediction → action → next-state estimate</code>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/neuron7xLab/time-rupture-inference/main/.github/assets/divider.svg" width="100%">
-</p>
 
 ## The one mechanism
 
@@ -244,12 +226,6 @@ Claim boundary: a learned sequence model with a representational
 advantage on a harder task — NOT intelligence, NOT AGI, NOT cognition.
 <!-- claims:end -->
 
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/neuron7xLab/time-rupture-inference/main/.github/assets/divider.svg" width="100%">
-</p>
-
 <div align="center">
-<sub>Build the smallest environment where language cannot fake adaptation;
-then make the model adapt under hidden temporal rupture, or fail loudly.</sub>
+<sub>Build the smallest environment where language cannot fake adaptation; then make the model adapt under hidden temporal rupture, or fail loudly.</sub>
 </div>

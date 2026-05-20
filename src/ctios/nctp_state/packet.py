@@ -79,6 +79,7 @@ def validate_inference_packet(packet: dict[str, Any]) -> list[str]:
         errors.append(f"missing top-level keys: {', '.join(missing_top)}")
 
     sections: dict[str, tuple[str, ...]] = {
+        "state": ("s_t", "s_prev"),
         "forecast": ("Y_hat", "horizons"),
         "precision_error": ("error", "precision", "weighted_error"),
         "drift": (

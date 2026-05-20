@@ -9,6 +9,7 @@ ZONE_KEYS = ("src", "tests", "docs", "scripts", "other")
 TEXT_EXT = {".py", ".md", ".yaml", ".yml", ".toml", ".json", ".sh", ".txt", ".cff"}
 EXCLUDE_PARTS = {".git", "__pycache__", ".venv", "venv", "node_modules"}
 SELF_EXCLUDE_PREFIXES = ("docs/NOISE_HYGIENE_AUDIT_", "evidence/noise_hygiene_audit_")
+TOP_FILE_LIMIT = 20
 
 
 @dataclass(frozen=True)
@@ -19,10 +20,26 @@ class Rule:
 
 
 RULES = (
-    Rule("todo_markers", r"\b(TODO|FIXME|HACK|XXX|TBD)\b", "unresolved implementation markers"),
-    Rule("ai_disclaimer", r"(?i)(as an ai|language model|i cannot|i can't)", "LLM disclaimer traces"),
-    Rule("brand_mentions", r"(?i)\b(chatgpt|claude\.ai|copilot|anthropic|openai)\b", "vendor/model mentions requiring context"),
-    Rule("pseudo_markers", r"(?i)\b(pseudocode|placeholder|dummy|stub|mock|temporary|temp)\b", "possible pseudo/non-production terms"),
+    Rule(
+        "todo_markers",
+        r"\b(TODO|FIXME|HACK|XXX|TBD)\b",
+        "unresolved implementation markers",
+    ),
+    Rule(
+        "ai_disclaimer",
+        r"(?i)(as an ai|language model|i can(?:not|\x27t))",
+        "LLM disclaimer traces",
+    ),
+    Rule(
+        "brand_mentions",
+        r"(?i)\b(chatgpt|claude\.ai|copilot|anthropic|openai)\b",
+        "vendor/model mentions requiring context",
+    ),
+    Rule(
+        "pseudo_markers",
+        r"(?i)\b(pseudocode|placeholder|dummy|stub|mock|temporary|temp)\b",
+        "possible pseudo/non-production terms",
+    ),
 )
 
 
@@ -56,13 +73,21 @@ def iter_files(root: Path, self_exclude: set[str]) -> list[Path]:
 
 
 def scan_repository(root: Path, generated_at_utc: str, output_relpath: str) -> dict:
-    self_exclude = {"tools/noise_audit.py", "tools/noise_scan.py", "tools/noise_policy.py", output_relpath}
+    self_exclude = {
+        "tools/noise_audit.py",
+        "tools/noise_scan.py",
+        "tools/noise_policy.py",
+        output_relpath,
+    }
     files = iter_files(root, self_exclude)
     compiled = {r.name: re.compile(r.pattern) for r in RULES}
     summary = {
         "generated_at_utc": generated_at_utc,
         "files_scanned": len(files),
-        "rules": [{"name": r.name, "pattern": r.pattern, "rationale": r.rationale} for r in RULES],
+        "rules": [
+            {"name": r.name, "pattern": r.pattern, "rationale": r.rationale}
+            for r in RULES
+        ],
         "matches": {},
     }
     for rule in RULES:
@@ -78,9 +103,11 @@ def scan_repository(root: Path, generated_at_utc: str, output_relpath: str) -> d
             per_file[rel] = count
             by_zone[classify_path(rel)] += count
             total += count
+        files_with_matches = sorted(per_file.items(), key=lambda x: (-x[1], x[0]))
         summary["matches"][rule.name] = {
             "total": total,
             "by_zone": by_zone,
-            "top_files": sorted(per_file.items(), key=lambda x: x[1], reverse=True)[:20],
+            "files": files_with_matches,
+            "top_files": files_with_matches[:TOP_FILE_LIMIT],
         }
     return summary

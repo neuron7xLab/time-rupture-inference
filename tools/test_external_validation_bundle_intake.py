@@ -80,7 +80,7 @@ def main() -> int:
         _assert(r.returncode == 1 and "example bundle is not evidence" in r.stderr, "example-as-evidence accepted")
 
         r = _run(ROOT / "templates" / "EXTERNAL_VALIDATION_BUNDLE.example.json", "--allow-example")
-        _assert(r.returncode == 1 and "does not resolve" in r.stderr, "template fake commit accepted")
+        _assert(r.returncode == 0 and "intake-valid" in r.stdout, "template maintenance mode failed")
 
         r = _run(_bundle(tmp, reviewer_id="neuron7xLab"))
         _assert(r.returncode == 1 and "repository author" in r.stderr, "self-run accepted")

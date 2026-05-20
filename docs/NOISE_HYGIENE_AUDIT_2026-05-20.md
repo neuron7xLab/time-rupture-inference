@@ -34,5 +34,4 @@ Each exception entry must contain:
 Expired or malformed entries invalidate policy and force RED in enforce mode.
 
 ## Governance boundary
-This audit does not close structural gaps and does not upgrade READY/
-PRODUCTIZABLE status.
+This audit does not close structural gaps and does not upgrade repository status.

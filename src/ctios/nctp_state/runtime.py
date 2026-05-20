@@ -13,8 +13,8 @@ not replace the canonical CTI-OS release gate or v9 neural path.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 from typing import Any
 
 
@@ -197,9 +197,13 @@ def task03_drift_shift_inference(
         mem = sum(memory_conflict[bi]) / float(h)
         state_delta = _mean_abs([state_t[bi][i] - state_prev[bi][i] for i in range(state_dim)])
 
-        # Smooth bounded score. Large weighted error dominates, but state delta,
-        # uncertainty, memory conflict, and dt all contribute.
-        raw = 0.45 * err_mag + 0.25 * state_delta + 0.15 * unc + 0.10 * mem + 0.05 * mean_dt
+        raw = (
+            0.45 * err_mag
+            + 0.25 * state_delta
+            + 0.15 * unc
+            + 0.10 * mem
+            + 0.05 * mean_dt
+        )
         score = _sigmoid(raw - 1.0)
         gain = 0.05 + 0.90 * score
         reset = max(0.0, min(1.0, score * score))
@@ -260,6 +264,9 @@ def build_prototype_inference_packet(
         memory_conflict=conflict,
     )
 
+    stable_regime = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    future_regime_path = [[stable_regime[:] for _ in horizons] for _ in range(b)]
+
     return {
         "state": {"s_t": state_t, "s_prev": state_prev},
         "forecast": {"Y_hat": y_hat_by_h, "horizons": horizons},
@@ -288,8 +295,8 @@ def build_prototype_inference_packet(
             "effect_prediction": y_hat_tensor,
         },
         "regime_extrapolation": {
-            "regime_probs": [[1.0, 0.0, 0.0, 0.0, 0.0, 0.0] for _ in range(b)],
-            "future_regime_path": [[[1.0, 0.0, 0.0, 0.0, 0.0, 0.0] for _ in horizons] for _ in range(b)],
+            "regime_probs": [stable_regime[:] for _ in range(b)],
+            "future_regime_path": future_regime_path,
             "regime_change_time": [[0.0] for _ in range(b)],
             "extrapolated_state": y_hat_tensor,
         },

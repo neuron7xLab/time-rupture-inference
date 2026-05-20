@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: MIT
 import json
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 from tools.noise_policy import evaluate_policy
 

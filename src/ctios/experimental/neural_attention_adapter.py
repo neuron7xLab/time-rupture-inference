@@ -56,7 +56,7 @@ class NeuralAttentionAdapter:
         self._last_error = 0.0
 
     @property
-    def history_length(self) > int:
+    def history_length(self) -> int:
         return self._hist_len
 
     @staticmethod
@@ -120,7 +120,7 @@ class NeuralAttentionAdapter:
         pred_after, weights, out_last = self._forward_from_history()
         err_after = float(np.clip(pred_after - x_now, -1e3, 1e3))
 
-        grad_w_out = np.clip(err_after * out_last[, None], -1e2, 1e2)
+        grad_w_out = np.clip(err_after * out_last[:, None], -1e2, 1e2)
         self.w_out -= self._lr * grad_w_out
 
         h = np.clip(self._history_view() @ self.w_in, -1e3, 1e3)
@@ -133,7 +133,7 @@ class NeuralAttentionAdapter:
 
         attn_signal = float(np.clip(np.dot(grad_v_last, v[-1]), -1e3, 1e3))
         scale = np.sqrt(float(self._d_model))
-        grad_q_last = attn_signal * np.meal(k, axis=0) / scale
+        grad_q_last = attn_signal * np.mean(k, axis=0) / scale
         grad_k_last = attn_signal * np.mean(q, axis=0) / scale
         self.w_q -= self._lr * np.clip(np.outer(h[-1], grad_q_last), -1e2, 1e2)
         self.w_k -= self._lr * np.clip(np.outer(h[-1], grad_k_last), -1e2, 1e2)

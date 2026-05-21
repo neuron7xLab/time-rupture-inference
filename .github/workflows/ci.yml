@@ -37,6 +37,8 @@ jobs:
           python scripts/verify_scorecard_prerequisites.py
           PYTHONPATH=src python -m ctios.supply_chain_audit
       - run: pip install -q -r requirements-ci.lock
+      - name: install cyber hygiene scanner
+        run: pip install -q bandit==1.8.3
       - name: lint
         run: ruff check src tests scripts
       - name: type (mypy --strict, explicit target — not config-dependent)
@@ -52,6 +54,8 @@ jobs:
         run: python scripts/provenance_attest.py
       - name: tests
         run: PYTHONPATH=src pytest tests -q
+      - name: cyber hygiene full gate (audit + governance)
+        run: make cyber-hygiene-full
       - name: fail-closed gate (30 seeds × 3 shifts)
         run: PYTHONPATH=src python -m ctios.runner --mode full
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

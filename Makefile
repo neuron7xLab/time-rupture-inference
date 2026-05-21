@@ -89,7 +89,7 @@ agent:
 falsify:
 	$(PY) -m ctios.falsify_cli
 
-.PHONY: noise-audit
+.PHONY: noise-audit cyber-hygiene-audit cyber-hygiene-governance cyber-hygiene-full
 NOISE_AUDIT_DATE ?= $(shell date -u +%F)
 OUTPUT_DIR := evidence/noise_hygiene
 
@@ -100,3 +100,15 @@ noise-audit:
 		--output $(OUTPUT_DIR)/latest.json \
 		--snapshot-tag $(NOISE_AUDIT_DATE) \
 		--policy-file .auditignore.json
+
+cyber-hygiene-audit:
+	bandit -r src tools scripts -f json -o /tmp/bandit.json
+	$(PY) tools/cyber_hygiene_audit.py \
+		--bandit-json /tmp/bandit.json \
+		--output evidence/cyber_hygiene_top7.json \
+		--mode must_not_exist
+
+cyber-hygiene-governance:
+	$(PY) tools/check_cyber_hygiene_governance.py
+
+cyber-hygiene-full: cyber-hygiene-audit cyber-hygiene-governance

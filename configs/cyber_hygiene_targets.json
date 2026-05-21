@@ -1,0 +1,9 @@
+[
+  {"key":"B607","title":"PATH-hijack subprocess execution","rationale":"partial executable path in subprocess enables PATH hijack in compromised runner"},
+  {"key":"B603","title":"Untrusted subprocess execution surface","rationale":"subprocess calls without explicit trust boundary widen command-injection blast radius"},
+  {"key":"B404","title":"Direct subprocess usage without policy guard","rationale":"raw subprocess usage bypasses centralized execution policy and audit hooks"},
+  {"key":"B101","title":"Runtime assert used as security control","rationale":"assert can be stripped with optimization and must not enforce safety"},
+  {"key":"B105","title":"Hardcoded secret-like literal","rationale":"embedded secret-like literals increase credential disclosure risk"},
+  {"key":"SCRIPTS","title":"Concentrated operational risk in scripts/","rationale":"risk clusters in operational scripts create repeatable exploit surface"},
+  {"key":"SRC","title":"Runtime library risk in src/","rationale":"runtime modules carrying findings propagate risk into production paths"}
+]

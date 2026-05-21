@@ -21,8 +21,10 @@ jobs:
           python-version: "3.12"
       - run: pip install -q -r requirements-ci.lock
       - name: lint NCTP role dynamics
-        run: ruff check src/ctios/nctp_state/role_dynamics.py tools/nctp_role_dynamics_smoke.py
+        run: ruff check src/ctios/nctp_state/role_dynamics.py tools/nctp_role_dynamics_smoke.py src/ctios/nctp_state/role_metrics.py tools/nctp_role_metrics_smoke.py
       - name: type NCTP role dynamics
-        run: mypy --strict src/ctios/nctp_state/role_dynamics.py
+        run: mypy --strict src/ctios/nctp_state/role_dynamics.py src/ctios/nctp_state/role_metrics.py
       - name: run NCTP role dynamics smoke
         run: PYTHONPATH=src python tools/nctp_role_dynamics_smoke.py
+      - name: run NCTP role metrics smoke
+        run: PYTHONPATH=src python tools/nctp_role_metrics_smoke.py

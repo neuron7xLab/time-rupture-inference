@@ -4,9 +4,8 @@ import json
 from pathlib import Path
 
 import pytest
-
-from tools.cyber_hygiene_contract import TARGETS_PATH
 from tools.cyber_hygiene_audit import _load_bandit, _load_targets, build_report
+from tools.cyber_hygiene_contract import TARGETS_PATH
 
 
 def _base_results() -> list[dict]:
@@ -48,7 +47,13 @@ def test_load_bandit_contract_validation(tmp_path: Path) -> None:
 
 def test_load_bandit_sanitization_counts_drops(tmp_path: Path) -> None:
     payload = tmp_path / "payload.json"
-    payload.write_text(json.dumps({"results": [{"test_id": "B607", "filename": "src/a.py"}, {"test_id": "bad-id", "filename": "../oops.py"}]}), encoding="utf-8")
+    payload_data = {
+        "results": [
+            {"test_id": "B607", "filename": "src/a.py"},
+            {"test_id": "bad-id", "filename": "../oops.py"},
+        ]
+    }
+    payload.write_text(json.dumps(payload_data), encoding="utf-8")
     rows, dropped = _load_bandit(payload)
     assert len(rows) == 1
     assert dropped == 1
@@ -56,7 +61,12 @@ def test_load_bandit_sanitization_counts_drops(tmp_path: Path) -> None:
 
 def test_load_bandit_blocks_dotdot_path(tmp_path: Path) -> None:
     payload = tmp_path / "payload2.json"
-    payload.write_text(json.dumps({"results": [{"test_id": "B607", "filename": "../scripts/evil.py"}]}), encoding="utf-8")
+    payload_data = {
+        "results": [
+            {"test_id": "B607", "filename": "../scripts/evil.py"},
+        ]
+    }
+    payload.write_text(json.dumps(payload_data), encoding="utf-8")
     rows, dropped = _load_bandit(payload)
     assert rows == []
     assert dropped == 1

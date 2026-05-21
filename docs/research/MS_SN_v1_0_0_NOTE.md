@@ -282,8 +282,73 @@ if !overload && in_metastable_region {
 ```
 
 Free-energy estimator contract (required before promotion):
-- `q(artheta|\mu)`: diagonal Gaussian posterior over latent coordinates.
-- `p(artheta)`: unit Gaussian prior.
+- `q(\vartheta|\mu)`: diagonal Gaussian posterior over latent coordinates.
+- `p(\vartheta)`: unit Gaussian prior.
+- `p(\tilde{s}|\vartheta)`: Gaussian observation model with fixed variance.
+- numerical method for `\partial F/\partial\theta_i`: finite-difference estimator with `\epsilon=1e-4` and stability bound check.
+
+
+## 14. Operational reservation & automation map (no-runtime-claim)
+
+Ціль: "забронювати" (закріпити в контракті) та автоматизувати критичні операційні процеси до runtime-переходу.
+
+### 14.1. Decision on your 4 points
+
+Так, напрям коректний: усі 4 пункти є валідними інженерними блокерами й уже відображені в скелеті протоколу.
+
+- **(1) Дифеоморфізм фази**: використовувати `\mu_i=[\cos\theta_i,\sin\theta_i]^\top` як мінімальний безвтратний embedding кола.
+- **(2) Асинхронний gamma/proxy**: runtime-контур читає proxy, а FFT/Welch живе у фоновому контурі.
+- **(3) Динамічний апскейлінг**: topological growth атомарно поєднаний з tensor migration (`N -> N+1`).
+- **(4) Ізоляція шуму**: шум керується `noise_sigma` + `dt` + seeded RNG, не `gamma`.
+
+### 14.2. Reserved process slots (must exist before promotion)
+
+1. **Spec-lock slot**
+   - Артефакти: prereg параметрів (`overload_lambda`, `W_*`, `dt_max`, `a_max`, estimator choices).
+   - Автоматизація: CI contract check that parameter keys exist and are finite.
+
+2. **Background spectral slot**
+   - Артефакти: async worker output (`gamma_estimate`, window id, timestamp UTC, estimator config hash).
+   - Автоматизація: periodic job + structured JSONL log; runtime only consumes latest sealed estimate.
+
+3. **Growth-transaction slot**
+   - Артефакти: atomic event log (`old_N`, `new_N`, migration verdict, coupling renorm verdict).
+   - Автоматизація: fail-closed transaction (`begin -> migrate -> renorm -> commit`, else rollback).
+
+4. **Noise-governor slot**
+   - Артефакти: seed registry + trajectory hash + per-step finite check summary.
+   - Автоматизація: deterministic RNG state serialization each run.
+
+5. **Anomaly/evidence slot**
+   - Артефакти: sealed evidence JSON for each RED scenario and recovery outcome.
+   - Автоматизація: one-command packer writes `evidence/ms_sn_v1_0_0/runtime_validation_seed_<seed>.json`.
+
+### 14.3. One-command operational pipeline (target)
+
+```bash
+make ms-sn-prereg-lock \
+  && make ms-sn-runtime-red \
+  && make ms-sn-runtime-green \
+  && make ms-sn-evidence-seal
+```
+
+Expected contract per stage:
+- `prereg-lock`: freezes params + estimator config.
+- `runtime-red`: forced synchrony/desynchrony/runaway/noise-feedback tests.
+- `runtime-green`: bounded recovery + reproducibility hash stability.
+- `evidence-seal`: emits sealed artifact and verdict summary.
+
+### 14.4. Minimum automation checklist for promotion gate
+
+- [ ] CI check: `noise_fn` has no `gamma` causal input.
+- [ ] CI check: growth path calls tensor migration + coupling renorm.
+- [ ] CI check: baseline update forbidden in overload/recovery/anomaly modes.
+- [ ] CI check: seeded reproducibility hash is stable across reruns.
+- [ ] CI check: background PSD estimator metadata is present and pinned.
+
+<!-- claims:disclaimer -->
+Операційна автоматизація вище є планом переходу до `runtime-validated` і **не** означає, що перехід уже виконано.
+<!-- claims:end -->
 - `p(	ilde{s}|artheta)`: Gaussian observation model with fixed variance.
 - estimator window: rolling window `T_F` with deterministic seed and pinned precision mode.
 - numerical method for `\partial F/\partial	heta_i`: finite-difference estimator with `\epsilon=1e-4` and stability bound check.

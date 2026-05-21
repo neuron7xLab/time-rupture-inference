@@ -7,8 +7,8 @@ plus assembly of a validator-compatible inference packet.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 from typing import cast
 
 
@@ -29,6 +29,9 @@ class DriftConfig:
     ema_decay: float = 0.8
 
 
+DEFAULT_DRIFT_CONFIG = DriftConfig()
+
+
 def _validate_finite_scalar(name: str, value: object) -> None:
     if not isinstance(value, (int, float)) or not math.isfinite(float(value)):
         raise ValueError(f"{name} must be a finite numeric scalar")
@@ -38,23 +41,23 @@ def _validate_btc(name: str, x: list[list[list[float]]]) -> tuple[int, int, int]
     if not x or not x[0] or not x[0][0]:
         raise ValueError(f"{name} must be non-empty [B][T][C]")
     b, t, c = len(x), len(x[0]), len(x[0][0])
-    for bi in x:
-        if len(bi) != t:
+    for batch in x:
+        if len(batch) != t:
             raise ValueError(f"{name}: ragged T dimension")
-        for ti in bi:
-            if len(ti) != c:
+        for timestep in batch:
+            if len(timestep) != c:
                 raise ValueError(f"{name}: ragged C dimension")
-            for vi, v in enumerate(ti):
-                _validate_finite_scalar(f"{name}[*][*][{vi}]", v)
+            for vi, value in enumerate(timestep):
+                _validate_finite_scalar(f"{name}[*][*][{vi}]", value)
     return b, t, c
 
 
 def _validate_bt(name: str, x: list[list[float]], b: int, t: int) -> None:
     if len(x) != b or any(len(row) != t for row in x):
         raise ValueError(f"{name} must match [B][T]")
-    for r, row in enumerate(x):
-        for c, v in enumerate(row):
-            _validate_finite_scalar(f"{name}[{r}][{c}]", v)
+    for row_index, row in enumerate(x):
+        for col_index, value in enumerate(row):
+            _validate_finite_scalar(f"{name}[{row_index}][{col_index}]", value)
 
 
 def _validate_horizons(horizons: list[int]) -> None:
@@ -66,8 +69,8 @@ def _validate_horizons(horizons: list[int]) -> None:
 
 def _ema(values: list[float], decay: float) -> float:
     ema = values[0]
-    for v in values[1:]:
-        ema = decay * ema + (1.0 - decay) * v
+    for value in values[1:]:
+        ema = decay * ema + (1.0 - decay) * value
     return ema
 
 
@@ -83,12 +86,16 @@ def task01_multi_horizon_inference(
         raise ValueError("x requires at least T>=2 for delta projection")
 
     out: dict[str, list[list[float]]] = {}
-    for h in horizons:
-        key = f"h{h}"
+    for horizon in horizons:
+        key = f"h{horizon}"
         preds: list[list[float]] = []
         for bi in range(b):
             mean_dt = sum(dt[bi]) / float(t)
-            row = [x[bi][t - 1][ci] + float(h) * (x[bi][t - 1][ci] - x[bi][t - 2][ci]) * mean_dt for ci in range(c)]
+            row: list[float] = []
+            for ci in range(c):
+                last_value = x[bi][t - 1][ci]
+                previous_value = x[bi][t - 2][ci]
+                row.append(last_value + float(horizon) * (last_value - previous_value) * mean_dt)
             preds.append(row)
         out[key] = preds
     return out
@@ -121,13 +128,13 @@ def task02_precision_weighted_error(
             we_h: list[float] = []
             c_h: list[float] = []
             for yi in range(y):
-                e = y_true[bi][hi][yi] - y_hat[bi][hi][yi]
-                s = max(sigma[bi][hi][yi], 0.0)
-                p = 1.0 / (s * s + epsilon)
-                e_h.append(e)
-                p_h.append(p)
-                we_h.append(p * e)
-                c_h.append(1.0 / (1.0 + math.exp(s)))
+                err = y_true[bi][hi][yi] - y_hat[bi][hi][yi]
+                sigma_value = max(sigma[bi][hi][yi], 0.0)
+                precision_value = 1.0 / (sigma_value * sigma_value + epsilon)
+                e_h.append(err)
+                p_h.append(precision_value)
+                we_h.append(precision_value * err)
+                c_h.append(1.0 / (1.0 + math.exp(sigma_value)))
             e_b.append(e_h)
             p_b.append(p_h)
             we_b.append(we_h)
@@ -136,18 +143,24 @@ def task02_precision_weighted_error(
         precision.append(p_b)
         weighted_error.append(we_b)
         confidence.append(c_b)
-    return {"error": error, "precision": precision, "weighted_error": weighted_error, "confidence": confidence}
+    return {
+        "error": error,
+        "precision": precision,
+        "weighted_error": weighted_error,
+        "confidence": confidence,
+    }
 
 
 def task03_drift_rupture_inference(
     weighted_error: list[list[list[float]]],
     sigma: list[list[list[float]]],
-    config: DriftConfig = DriftConfig(),
+    config: DriftConfig | None = None,
 ) -> dict[str, list[list[float]] | list[list[bool]]]:
+    active_config = config or DEFAULT_DRIFT_CONFIG
     b, h, y = _validate_btc("weighted_error", weighted_error)
     if _validate_btc("sigma", sigma) != (b, h, y):
         raise ValueError("sigma shape must match weighted_error")
-    if not (0.0 <= config.ema_decay < 1.0):
+    if not (0.0 <= active_config.ema_decay < 1.0):
         raise ValueError("ema_decay must be in [0, 1)")
 
     drift_score: list[list[float]] = []
@@ -156,15 +169,17 @@ def task03_drift_rupture_inference(
     reset: list[list[float]] = []
     mem_prio: list[list[float]] = []
     for bi in range(b):
-        # flatten per-horizon energies
         energies = [weighted_error[bi][hi][yi] ** 2 for hi in range(h) for yi in range(y)]
-        uncs = [sigma[bi][hi][yi] for hi in range(h) for yi in range(y)]
-        energy_ema = _ema(energies, config.ema_decay)
-        uncertainty_ema = _ema(uncs, config.ema_decay)
-        z = config.energy_weight * energy_ema - config.uncertainty_weight * uncertainty_ema
+        uncertainties = [sigma[bi][hi][yi] for hi in range(h) for yi in range(y)]
+        energy_ema = _ema(energies, active_config.ema_decay)
+        uncertainty_ema = _ema(uncertainties, active_config.ema_decay)
+        z = (
+            active_config.energy_weight * energy_ema
+            - active_config.uncertainty_weight * uncertainty_ema
+        )
         score = 1.0 / (1.0 + math.exp(-z))
         drift_score.append([score])
-        rupture.append([score > config.threshold])
+        rupture.append([score > active_config.threshold])
         gain.append([score])
         reset.append([min(max(score * 0.5, 0.0), 1.0)])
         mem_prio.append([score])
@@ -193,17 +208,26 @@ def task04_causal_delay_inference(
     credit: list[list[float]] = []
     effects: list[list[list[float]]] = []
     for bi in range(b):
-        inv = [1.0 / float(h) for h in horizons]
+        inv = [1.0 / float(horizon) for horizon in horizons]
         norm = sum(inv)
-        probs = [v / norm for v in inv]
+        probs = [value / norm for value in inv]
         delay.append(probs)
         state_strength = min(max(abs(sum(state_t[bi])) / (d * 10.0), 0.0), 1.0)
         credit.append([state_strength] * len(horizons))
-        effects.append([[state_t[bi][j % d] * probs[hi] for j in range(d)] for hi in range(len(horizons))])
-    return {"delay_distribution": delay, "causal_credit": credit, "effect_prediction": effects}
+        effects.append(
+            [[state_t[bi][j % d] * probs[hi] for j in range(d)] for hi in range(len(horizons))]
+        )
+    return {
+        "delay_distribution": delay,
+        "causal_credit": credit,
+        "effect_prediction": effects,
+    }
 
 
-def _pack_memory_section(state_last: list[list[float]], memory_priority: list[list[float]]) -> dict[str, object]:
+def _pack_memory_section(
+    state_last: list[list[float]],
+    memory_priority: list[list[float]],
+) -> dict[str, object]:
     b = len(state_last)
     retrieval = [[1.0] for _ in range(b)]
     return {
@@ -231,10 +255,15 @@ def build_prototype_inference_packet(inputs: RuntimeInputs) -> dict[str, object]
     state_last = [row[-1] for row in inputs.x]
     p4 = task04_causal_delay_inference(state_last, inputs.horizons)
 
+    stable_regime = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     return {
         "state": {"s_t": state_last},
         "forecast": {"Y_hat": y_hat_by_h, "horizons": inputs.horizons},
-        "precision_error": {"error": p2["error"], "precision": p2["precision"], "weighted_error": p2["weighted_error"]},
+        "precision_error": {
+            "error": p2["error"],
+            "precision": p2["precision"],
+            "weighted_error": p2["weighted_error"],
+        },
         "drift": {
             "drift_score": p3["drift_score"],
             "rupture_label_hat": p3["rupture_label_hat"],
@@ -248,15 +277,17 @@ def build_prototype_inference_packet(inputs: RuntimeInputs) -> dict[str, object]
             "effect_prediction": p4["effect_prediction"],
         },
         "regime_extrapolation": {
-            "regime_probs": [[1.0, 0.0, 0.0, 0.0, 0.0, 0.0] for _ in range(b)],
-            "future_regime_path": [[[1.0, 0.0, 0.0, 0.0, 0.0, 0.0] for _ in inputs.horizons] for _ in range(b)],
+            "regime_probs": [stable_regime[:] for _ in range(b)],
+            "future_regime_path": [[stable_regime[:] for _ in inputs.horizons] for _ in range(b)],
             "regime_change_time": [[0.0] for _ in range(b)],
             "extrapolated_state": y_hat_tensor,
         },
         "counterfactual": {
             "Y_real_hat": y_hat_tensor,
             "Y_counterfact_hat": y_hat_tensor,
-            "counterfactual_delta": [[[0.0 for _ in range(y)] for _ in inputs.horizons] for _ in range(b)],
+            "counterfactual_delta": [
+                [[0.0 for _ in range(y)] for _ in inputs.horizons] for _ in range(b)
+            ],
             "causal_effect_score": [[0.0 for _ in inputs.horizons] for _ in range(b)],
             "status": "stub",
         },

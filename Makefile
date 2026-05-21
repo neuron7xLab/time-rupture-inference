@@ -106,7 +106,7 @@ cyber-hygiene-audit:
 	$(PY) tools/cyber_hygiene_audit.py \
 		--bandit-json /tmp/bandit.json \
 		--output evidence/cyber_hygiene_top7.json \
-		--mode must_not_exist || true
+		--mode must_not_exist
 
 cyber-hygiene-enforce:
 	$(PY) -m bandit -r src tools scripts -f json -o /tmp/bandit.json || true

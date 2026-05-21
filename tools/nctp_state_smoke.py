@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
+
 from ctios.nctp_state.packet import validate_inference_packet
 from ctios.nctp_state.runtime import (
     build_prototype_inference_packet,
@@ -35,6 +37,12 @@ def main() -> int:
     if errors:
         raise AssertionError("packet validation failed: " + "; ".join(errors))
 
+    bad_packet = deepcopy(packet)
+    bad_packet["state"] = None
+    bad_errors = validate_inference_packet(bad_packet)
+    if not any("section 'state' must be a dict" in err for err in bad_errors):
+        raise AssertionError("malformed state section must fail validation")
+
     stable = task03_drift_shift_inference(
         weighted_error=[[[0.01], [0.02], [0.01]]],
         state_t=[[1.02]],
@@ -61,9 +69,29 @@ def main() -> int:
     if changed.reset_probability[0][0] <= stable.reset_probability[0][0]:
         raise AssertionError("changed stream must increase reset probability")
 
+    low_dt_packet = build_prototype_inference_packet(
+        x=x,
+        dt=[[0.1, 0.1, 0.1], [0.1, 0.1, 0.1]],
+        y_true=y_true,
+        sigma=sigma,
+        horizons=horizons,
+    )
+    high_dt_packet = build_prototype_inference_packet(
+        x=x,
+        dt=[[5.0, 5.0, 5.0], [5.0, 5.0, 5.0]],
+        y_true=y_true,
+        sigma=sigma,
+        horizons=horizons,
+    )
+    low_dt_score = low_dt_packet["drift"]["drift_score"][0][0]
+    high_dt_score = high_dt_packet["drift"]["drift_score"][0][0]
+    if not high_dt_score > low_dt_score:
+        raise AssertionError("builder must preserve dt sensitivity for TASK-03")
+
     print(
         "NCTP_STATE_SMOKE — PASS "
-        f"stable_score={stable_score:.4f} changed_score={changed_score:.4f}"
+        f"stable_score={stable_score:.4f} changed_score={changed_score:.4f} "
+        f"low_dt_score={low_dt_score:.4f} high_dt_score={high_dt_score:.4f}"
     )
     return 0
 

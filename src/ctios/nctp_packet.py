@@ -81,12 +81,18 @@ SECTION_REQUIREMENTS: dict[str, tuple[str, ...]] = {
 }
 
 
-def _is_finite_number(value: object) -> bool:
+def _finite_float(value: object) -> float | None:
     if isinstance(value, bool):
-        return False
+        return None
     if isinstance(value, (int, float)):
-        return math.isfinite(float(value))
-    return False
+        numeric = float(value)
+        if math.isfinite(numeric):
+            return numeric
+    return None
+
+
+def _is_finite_number(value: object) -> bool:
+    return _finite_float(value) is not None
 
 
 def _same_shape(left: object, right: object) -> bool:
@@ -108,13 +114,12 @@ def _delta_matches(
             _delta_matches(a, b, c, tol)
             for a, b, c in zip(y_counterfactual, y_real, delta, strict=True)
         )
-    if (
-        _is_finite_number(y_counterfactual)
-        and _is_finite_number(y_real)
-        and _is_finite_number(delta)
-    ):
-        return abs((float(y_counterfactual) - float(y_real)) - float(delta)) <= tol
-    return False
+    y_counterfactual_value = _finite_float(y_counterfactual)
+    y_real_value = _finite_float(y_real)
+    delta_value = _finite_float(delta)
+    if y_counterfactual_value is None or y_real_value is None or delta_value is None:
+        return False
+    return abs((y_counterfactual_value - y_real_value) - delta_value) <= tol
 
 
 def validate_inference_packet(packet: dict[str, object]) -> list[str]:
@@ -180,10 +185,11 @@ def _validate_causal_delay(packet: dict[str, object], errors: list[str]) -> None
     for row in delay_distribution:
         if not isinstance(row, list) or not row:
             continue
-        if any(not _is_finite_number(v) for v in row):
+        numeric_row = [_finite_float(value) for value in row]
+        if any(value is None for value in numeric_row):
             errors.append("causal_delay.delay_distribution must be finite")
             continue
-        total = sum(float(v) for v in row)
+        total = sum(value for value in numeric_row if value is not None)
         if abs(total - 1.0) > 1e-6:
             errors.append("causal_delay.delay_distribution rows must be normalized")
 

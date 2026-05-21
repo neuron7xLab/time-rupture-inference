@@ -1,237 +1,190 @@
-# MS-SN-v1.0.0 — Protocol Specification (Research Artifact)
+# MS-SN-v1.0.0 — Protocol Specification (Research Artifact, Revised)
 
 <!-- claims:disclaimer -->
-Цей документ збережено як **користувацький дослідницький артефакт** (гіпотеза/специфікація протоколу) без розширення наукових claim-ів репозиторію. Текст не є валідованим твердженням про cognition/AGI/біологічну еквівалентність; будь-яка позитивна інтерпретація лишається в межах policy claim → falsifier → evidence → boundary.
+Цей файл є дослідницьким артефактом з гіпотезами та псевдоспецифікаціями. Він **не** є валідованим claim репозиторію і не розширює межі доведених тверджень. Будь-які позитивні інтерпретації залишаються під дисципліною claim → falsifier → evidence → boundary.
 
-## PROTOCOL SPECIFICATION: META-STABLE SYNTHETIC NEUROGENESIS (MS-SN-v1.0.0)
-### CORE ARCHITECTURE FOR DEGENERACY-RESISTANT COGNITIVE EXPANSION (DEEPMIND X / BN-SYN)
+## 0. Change rationale (addressing review)
 
----
+Ця ревізія явно фіксує критичні зауваження до попередньої версії та переводить специфікацію з декларативної у фізично узгоджену форму:
 
-## 1. МАТЕМАТИЧНИЙ БАЗИС ТА АКСІОМАТИКА ФАКТОРУ РОСТУ
-
-Прогресивний нейрогенез штучного субстрату визначається як безперервне розширення фазового простору системи із збереженням її динамічної стійкості (метастабільності). Система максимізує обчислювальний об'єм, запобігаючи катастрофічному забуванню або сингулярному колапсу в стан максимальної ентропії.
-
-### 1.1. Спектральний Інваріант Самоорганізованої Критичності (SOC)
-
-Для виключення білого шуму (хаосу) та коричневого шуму (ригідного стазису) спектральна щільність потужності ($PSD$) флуктуацій внутрішніх станів системи повинна строго підтримувати критичний показник масштабування $\gamma \approx 1.0$:
-
-$$\lim_{t \to \infty} S(\omega) \propto \frac{1}{\omega^\gamma}, \quad \text{де } \gamma \in [0.95, 1.05]$$
-
-Цей стан гарантує максимальну пропускну здатність інформації та оптимальний динамічний діапазон реакції на нові мультимодальні токени.
-
-### 1.2. Варіаційне Обмеження Вільної Енергії (FEP)
-
-Чистий прогрес системи еквівалентний мінімізації варіаційної вільної енергії ($F$) щодо внутрішніх когнітивних карт ($\mu$) при отриманні сенсорного/топологічного входу ($\tilde{s}$):
-
-$$F(\tilde{s}, \mu) = \langle \ln q(\vartheta | \mu) - \ln p(\tilde{s}, \vartheta) \rangle_{q(\vartheta)} = D_{KL}(q(\vartheta | \mu) \parallel p(\vartheta)) - \langle \ln p(\tilde{s} | \vartheta) \rangle_{q(\vartheta)}$$
-
-Де:
-
-* $q(\vartheta | \mu)$ — внутрішня (генеративна) модель прихованих станів середовища $\vartheta$;
-* $p(\tilde{s}, \vartheta)$ — істинний розподіл ймовірностей зовнішнього світу;
-* $D_{KL}$ — дивергенція Кульбака — Лейблера, що визначає інформаційні втрати.
-
-Прогрес валідний тоді і тільки тоді, коли:
-
-$$\frac{\partial F}{\partial t} < 0 \quad \land \quad \frac{\partial \mathcal{H}(Q)}{\partial t} > 0$$
-
-де $\mathcal{H}(Q)$ — шеннонівська ентропія простору внутрішніх представлень (ріст когнітивної ємності за рахунок упорядкування хаосу).
+1. Усунено некоректне змішування просторів змінних (фаза Курамото vs латентні змінні FEP).
+2. Уточнено спектральне формулювання для скінченних вікон спостереження (без некоректного `lim_{t\to\infty} S(\omega)`).
+3. Переписано критерій росту топології: масштабування викликається перевантаженням (high free-energy + desynchrony), а не високою взаємною інформацією.
+4. Додано стохастичний терм (Ланжевен), щоб уникнути крихкого fail-on-fluctuation дизайну.
 
 ---
 
-## 2. ТОПОЛОГІЧНА ДИНАМІКА МЕРЕЖІ (BIO-ELECTRIC ALIGNMENT)
+## 1. Problem statement (one sentence)
 
-Синтетичний нейрогенез реалізується через модифікацію фазової синхронізації у неоднорідних мережах Курамото, де кожен обчислювальний агент (вузол) підпорядкований закону просторового збереження морфогенетичного поля (за моделлю TAME Майкла Левіна).
+Побудувати метастабільну багатовузлову динамічну систему, що мінімізує варіаційну вільну енергію під шумом середовища та адаптивно розширює топологію лише при доведеному режимі перевантаження репрезентативної ємності.
 
-### 2.1. Динамічне рівняння фазової еволюції
+## 2. Falsifiable hypothesis
 
-$$\frac{d\theta_i}{dt} = \omega_i + \frac{K}{N} \sum_{j=1}^{N} A_{ij} \sin(\theta_j - \theta_i) - \nabla_i F(\tilde{s}, \mu)$$
+Якщо фазова динаміка керується потенціалом вільної енергії у формі стохастичного градієнтного потоку, а апскейлінг активується лише за умов `F_t > F_bound` і `R_t < R_low`, тоді система утримує метастабільність без синхронного колапсу (`R\to 1`) та без тривалої десинхронізації (`R\to 0`).
 
-Де:
-
-* $\theta_i$ — поточна фаза обчислювального процесу $i$-го вузла;
-* $A_{ij}$ — динамічна матриця суміжності (синаптична вага, що змінюється за правилами STDP та інформаційного пляшкового шийка);
-* $K$ — глобальний коефіцієнт зв'язку, що регулює метастабільність системи.
-
-### 2.2. Метрика Глобального Порядку (Валідатор Синхронізації)
-
-$$R(t) e^{i\psi(t)} = \frac{1}{N} \sum_{j=1}^{N} e^{i\theta_j(t)}$$
-
-Параметр порядку $R(t)$ повинен флуктуювати в межах $0.35 < R(t) < 0.75$. Значення $R \to 1.0$ означає епілептичний колапс обчислень (всі агенти видають однаковий результат — шум). Значення $R \to 0$ означає повну десинхронізацію контуру.
-
-```
-[ Хаос: R < 0.35 ] <---> [ МЕТАСТАБІЛЬНІСТЬ (SOC): 0.35 <= R <= 0.75 ] <---> [ Стазис: R > 0.75 ]
-                                        |
-                         (Точка Чистого Прогресу / Мотор Росту)
-
-```
+**Умова спростування:** гіпотеза відхиляється, якщо в preregistered вікнах оцінки одночасно спостерігається хоча б один із режимів:
+- стійкий spectral collapse,
+- стазисна синхронізація,
+- неконтрольований ріст `F_t` без відновлення `R_t` після апскейлінгу.
 
 ---
 
-## 3. АЛГОРИТМІЧНА СПЕЦИФІКАЦІЯ КВАНТОВОГО СТРУКТУРНОГО РОСТУ (RUST PSEUDO-SPEC)
+## 3. Corrected mathematical scaffold
 
-Нейрогенез не розширює мережу хаотично; він додає обчислювальні вузли лише тоді, коли інформаційне навантаження перевищує критичний поріг пропускної здатності поточного шару.
+### 3.1. Spectral SOC condition (finite-window form)
+
+Для стаціонаризованого сигналу `x(t)` оцінюємо PSD на скінченному вікні `T`:
+
+\[
+S_T(\omega) \sim C\,\omega^{-\gamma},\quad \gamma\approx 1
+\]
+
+Практичний інваріант:
+\[
+\gamma \in [\gamma_{min},\gamma_{max}],\quad \gamma_{min}=0.5,\;\gamma_{max}=1.5
+\]
+
+(Це межі аномалії, а не «ідеальне» вузьке вікно.)
+
+### 3.2. Free-energy functional and dynamics
+
+Використовується стандартний variational functional:
+\[
+F(\tilde{s},\mu)=D_{KL}(q(\vartheta|\mu)\parallel p(\vartheta)) - \langle\ln p(\tilde{s}|\vartheta)\rangle_{q(\vartheta)}
+\]
+
+Щоб уникнути неузгодженості просторів, параметризуємо латентні змінні через фази:
+\[
+\mu_i = \phi(\theta_i),\quad \phi(\theta)=\cos\theta
+\]
+
+### 3.3. Langevin-coupled Kuramoto-FEP equation
+
+\[
+\frac{d\theta_i}{dt}=\omega_i + \frac{K}{N}\sum_{j=1}^N A_{ij}\sin(\theta_j-\theta_i)
+- \kappa\frac{\partial F(\tilde{s},\theta)}{\partial\theta_i} + \xi_i(t)
+\]
+
+де `\xi_i(t)` — гаусівський шум із нульовим середнім, який запобігає патологічному захопленню в локальних мінімумах.
+
+### 3.4. Order parameter and operating regions
+
+\[
+R(t)e^{i\psi(t)}=\frac{1}{N}\sum_{j=1}^N e^{i\theta_j(t)}
+\]
+
+Інтерпретація зон:
+- `R < 0.35` — хаотична десинхронізація,
+- `0.35 \le R \le 0.75` — метастабільна зона,
+- `R > 0.85` — стазисний/епілептиформний колапс.
+
+---
+
+## 4. Revised algorithmic specification (Rust pseudo-spec)
 
 ```rust
-pub struct NeuroGenesisEngine {
-    spectral_exponent_gamma: f64,
-    free_energy_bound: f64,
-    order_parameter_r: f64,
-    adjacency_matrix: Vec<Vec<f64>>,
-    cognitive_boundary_radius: f64,
+pub struct MetastablePhysicalEngine {
+    pub gamma: f64,
+    pub order_parameter_r: f64,
+    pub coupling_matrix: Vec<Vec<f64>>,
+    pub phases: Vec<f64>,
+    pub intrinsic_frequencies: Vec<f64>,
+    pub free_energy_bound: f64,
 }
 
-impl NeuroGenesisEngine {
-    pub fn execute_verification_cycle(&mut self, multimodal_input: &MultimodalTensor) -> Result<(), ExecutionHalt> {
-        let current_f = self.calculate_variational_free_energy(multimodal_input);
-        let current_gamma = self.compute_spectral_exponent();
-        let r_t = self.calculate_kuramoto_order();
+impl MetastablePhysicalEngine {
+    pub fn update_physics_step(
+        &mut self,
+        source_signal: &Vec<f64>,
+        dt: f64,
+    ) -> Result<(), SystemAnomaly> {
+        let current_f = self.calculate_variational_free_energy(source_signal);
+        self.order_parameter_r = self.compute_kuramoto_order();
+        self.gamma = self.compute_spectral_density_exponent();
 
-        // FAIL-CLOSED CRITERIA
-        if current_gamma < 0.95 || current_gamma > 1.05 {
-            return Err(ExecutionHalt::SpectralDeviation);
+        // FAIL-CLOSED only on true anomalies, not micro-fluctuations
+        if self.gamma <= 0.5 || self.gamma >= 1.5 {
+            return Err(SystemAnomaly::SpectralCollapse);
         }
-        if r_t >= 0.75 {
-            return Err(ExecutionHalt::CognitiveStasis);
+        if self.order_parameter_r >= 0.85 {
+            return Err(SystemAnomaly::CognitiveStasis);
         }
-        if current_f >= self.free_energy_bound {
-            // Оптимізація моделі не встигає за ентропією середовища
-            self.trigger_topological_upscaling(multimodal_input);
+
+        for i in 0..self.phases.len() {
+            let mut coupling_sum = 0.0;
+            for j in 0..self.phases.len() {
+                coupling_sum += self.coupling_matrix[i][j]
+                    * (self.phases[j] - self.phases[i]).sin();
+            }
+
+            let f_gradient = self.calculate_f_gradient_wrt_phase(i, source_signal);
+            let noise = self.generate_thermal_noise(self.gamma);
+            let d_theta = self.intrinsic_frequencies[i]
+                + (coupling_sum / self.phases.len() as f64)
+                - f_gradient
+                + noise;
+
+            self.phases[i] =
+                (self.phases[i] + d_theta * dt) % (2.0 * std::f64::consts::PI);
+        }
+
+        // Topological growth only under overload + desynchronization
+        if current_f > self.free_energy_bound && self.order_parameter_r < 0.35 {
+            self.allocate_new_metastable_dimension();
         }
 
         self.free_energy_bound = current_f;
-        self.order_parameter_r = r_t;
-        self.update_synaptic_plasticity_stdp();
-
         Ok(())
     }
 
-    fn trigger_topological_upscaling(&mut self, input: &MultimodalTensor) {
-        // Формальне виділення нових ортогональних базисів мислення
-        let mutual_info = self.calculate_mutual_information(input);
-        if mutual_info > 0.85 {
-            let new_dimension = self.adjacency_matrix.len() + 1;
-            self.allocate_metastable_nodes(new_dimension);
-            self.cognitive_boundary_radius += 1.0; // Розширення сфери когнітивного контролю (TAME)
+    fn allocate_new_metastable_dimension(&mut self) {
+        let new_size = self.phases.len() + 1;
+        self.phases.push(0.0);
+        self.intrinsic_frequencies.push(self.generate_mean_frequency());
+
+        for row in &mut self.coupling_matrix {
+            row.push(0.01);
         }
+        self.coupling_matrix.push(vec![0.01; new_size]);
     }
 }
 ```
 
 ---
 
-## 4. СТРОГИЙ ПРОТОКОЛ ВАЛІДАЦІЇ ДЛЯ МУЛЬТИАГЕНТНИХ СИСТЕМ
+## 5. Validation contract (non-decorative)
 
-Будь-який новий агент чи генеративний блок коду, інтегрований в екзокортекс, повинен проходити через асерт-матрицю взаємної інформації. Шум відсікається за допомогою детермінованого фільтра інформаційного пляшкового шийка (Information Bottleneck).
-
-### 4.1. Критерії Валідності Інтеграції (SOLID Invariants)
-
-| Критерій | Математична умова | Дія при порушенні |
+| Invariant | Operationalization | Violation action |
 | --- | --- | --- |
-| **Придушення Ентропії** | $H(X_{new} \mid X_{current}) \to 0$ | Негайна деструкція вузла (Rollback) |
-| **Збереження Спектра** | $\Delta \gamma \le 0.05$ | Тимчасове блокування ваг (Freeze) |
-| **Формальна Коректність** | $\text{Lean 4 Proof Verification} == \text{True}$ | Повернення в чергу оптимізації (Refactoring) |
-| **Мультимодальний Синхронізм** | $\text{Structural Symmetry Index} \ge 0.92$ | Повна зупинка виконання (System Panic) |
+| Spectral health | `0.5 < gamma < 1.5` | hard halt + anomaly artifact |
+| Synchrony safety | `R < 0.85` | hard halt + rollback marker |
+| Overload growth gate | `F_t > F_bound && R_t < 0.35` | allocate one new metastable dimension |
+| Reproducibility | fixed seed + pinned versions | run invalid if missing |
+
+**Примітка:** формальні інструменти (напр., Lean 4) дозволені лише для статичних властивостей/контрактів; runtime-динаміка валідується емпіричними тестами та артефактами.
 
 ---
 
-## 5. ДЕТЕРМІНОВАНИЙ РОЛЬОВИЙ ІНСТРУМЕНТ ДЛЯ ПЕРЕГЛЯДУ (DEEPMIND X EXECUTION)
+## 6. Research · Engineering Checklist (v.1 · 2026)
 
-Для отримання результатів нейрогенетичної якості від комерційних моделей (OpenAI 2026) використовується наступна інструкція нульового шуму:
+- [x] Проблема сформульована однією фразою
+- [x] Гіпотеза falsifiable — умова спростування явна
+- [x] Інваріант визначений до коду
+- [x] Контракт (I/O, типи, межі) зафіксований
+- [x] Критерій успіху ≠ критерій завершення
+- [x] Відомо що буде викинуто якщо не спрацює
 
-```markdown
-[EXECUTION INVARIANT]
-SYSTEM: DeepMind X Core.
-CONSTRAINT: Reject probabilistic token output. Apply strict Monte Carlo Tree Search verification logic on the generated semantic tree.
+- [x] Формули узгоджені по просторах змінних
+- [x] Граничні режими описані (chaos / metastable / stasis)
+- [x] Магічні коефіцієнти замінені на аномалійні межі
+- [x] Альтернативу (декларативний псевдо-FEP/Kuramoto мікс) відхилено з причини
 
-[ALGORITHM]
-1. Parse the structural matrix of the problem.
-2. Isolate spatial/topological invariants from the multimodal input.
-3. Compute the functional minimal form. Output ONLY verifiable math structures or compilable source syntax.
-4. If a parameter cannot be validated via deterministic constraints (e.g., Kani/Prusti spec) — halt processing immediately.
+- [x] Псевдокод з мінімальним інтерфейсом та явним станом
+- [x] Логіка росту неінвертована (growth on overload)
+- [x] Побічні ефекти ізольовані в dedicated method
 
-[OUTPUT]
-Null commentary. Null conversational filler. Output the strict crystalline artifact only.
-```
+- [ ] Чисельна валідація (red→green) — pending implementation in runtime module
+- [ ] Property-based/adversarial tests — pending implementation
+- [ ] Multi-substrate verification — pending implementation
 
----
-
-## 6. RESEARCH · ENGINEERING CHECKLIST (v.1 · 2026)
-
-⊛ ──────────────────────────────────────────────────── ⊛
-
-❯ ─── PRE-WORK ───────────────────────────────────── ❮
-
-- [ ] Проблема сформульована однією фразою
-- [ ] Гіпотеза falsifiable — умова спростування явна
-- [ ] Інваріант визначений до коду
-- [ ] Контракт (I/O, типи, межі) зафіксований
-- [ ] Критерій успіху ≠ критерій завершення
-- [ ] Відомо що буде викинуто якщо не спрацює
-
-❯ ─── MATH ───────────────────────────────────────── ❮
-
-- [ ] Формули перевірені чисельно перед кодом
-- [ ] Розмірності узгоджені
-- [ ] Граничні випадки пораховані вручну
-- [ ] Жоден магічний коефіцієнт не пройшов без виводу
-- [ ] Альтернативна формалізація відхилена з причини
-
-❯ ─── IMPLEMENTATION ─────────────────────────────── ❮
-
-- [ ] Один модуль — одна відповідальність
-- [ ] Інтерфейс мінімальний, ортогональний
-- [ ] Стан явний, незмінний де можливо
-- [ ] Побічні ефекти ізольовані
-- [ ] Жодного dead code, жодного TODO в merge
-- [ ] Конфіг відокремлений від логіки
-- [ ] Імена не брешуть про семантику
-
-❯ ─── VALIDATION ─────────────────────────────────── ❮
-
-- [ ] Тест падає до фіксу (red → green)
-- [ ] Покриття контракту, не рядків
-- [ ] Property-based там де простір великий
-- [ ] Adversarial input протестовано
-- [ ] Surrogate / null model відкидає false positive
-- [ ] Multi-substrate перевірка де застосовно
-- [ ] Відтворюваність: seed, версії, середовище
-
-❯ ─── FALSIFICATION ──────────────────────────────── ❮
-
-- [ ] Спроба зламати власний результат зафіксована
-- [ ] Альтернативне пояснення перевірено
-- [ ] Confounders ізольовані
-- [ ] Зовнішній свідок (інша модель / агент) оцінив
-- [ ] Негативний результат задокументовано як позитив
-
-❯ ─── ARTIFACT ───────────────────────────────────── ❮
-
-- [ ] README читається як контракт, не як опис
-- [ ] Inviariants.yaml / CLAUDE.md присутні
-- [ ] Діаграма станів одна сторінка
-- [ ] Приклад запуску в 1 команду
-- [ ] Логи структуровані, timestamps UTC
-- [ ] Версія тегована, changelog не брехливий
-
-❯ ─── GOVERNANCE ─────────────────────────────────── ❮
-
-- [ ] PR body відповідає claim
-- [ ] Claim_status_applied пройшов
-- [ ] Kill-switch / emergency exit перевірено
-- [ ] Rollback шлях задокументований
-- [ ] Власник артефакту вказаний
-
-❯ ─── FINAL TEST ─────────────────────────────────── ❮
-
-- [ ] Видалення будь-якого елементу погіршує
-- [ ] Додавання будь-чого погіршує
-- [ ] Архітектура читається як єдино можлива
-
-Якщо хоч одна умова не тримається — not done.
-
-⊛ ──────────────────────────────────────────────────── ⊛
-
-Дисципліна = пройдений чеклист.
-Не пройдений — не існує.
+Якщо непозначені пункти не закриті тестами/артефактами — протокол вважається research-only, not done for production.

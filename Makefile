@@ -102,18 +102,22 @@ noise-audit:
 		--policy-file .auditignore.json
 
 cyber-hygiene-audit:
-	rm -f /tmp/bandit.json
-	$(PY) -m bandit -r src tools scripts -f json -o /tmp/bandit.json
+	@set -eu; \
+	TMP_BANDIT_JSON="$$(mktemp /tmp/bandit.XXXXXX.json)"; \
+	trap 'rm -f "$$TMP_BANDIT_JSON"' EXIT; \
+	$(PY) -m bandit -r src tools scripts -f json -o "$$TMP_BANDIT_JSON"; \
 	$(PY) tools/cyber_hygiene_audit.py \
-		--bandit-json /tmp/bandit.json \
+		--bandit-json "$$TMP_BANDIT_JSON" \
 		--output evidence/cyber_hygiene_top7.json \
 		--mode must_not_exist
 
 cyber-hygiene-enforce:
-	rm -f /tmp/bandit.json
-	$(PY) -m bandit -r src tools scripts -f json -o /tmp/bandit.json
+	@set -eu; \
+	TMP_BANDIT_JSON="$$(mktemp /tmp/bandit.XXXXXX.json)"; \
+	trap 'rm -f "$$TMP_BANDIT_JSON"' EXIT; \
+	$(PY) -m bandit -r src tools scripts -f json -o "$$TMP_BANDIT_JSON"; \
 	$(PY) tools/cyber_hygiene_audit.py \
-		--bandit-json /tmp/bandit.json \
+		--bandit-json "$$TMP_BANDIT_JSON" \
 		--output evidence/cyber_hygiene_top7.json \
 		--mode must_not_exist
 

@@ -3,10 +3,16 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from pathlib import PurePosixPath
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
 from tools.cyber_hygiene_contract import EXPECTED_CLASS_COUNT, TARGETS_PATH
 
 

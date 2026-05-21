@@ -7,9 +7,9 @@ optional and explicit; development and CI use the deterministic userspace timer.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Callable
 from dataclasses import dataclass
-import math
 from time import perf_counter_ns
 from typing import ParamSpec, TypeVar
 

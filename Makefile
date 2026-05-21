@@ -102,7 +102,7 @@ noise-audit:
 		--policy-file .auditignore.json
 
 cyber-hygiene-audit:
-	bandit -r src tools scripts -f json -o /tmp/bandit.json
+	$(PY) -m bandit -r src tools scripts -f json -o /tmp/bandit.json
 	$(PY) tools/cyber_hygiene_audit.py \
 		--bandit-json /tmp/bandit.json \
 		--output evidence/cyber_hygiene_top7.json \

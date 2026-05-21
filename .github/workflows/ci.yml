@@ -37,8 +37,6 @@ jobs:
           python scripts/verify_scorecard_prerequisites.py
           PYTHONPATH=src python -m ctios.supply_chain_audit
       - run: pip install -q -r requirements-ci.lock
-      - name: install cyber hygiene scanner
-        run: pip install -q bandit==1.8.3
       - name: lint
         run: ruff check src tests scripts
       - name: type (mypy --strict, explicit target — not config-dependent)

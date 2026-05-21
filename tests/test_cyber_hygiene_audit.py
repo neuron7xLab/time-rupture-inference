@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
+
 from tools.cyber_hygiene_audit import _load_bandit, _load_targets, build_report
 from tools.cyber_hygiene_contract import TARGETS_PATH
 

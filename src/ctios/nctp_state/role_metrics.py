@@ -27,11 +27,13 @@ def evaluate_role_policy(decisions: list[RoleDecision]) -> RolePolicyMetrics:
 
     steps = len(decisions)
     switches = sum(
-        1 for prev, cur in zip(decisions, decisions[1:]) if prev.role is not cur.role
+        1
+        for prev, cur in zip(decisions, decisions[1:], strict=False)
+        if prev.role is not cur.role
     )
     flips = sum(
         1
-        for left, mid, right in zip(decisions, decisions[1:], decisions[2:])
+        for left, mid, right in zip(decisions, decisions[1:], decisions[2:], strict=False)
         if left.role is right.role and left.role is not mid.role
     )
     adapt_steps = sum(1 for d in decisions if d.role is NCTPRole.ADAPT)

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+import math
 from time import perf_counter_ns
 from typing import ParamSpec, TypeVar
 
@@ -47,10 +48,12 @@ class LatencyMonitorConfig:
     latency_budget_ms_p99: float = 20.0
 
     def __post_init__(self) -> None:
-        if not self.binary_path:
+        if not self.binary_path.strip():
             raise ValueError("binary_path must be non-empty")
-        if not self.symbol:
+        if not self.symbol.strip():
             raise ValueError("symbol must be non-empty")
+        if not math.isfinite(self.latency_budget_ms_p99):
+            raise ValueError("latency_budget_ms_p99 must be finite")
         if self.latency_budget_ms_p99 <= 0.0:
             raise ValueError("latency_budget_ms_p99 must be positive")
 
@@ -79,6 +82,8 @@ def deploy_kernel_latency_monitor(config: LatencyMonitorConfig) -> object:
 def measure_call_ns(fn: Callable[P, R], *args: P.args, **kwargs: P.kwargs) -> tuple[R, int]:
     """Measure one function call with a deterministic userspace timer."""
 
+    if not callable(fn):
+        raise TypeError("fn must be callable")
     start = perf_counter_ns()
     result = fn(*args, **kwargs)
     elapsed = perf_counter_ns() - start

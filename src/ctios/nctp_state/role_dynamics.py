@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: MIT
 """Deterministic role dynamics for adaptive NCTP state control.
 
-The module converts measured runtime signals into a role state. Roles are not
-personas. They are bounded control modes for dynamic environments.
+Roles are bounded control modes, not personas. The module turns measured
+packet signals into a small policy decision that can be tested and rejected.
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import Enum
-import math
 
 
 class NCTPRole(str, Enum):
@@ -47,12 +47,12 @@ def _finite_unit(name: str, value: float) -> float:
 def decide_role(signals: RoleSignals) -> RoleDecision:
     """Map bounded signals to a deterministic role decision.
 
-    Rule order is intentional and fail-closed:
+    Rule order is fail-closed:
 
-    1. High uncertainty plus memory conflict enters quarantine.
-    2. High reset probability enters stabilize.
-    3. High drift enters adapt.
-    4. Otherwise observe.
+    1. high uncertainty plus memory conflict -> quarantine
+    2. high reset probability -> stabilize
+    3. high drift -> adapt
+    4. otherwise observe
     """
 
     drift = _finite_unit("drift_score", signals.drift_score)
@@ -97,17 +97,30 @@ def decide_role(signals: RoleSignals) -> RoleDecision:
 
 
 def role_from_packet(packet: dict[str, object]) -> RoleDecision:
-    """Derive a role decision from an NCTP inference packet."""
+    """Derive a deterministic role decision from an NCTP inference packet.
+
+    Uncertainty is derived from precision, not from memory priority. Precision is
+    the packet field that encodes confidence in the prediction-error channel;
+    memory priority is an action hint, not an uncertainty measurement.
+    """
 
     drift_section = packet.get("drift")
     memory_section = packet.get("memory")
-    if not isinstance(drift_section, dict) or not isinstance(memory_section, dict):
-        raise ValueError("packet requires drift and memory sections")
+    precision_section = packet.get("precision_error")
+    if not isinstance(drift_section, dict):
+        raise ValueError("packet requires drift section")
+    if not isinstance(memory_section, dict):
+        raise ValueError("packet requires memory section")
+    if not isinstance(precision_section, dict):
+        raise ValueError("packet requires precision_error section")
 
-    drift_score = _first_scalar(drift_section.get("drift_score"), "drift_score")
-    reset_probability = _first_scalar(drift_section.get("reset_probability"), "reset_probability")
-    uncertainty = _first_scalar(drift_section.get("memory_priority"), "memory_priority")
-    memory_conflict = _first_scalar(memory_section.get("memory_conflict"), "memory_conflict")
+    drift_score = _mean_nested_unit(drift_section.get("drift_score"), "drift_score")
+    reset_probability = _mean_nested_unit(
+        drift_section.get("reset_probability"),
+        "reset_probability",
+    )
+    memory_conflict = _mean_nested_unit(memory_section.get("memory_conflict"), "memory_conflict")
+    uncertainty = _uncertainty_from_precision(precision_section.get("precision"))
 
     return decide_role(
         RoleSignals(
@@ -119,13 +132,42 @@ def role_from_packet(packet: dict[str, object]) -> RoleDecision:
     )
 
 
-def _first_scalar(value: object, name: str) -> float:
-    if not isinstance(value, list) or not value:
-        raise ValueError(f"{name} must be a non-empty nested list")
-    first = value[0]
-    if not isinstance(first, list) or not first:
-        raise ValueError(f"{name} must be a non-empty nested list")
-    scalar = first[0]
-    if not isinstance(scalar, (int, float)) or isinstance(scalar, bool):
-        raise ValueError(f"{name} first value must be numeric")
-    return float(scalar)
+def _uncertainty_from_precision(value: object) -> float:
+    precision = _mean_nested_positive(value, "precision")
+    return 1.0 / (1.0 + precision)
+
+
+def _mean_nested_unit(value: object, name: str) -> float:
+    vals = _flatten_numeric(value, name)
+    return _finite_unit(name, sum(vals) / float(len(vals)))
+
+
+def _mean_nested_positive(value: object, name: str) -> float:
+    vals = _flatten_numeric(value, name)
+    mean_value = sum(vals) / float(len(vals))
+    if mean_value < 0.0:
+        raise ValueError(f"{name} must be non-negative")
+    return mean_value
+
+
+def _flatten_numeric(value: object, name: str) -> list[float]:
+    vals: list[float] = []
+
+    def walk(node: object) -> None:
+        if isinstance(node, list):
+            if not node:
+                raise ValueError(f"{name} contains empty list")
+            for child in node:
+                walk(child)
+            return
+        if not isinstance(node, (int, float)) or isinstance(node, bool):
+            raise ValueError(f"{name} must contain only numeric values")
+        scalar = float(node)
+        if not math.isfinite(scalar):
+            raise ValueError(f"{name} must contain finite values")
+        vals.append(scalar)
+
+    walk(value)
+    if not vals:
+        raise ValueError(f"{name} must contain at least one value")
+    return vals

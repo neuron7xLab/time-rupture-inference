@@ -1,0 +1,21 @@
+name: nctp-metrics
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nctp-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements-ci.lock
+      - run: ruff check src/ctios/nctp_state/role_metrics.py tools/nctp_role_metrics_smoke.py
+      - run: mypy --strict src/ctios/nctp_state/role_metrics.py
+      - run: PYTHONPATH=src python tools/nctp_role_metrics_smoke.py

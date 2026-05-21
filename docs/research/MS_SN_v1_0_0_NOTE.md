@@ -1,5 +1,7 @@
 # MS-SN-v1.0.0 — Protocol Specification (Research Artifact, Revised)
 
+Status: research-only; no validated runtime claim.
+
 <!-- claims:disclaimer -->
 Цей файл є дослідницьким артефактом з гіпотезами та псевдоспецифікаціями. Він **не** є валідованим claim репозиторію і не розширює межі доведених тверджень. Будь-які позитивні інтерпретації залишаються під дисципліною claim → falsifier → evidence → boundary.
 
@@ -89,9 +91,20 @@ pub struct MetastablePhysicalEngine {
     pub coupling_matrix: Vec<Vec<f64>>,
     pub phases: Vec<f64>,
     pub intrinsic_frequencies: Vec<f64>,
-    pub free_energy_bound: f64,
+    pub free_energy_baseline: f64,
+    pub free_energy_sigma: f64,
+    pub overload_lambda: f64,
+    pub kappa: f64,
+    pub noise_sigma: f64,
     pub thermal_temperature: f64,
     pub gamma_proxy_window_var: f64,
+    pub rng_seed: u64,
+    pub rng_state: u64,
+    pub w_desync: usize,
+    pub w_stasis: usize,
+    pub w_recovery: usize,
+    pub dt_max: f64,
+    pub a_max: f64,
 }
 
 impl MetastablePhysicalEngine {
@@ -101,6 +114,8 @@ impl MetastablePhysicalEngine {
         dt: f64,
     ) -> Result<(), SystemAnomaly> {
         let current_f = self.calculate_variational_free_energy(source_signal);
+        let overload_threshold = self.free_energy_baseline + self.overload_lambda * self.free_energy_sigma;
+        let overload = current_f > overload_threshold;
         self.order_parameter_r = self.compute_kuramoto_order();
         // fast proxy at each step; expensive gamma estimate is decoupled
         self.gamma_proxy_window_var = self.compute_phase_increment_variance_proxy();
@@ -108,8 +123,11 @@ impl MetastablePhysicalEngine {
         if self.gamma_proxy_window_var >= self.proxy_criticality_ceiling() {
             return Err(SystemAnomaly::CriticalityProxyCollapse);
         }
-        if self.order_parameter_r >= 0.85 {
+        if self.is_sustained_stasis(self.w_stasis) {
             return Err(SystemAnomaly::CognitiveStasis);
+        }
+        if self.is_sustained_desync(self.w_desync) {
+            return Err(SystemAnomaly::DesynchronyCollapse);
         }
 
         for i in 0..self.phases.len() {
@@ -120,10 +138,10 @@ impl MetastablePhysicalEngine {
             }
 
             let f_gradient = self.calculate_f_gradient_wrt_phase(i, source_signal);
-            let noise = self.generate_thermal_noise(self.thermal_temperature);
+            let noise = self.noise_sigma * dt.sqrt() * self.randn_seeded();
             let d_theta = self.intrinsic_frequencies[i]
                 + (coupling_sum / self.phases.len() as f64)
-                - f_gradient
+                - self.kappa * f_gradient
                 + noise;
 
             self.phases[i] =
@@ -131,11 +149,14 @@ impl MetastablePhysicalEngine {
         }
 
         // Topological growth only under overload + desynchronization
-        if current_f > self.free_energy_bound && self.order_parameter_r < 0.35 {
-            self.allocate_new_metastable_dimension();
+        if overload && self.order_parameter_r < 0.35 {
+            self.allocate_new_metastable_dimension()?;
+            self.enforce_recovery_window(self.w_recovery, current_f)?;
         }
 
-        self.free_energy_bound = current_f;
+        if !overload && self.in_metastable_region() && !self.in_recovery_or_anomaly() {
+            self.update_free_energy_baseline(current_f);
+        }
         Ok(())
     }
 
@@ -143,16 +164,18 @@ impl MetastablePhysicalEngine {
         self.gamma = gamma_estimate;
     }
 
-    fn allocate_new_metastable_dimension(&mut self) {
+    fn allocate_new_metastable_dimension(&mut self) -> Result<(), SystemAnomaly> {
         let new_size = self.phases.len() + 1;
-        self.phases.push(0.0);
+        self.phases.push(self.rand_uniform_phase());
         self.intrinsic_frequencies.push(self.generate_mean_frequency());
 
         for row in &mut self.coupling_matrix {
             row.push(0.01);
         }
         self.coupling_matrix.push(vec![0.01; new_size]);
-        self.reallocate_generative_model_tensors_with_zero_padding(new_size);
+        self.renormalize_coupling_rows(self.a_max)?;
+        self.reallocate_generative_model_tensors_with_zero_padding(new_size)?;
+        Ok(())
     }
 }
 ```
@@ -165,7 +188,7 @@ impl MetastablePhysicalEngine {
 | --- | --- | --- |
 | Spectral health | async FFT/wavelet `gamma` monitor + per-step proxy variance | halt on proxy collapse; background alarm on `gamma` breach |
 | Synchrony safety | `R < 0.85` | hard halt + rollback marker |
-| Overload growth gate | `F_t > F_bound && R_t < 0.35` | allocate one new metastable dimension |
+| Overload growth gate | `F_t > overload_threshold && R_t < 0.35` | allocate one new metastable dimension |
 | Dimensional consistency on growth | reallocate/zero-pad `q(\vartheta|\mu)` tensors to `N+1` | abort growth if tensor migration fails |
 | Reproducibility | fixed seed + pinned versions | run invalid if missing |
 
@@ -243,6 +266,65 @@ impl MetastablePhysicalEngine {
 
 ### 9.3. Interpolation singularity
 
+
+
+## 12. Overload semantics and estimator contract (runtime-ready gate draft)
+
+\[
+overload\_threshold = free\_energy\_baseline + \lambda \cdot free\_energy\_sigma,\quad \lambda=3.0
+\]
+
+Baseline update rule:
+```rust
+if !overload && in_metastable_region {
+    self.update_free_energy_baseline(current_f);
+}
+```
+
+Free-energy estimator contract (required before promotion):
+- `q(artheta|\mu)`: diagonal Gaussian posterior over latent coordinates.
+- `p(artheta)`: unit Gaussian prior.
+- `p(	ilde{s}|artheta)`: Gaussian observation model with fixed variance.
+- estimator window: rolling window `T_F` with deterministic seed and pinned precision mode.
+- numerical method for `\partial F/\partial	heta_i`: finite-difference estimator with `\epsilon=1e-4` and stability bound check.
+
+PSD estimator contract:
+- Welch PSD + log-log linear regression on preregistered frequency band.
+- fixed detrending rule and window overlap.
+- Statement: **This band is a spectral anomaly filter, not evidence of criticality.**
+
+Finite-value invariant per step:
+- `gamma, R, F, theta_i, omega_i, A_ij` must be finite; otherwise hard halt.
+
+Coupling boundedness invariant:
+- `forall i: sum_j |A_ij| <= A_max`; action on violation: renormalize else halt.
+
+## 13. Verification protocol: 30-task execution plan
+
+CURRENT STATE: research-only protocol note
+TARGET STATE: research-runtime-ready
+BLOCKING CLASS: overload semantics + stochastic runtime correctness
+MINIMUM REQUIRED WORK: 30 tasks
+PROMOTION ALLOWED: only after runtime + tests + evidence
+
+Promotion gate to `runtime-validated`:
+1. Runtime module implemented.
+2. Red tests pass as expected.
+3. Green tests demonstrate bounded recovery.
+4. Reproducibility hash stable.
+5. Evidence artifact sealed.
+6. Claim boundary updated.
+7. Reviewer signs off on no-overclaim condition.
+
+Required test matrix (must exist before promotion):
+- red: forced synchrony -> `SystemAnomaly::CognitiveStasis`
+- red: forced desynchrony sustained for `W_desync`
+- red: post-growth free-energy runaway -> `UncontrolledFreeEnergyRunaway`
+- red: fake criticality under noise feedback (must fail if noise depends on gamma)
+- reproducibility: identical trajectory hash for fixed seed
+- sensitivity grid: `kappa in {0.0,0.1,0.5,1.0,2.0}`
+- sensitivity grid: `noise_sigma in {0.0,0.01,0.05,0.1,0.2}`
+- sealed artifact path: `evidence/ms_sn_v1_0_0/runtime_validation_seed_<seed>.json`
 Сильна сторона моделі — композиція/інтерполяція між відомими патернами. Радикальна екстраполяція потребує зовнішнього середовища з помилками, фальсифікацією та відбором — саме тому prereg, falsifier і artifacts обов'язкові.
 
 ### 9.4. Entropic tax (alignment regularization)

@@ -65,6 +65,20 @@ Rules:
 
 - External-review one-command demo gate.
 
+## 3.1) Workflow identity table
+
+| Workflow display name | Workflow file | Primary jobs | Primary invariant | Required for merge |
+|---|---|---|---|---|
+| gate | `.github/workflows/ci.yml` | `proof-of-life`, `external-adversarial` | trust+deps+docs+tests+runner fail-closed gate | Yes |
+| nctp-state-smoke | `.github/workflows/nctp-state-smoke.yml` | `nctp-state-smoke` | NCTP packet/state schema contract is executable | Yes |
+| nctp-role-dynamics | `.github/workflows/nctp-role-dynamics.yml` | `nctp-role-dynamics` | role dynamics and metrics contract integrity | Yes |
+| nctp-promotion-audit | `.github/workflows/nctp-promotion-audit.yml` | `nctp-promotion-audit` | promotion policy/audit contract validity | Yes |
+| latency-monitor | `.github/workflows/latency-monitor.yml` | `latency-monitor` | observability latency contract boundaries | Yes |
+| platform-demo | `.github/workflows/platform-demo.yml` | `platform-demo` | runtime portability demo remains reproducible | Yes |
+| v7-readiness | `.github/workflows/v7-readiness.yml` | `v7-readiness` | CPU readiness + artifact schema + non-destructive dry-run | Yes |
+| conference-smoke | `.github/workflows/conference-smoke.yml` | `conference-smoke` | reviewer-facing demo/smoke package integrity | Yes |
+| indi-demo-gate | `.github/workflows/indi-demo-gate.yml` | `indi-demo` | one-command external review gate integrity | Yes |
+
 ## 4) Verification surface map
 
 Primary instrument scripts and inferred invariants:
@@ -87,11 +101,9 @@ Primary instrument scripts and inferred invariants:
   - Invariant: internal adversarial probes remain non-independent and cannot close independence gap by self-production.
   - Artifact: `evidence/INTERNAL_ADVERSARIAL_REDTEAM.json`.
 
+## 4.1) Data-structure invariant map
 
-
-## 4.1) Structured data-contract probes (mandatory)
-
-The following probes are required during forensics and repair for NCTP-related failures.
+The following probes are mandatory during forensics and repair for NCTP-related failures.
 
 - packet schema strictness
 - unknown-key rejection
@@ -129,6 +141,26 @@ Each probe must map to one owning validator/test and one failure class before pa
 
 Classification rule: first failing check defines primary class; correlated downstream failures are secondary classes.
 
+## 5.1) Failure-class repair matrix
+
+| Failure class | Owning surface | Primary command | Allowed patch scope | Forbidden response |
+|---|---|---|---|---|
+| workflow trust failure | `.github/workflows`, trust evidence | `PYTHONPATH=src python scripts/audit_workflow_trust.py` | workflow trust metadata/pins/permission justification only | do not weaken permission rules or unpin actions |
+| dependency trust failure | CI dependency contract | `PYTHONPATH=src python scripts/verify_ci_deps.py` | lock consumption declarations and trust docs only | do not bypass lock usage or downgrade trust checks |
+| provenance drift | `provenance_manifest.json` | `PYTHONPATH=src python scripts/provenance_attest.py --write` | manifest regeneration only | do not edit manifest hashes manually |
+| claim-boundary violation | docs/claim boundary surface | `PYTHONPATH=src python scripts/claims_lint.py` | claim text/disclaimer boundary docs only | do not expand claims or remove qualifiers |
+| documentation trust failure | docs trust layer + evidence mapping | `PYTHONPATH=src python scripts/check_doc_trust.py` | trust docs/source-matrix consistency only | do not suppress trust checks |
+| static type contract failure | `src/ctios` | `mypy --strict src/ctios` | typing/source corrections only | do not weaken mypy strictness |
+| lint hygiene failure | `src`, `tests`, `scripts`, `tools` | `ruff check src tests scripts tools` | lint-compliant formatting/import/order fixes in failing scope only | do not disable lint rules globally |
+| unit/integration test failure | `tests` + owning source modules | `PYTHONPATH=src pytest tests -q` | minimal bug fix + targeted test alignment | do not remove failing tests or assertions |
+| fail-closed runner failure | runner/gate runtime surface | `PYTHONPATH=src python -m ctios.runner --mode full` | deterministic runner invariant fixes only | do not relax thresholds to mask failures |
+| demo portability failure | demo scripts and demo contracts | `bash scripts/platform_demo.sh` (or workflow-equivalent demo script) | demo portability scripts/contracts only | do not delete demo checks |
+| data-structure contract mismatch | `src/ctios/nctp_state`, packet/runtime validators | `PYTHONPATH=src python tools/nctp_state_smoke.py` | strict schema/validation + targeted tests only | do not allow unknown keys or malformed payloads |
+| stale README/test-count drift | README/test-count sync surface | `PYTHONPATH=src pytest tests/test_readme_sync.py -q` | README count synchronization only | do not remove sync guardrails |
+| overly broad PR surface | PR governance scope | manual diff audit vs protocol | split PR by invariant ownership | do not mix unrelated runtime/docs/provenance changes |
+| hidden scientific claim expansion | docs/spec/README claim surface | `PYTHONPATH=src python scripts/claims_lint.py` + doc trust checks | remove claim inflation and restore boundary language | do not introduce stronger scientific claims |
+| missing instrumentation | governance/workflow/test surface | workflow+tests inventory review | add explicit missing probe/check mapping documentation | do not declare coverage without executable instrument |
+
 ## 6) Log-forensics procedure
 
 1. Record run identifiers: workflow name, run id, head SHA, branch, matrix axis.
@@ -145,9 +177,6 @@ Classification rule: first failing check defines primary class; correlated downs
 8. Re-run local command parity with failing step.
 9. Re-run full required verification surface before merge decision.
 10. Document residual risk if any check is intentionally non-claiming (e.g., internal non-independence boundaries).
-
-
-
 
 ## 6.1) Workflow -> invariant -> root cause -> minimal patch map
 
@@ -205,11 +234,11 @@ For CI failures handled by Codex agent:
 
 ## 11) Required future hardening recommendations
 
-- Add machine-readable workflow-to-invariant index (single source of truth) under `docs/governance/`.
-- Add owner mapping (`invariant -> owning file(s)/team`) to reduce triage latency.
-- Add deterministic runbook links in each workflow step name (taxonomy key prefix).
-- Add explicit “required for merge” policy document mapping branch type to required workflows.
-- Add periodic CI drift audit that detects redundant workflow coverage and unexplained overlap.
+- **P0:** Add explicit machine-readable `required_for_merge` policy by branch/PR type.
+- **P1:** Add machine-readable workflow-to-invariant index (single source of truth) under `docs/governance/`.
+- **P1:** Add owner mapping (`invariant -> owning file(s)/team`) to reduce triage latency.
+- **P2:** Add deterministic runbook links in each workflow step name (taxonomy key prefix).
+- **P3:** Add periodic CI drift audit that detects redundant workflow coverage and unexplained overlap.
 
 ## 12) Explicit non-claims
 

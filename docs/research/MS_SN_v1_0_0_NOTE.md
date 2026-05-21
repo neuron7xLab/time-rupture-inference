@@ -55,7 +55,7 @@ F(\tilde{s},\mu)=D_{KL}(q(\vartheta|\mu)\parallel p(\vartheta)) - \langle\ln p(\
 
 Щоб уникнути неузгодженості просторів, параметризуємо латентні змінні через фази:
 \[
-\mu_i = \phi(\theta_i),\quad \phi(\theta)=\cos\theta
+\mu_i = \phi(\theta_i),\quad \phi(\theta)=[\cos\theta,\sin\theta]^\top
 \]
 
 ### 3.3. Langevin-coupled Kuramoto-FEP equation
@@ -90,6 +90,8 @@ pub struct MetastablePhysicalEngine {
     pub phases: Vec<f64>,
     pub intrinsic_frequencies: Vec<f64>,
     pub free_energy_bound: f64,
+    pub thermal_temperature: f64,
+    pub gamma_proxy_window_var: f64,
 }
 
 impl MetastablePhysicalEngine {
@@ -100,11 +102,11 @@ impl MetastablePhysicalEngine {
     ) -> Result<(), SystemAnomaly> {
         let current_f = self.calculate_variational_free_energy(source_signal);
         self.order_parameter_r = self.compute_kuramoto_order();
-        self.gamma = self.compute_spectral_density_exponent();
+        // fast proxy at each step; expensive gamma estimate is decoupled
+        self.gamma_proxy_window_var = self.compute_phase_increment_variance_proxy();
 
-        // FAIL-CLOSED only on true anomalies, not micro-fluctuations
-        if self.gamma <= 0.5 || self.gamma >= 1.5 {
-            return Err(SystemAnomaly::SpectralCollapse);
+        if self.gamma_proxy_window_var >= self.proxy_criticality_ceiling() {
+            return Err(SystemAnomaly::CriticalityProxyCollapse);
         }
         if self.order_parameter_r >= 0.85 {
             return Err(SystemAnomaly::CognitiveStasis);
@@ -118,7 +120,7 @@ impl MetastablePhysicalEngine {
             }
 
             let f_gradient = self.calculate_f_gradient_wrt_phase(i, source_signal);
-            let noise = self.generate_thermal_noise(self.gamma);
+            let noise = self.generate_thermal_noise(self.thermal_temperature);
             let d_theta = self.intrinsic_frequencies[i]
                 + (coupling_sum / self.phases.len() as f64)
                 - f_gradient
@@ -137,6 +139,10 @@ impl MetastablePhysicalEngine {
         Ok(())
     }
 
+    pub fn refresh_gamma_from_background_fft(&mut self, gamma_estimate: f64) {
+        self.gamma = gamma_estimate;
+    }
+
     fn allocate_new_metastable_dimension(&mut self) {
         let new_size = self.phases.len() + 1;
         self.phases.push(0.0);
@@ -146,6 +152,7 @@ impl MetastablePhysicalEngine {
             row.push(0.01);
         }
         self.coupling_matrix.push(vec![0.01; new_size]);
+        self.reallocate_generative_model_tensors_with_zero_padding(new_size);
     }
 }
 ```
@@ -156,9 +163,10 @@ impl MetastablePhysicalEngine {
 
 | Invariant | Operationalization | Violation action |
 | --- | --- | --- |
-| Spectral health | `0.5 < gamma < 1.5` | hard halt + anomaly artifact |
+| Spectral health | async FFT/wavelet `gamma` monitor + per-step proxy variance | halt on proxy collapse; background alarm on `gamma` breach |
 | Synchrony safety | `R < 0.85` | hard halt + rollback marker |
 | Overload growth gate | `F_t > F_bound && R_t < 0.35` | allocate one new metastable dimension |
+| Dimensional consistency on growth | reallocate/zero-pad `q(\vartheta|\mu)` tensors to `N+1` | abort growth if tensor migration fails |
 | Reproducibility | fixed seed + pinned versions | run invalid if missing |
 
 **Примітка:** формальні інструменти (напр., Lean 4) дозволені лише для статичних властивостей/контрактів; runtime-динаміка валідується емпіричними тестами та артефактами.
@@ -251,3 +259,13 @@ LLM у цьому контурі трактуємо як **екзокортек�
 - Scope: `research-only` документ; runtime-claim не розширено.
 - Safety: сильні формулювання про "інтелект" залишені лише в disclaimer-блоці як гіпотетичні/метафоричні.
 - Next required step before promotion: реалізація мінімального runtime-модуля + red→green falsification tests + sealed evidence artifact.
+
+
+## 11. Inline fix-pack for reviewer criticals (v1.0.1-draft)
+
+1. **Degeneracy fix for $\phi(	heta)$**: scalar mapping replaced by 2D phase embedding $[\cos	heta,\sin	heta]^	op$ to remove sign aliasing and reduce gradient-freeze artifacts.
+2. **Runtime $\gamma$ paradox fix**: expensive spectral exponent estimation is moved to background analysis; per-step control uses a cheap criticality proxy (phase-increment variance).
+3. **Growth dimensionality fix**: topology growth now includes explicit generative-tensor migration (`reallocate_generative_model_tensors_with_zero_padding`) before accepting new dimension.
+4. **Noise-loop fix**: Langevin noise source uses independent `thermal_temperature`, not measured `gamma`, breaking positive feedback between observed criticality and injected noise.
+
+These changes remain **research-spec pseudocode** and require runtime implementation + falsification tests before any promotion.

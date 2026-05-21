@@ -42,8 +42,14 @@ def main() -> int:
 
     expect_value_error(lambda: LatencyMonitorConfig(binary_path=""), "empty path must fail")
     expect_value_error(lambda: LatencyMonitorConfig(binary_path="   "), "blank path must fail")
-    expect_value_error(lambda: LatencyMonitorConfig(binary_path="python3", symbol=""), "empty symbol must fail")
-    expect_value_error(lambda: LatencyMonitorConfig(binary_path="python3", symbol="   "), "blank symbol must fail")
+    expect_value_error(
+        lambda: LatencyMonitorConfig(binary_path="python3", symbol=""),
+        "empty symbol must fail",
+    )
+    expect_value_error(
+        lambda: LatencyMonitorConfig(binary_path="python3", symbol="   "),
+        "blank symbol must fail",
+    )
     expect_value_error(
         lambda: LatencyMonitorConfig(binary_path="python3", latency_budget_ms_p99=0.0),
         "zero latency budget must fail",

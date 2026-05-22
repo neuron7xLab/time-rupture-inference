@@ -15,7 +15,7 @@ Non-claims:
 - no production readiness;
 - no biological validation;
 - no intelligence validation;
-- no empirical validation claim;
+- no consciousness claim;
 - no empirical validation claim.
 
 Runtime implementation is out of scope for PR #74 and requires a separate PR, separate runtime manifest, and updated verification boundary.

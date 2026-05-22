@@ -32,6 +32,7 @@ ALLOWED_NEGATION_MARKERS = [
     "forbidden",
     "non-claim",
     "must not claim",
+    "without ",
     "claim ",
 ]
 

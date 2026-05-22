@@ -2,7 +2,7 @@
   "protocol": "MS-SN-v1.0.0",
   "pr": 74,
   "status": "SCAFFOLD_ONLY",
-  "claim_boundary": "research-only; runtime not implemented; no production, biological, intelligence, or consciousness claim",
+  "claim_boundary": "research-only deterministic scaffold; runtime absent; no production, biological, intelligence, consciousness, or empirical validation claim",
   "config_sha256": "e3a31fb3d70c0df6b8dc3c84e12aa4b98d6eb72ec06b9f74a376272fa4a47018",
   "runs": [
     {

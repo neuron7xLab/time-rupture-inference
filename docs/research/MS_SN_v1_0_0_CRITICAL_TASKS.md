@@ -3,5 +3,6 @@
 P0 tasks:
 - Claim-boundary governance
 - Deterministic config and sealing
-- Runtime skeleton and falsifiers
+- Runtime absence contract enforcement
+- Future runtime falsifier boundary specification without runtime implementation
 - Gate truth-table enforcement

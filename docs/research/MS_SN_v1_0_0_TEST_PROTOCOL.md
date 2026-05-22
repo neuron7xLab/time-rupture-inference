@@ -1,7 +1,16 @@
 # MS-SN v1.0.0 — Deterministic test protocol
 
 ## Boundary
-No high-level intelligence or biological-proof claim is validated by this protocol.
+
+This protocol validates only scaffold-level deterministic checks for PR #74.
+
+It does not validate:
+- runtime behavior;
+- production readiness;
+- biological claims;
+- intelligence claims;
+- consciousness claims;
+- empirical MS-SN claims.
 
 ## Allowed verdicts
 - GREEN

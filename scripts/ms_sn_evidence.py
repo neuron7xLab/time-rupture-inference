@@ -43,6 +43,8 @@ def write_evidence(payload: dict[str, Any], path: Path) -> str:
 
 
 def validate_manifest(path: Path) -> None:
+    if not path.exists():
+        raise FileNotFoundError(f"manifest not found: {path}")
     payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("protocol") != "MS-SN-v1.0.0":
         raise ValueError("invalid manifest protocol")

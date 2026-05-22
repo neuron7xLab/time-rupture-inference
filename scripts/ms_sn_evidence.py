@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -29,6 +30,10 @@ def sha256_file(path: Path) -> str:
 
 def compute_config_sha256(config_path: Path = DEFAULT_CONFIG) -> str:
     return sha256_file(config_path)
+
+
+def is_sha256(value: object) -> bool:
+    return isinstance(value, str) and bool(re.fullmatch(r"[0-9a-f]{64}", value))
 
 
 def load_json_object(path: Path) -> dict[str, Any]:
@@ -60,8 +65,8 @@ def _validate_common(payload: dict[str, Any]) -> None:
     if not isinstance(claim_boundary, str) or not claim_boundary.strip():
         raise ValueError("missing or empty claim_boundary")
     config_sha = payload.get("config_sha256")
-    if not isinstance(config_sha, str) or not config_sha:
-        raise ValueError("missing config_sha256")
+    if not is_sha256(config_sha):
+        raise ValueError("config_sha256 must be lowercase sha256 hex")
     if config_sha != compute_config_sha256():
         raise ValueError("config_sha256 mismatch against configs/ms_sn_v1_0_0.yaml")
     runs = payload.get("runs")
@@ -98,12 +103,19 @@ def validate_runtime_manifest(path: Path) -> None:
         for key in ("seed", "verdict", "hashes", "tests"):
             if key not in run:
                 raise ValueError(f"run #{i} missing {key}")
+        if not run["hashes"]:
+            raise ValueError(f"run #{i} hashes must be non-empty")
+        if not run["tests"]:
+            raise ValueError(f"run #{i} tests must be non-empty")
         if run["verdict"] == "INVALID_RUN":
             raise ValueError(f"run #{i} verdict INVALID_RUN is not allowed for runtime validation")
         if run["verdict"] not in ALLOWED_VERDICTS:
             raise ValueError(f"run #{i} invalid verdict")
-        if "artifact_sha256" not in run and "runtime_artifact_sha256" not in run:
+        artifact = run.get("artifact_sha256") or run.get("runtime_artifact_sha256")
+        if artifact is None:
             raise ValueError(f"run #{i} missing artifact_sha256 or runtime_artifact_sha256")
+        if not is_sha256(artifact):
+            raise ValueError(f"run #{i} runtime artifact must be lowercase sha256 hex")
     print("runtime manifest valid")
 
 

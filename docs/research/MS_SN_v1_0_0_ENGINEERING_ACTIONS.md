@@ -1,4 +1,20 @@
 # MS-SN v1.0.0 — Engineering actions
 
-Create runtime skeleton, config loading, anomaly taxonomy, growth transaction, evidence sealing helper, and CI gate.
-Use preregistered thresholds from config, not hard-coded values in tests.
+PR #74 is scaffold-only.
+
+Allowed actions:
+- lock preregistered configuration;
+- validate scaffold manifest;
+- enforce runtime absence contract;
+- enforce claim-boundary restrictions;
+- validate deterministic canonical JSON serialization;
+- isolate NCTP StrEnum normalization from MS-SN runtime claims.
+
+Forbidden actions in PR #74:
+- create runtime module;
+- create runtime skeleton;
+- claim runtime validation;
+- claim production readiness;
+- claim biological, intelligence, or empirical validation.
+
+Future runtime work requires a separate PR, separate runtime manifest, and explicit claim-boundary update.

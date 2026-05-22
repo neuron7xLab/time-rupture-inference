@@ -141,3 +141,29 @@ def test_runtime_manifest_accepts_minimal_valid_runtime_manifest(tmp_path: Path)
     path = tmp_path / "m.json"
     path.write_text(json.dumps(m), encoding="utf-8")
     mod.validate_runtime_manifest(path)
+
+
+def test_runtime_manifest_rejects_empty_hashes(tmp_path: Path) -> None:
+    mod = _load_ms_sn_evidence_module()
+    m = _base_manifest(mod, status="RUNTIME_VALIDATED", verdict="GREEN")
+    m["head_sha"] = "abc123"
+    m["runs"][0]["hashes"] = {}
+    m["runs"][0]["tests"] = {"suite": "ok"}
+    m["runs"][0]["artifact_sha256"] = "a" * 64
+    path = tmp_path / "m.json"
+    path.write_text(json.dumps(m), encoding="utf-8")
+    with pytest.raises(ValueError, match="hashes must be non-empty"):
+        mod.validate_runtime_manifest(path)
+
+
+def test_runtime_manifest_rejects_empty_tests(tmp_path: Path) -> None:
+    mod = _load_ms_sn_evidence_module()
+    m = _base_manifest(mod, status="RUNTIME_VALIDATED", verdict="GREEN")
+    m["head_sha"] = "abc123"
+    m["runs"][0]["hashes"] = {"manifest": "x"}
+    m["runs"][0]["tests"] = {}
+    m["runs"][0]["artifact_sha256"] = "a" * 64
+    path = tmp_path / "m.json"
+    path.write_text(json.dumps(m), encoding="utf-8")
+    with pytest.raises(ValueError, match="tests must be non-empty"):
+        mod.validate_runtime_manifest(path)

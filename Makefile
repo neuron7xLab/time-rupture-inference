@@ -102,14 +102,13 @@ noise-audit:
 		--policy-file .auditignore.json
 
 
-PYTHON ?= python
 PYTEST ?= pytest
 SEED ?= 1729
 
 .PHONY: ms-sn-prereg-lock ms-sn-runtime-absent-contract ms-sn-runtime-red ms-sn-reproducibility ms-sn-scaffold-seal ms-sn-runtime-seal ms-sn-claim-boundary
 
 ms-sn-prereg-lock:
-	$(PYTHON) scripts/ms_sn_evidence.py --config configs/ms_sn_v1_0_0.yaml --expected-config-hash configs/ms_sn_v1_0_0.sha256
+	$(PY) scripts/ms_sn_evidence.py --config configs/ms_sn_v1_0_0.yaml --expected-config-hash configs/ms_sn_v1_0_0.sha256
 
 ms-sn-runtime-red:
 	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_red.py -q
@@ -125,13 +124,28 @@ ms-sn-sensitivity-grid:
 
 ms-sn-scaffold-seal:
 	@test -f evidence/ms_sn_v1_0_0/manifest.json
-	$(PYTHON) scripts/ms_sn_evidence.py --validate-scaffold evidence/ms_sn_v1_0_0/manifest.json
+	$(PY) scripts/ms_sn_evidence.py --validate-scaffold evidence/ms_sn_v1_0_0/manifest.json
 
 
 ms-sn-runtime-seal:
-	@test -f evidence/ms_sn_v1_0_0/runtime_manifest.json
-	$(PYTHON) scripts/ms_sn_evidence.py --validate-runtime evidence/ms_sn_v1_0_0/runtime_manifest.json
+	@if [ ! -f evidence/ms_sn_v1_0_0/runtime_manifest.json ]; then \
+		echo "FAILURE: runtime_manifest.json absent; runtime validation is out of scope for PR #74 and must fail closed."; \
+		exit 1; \
+	fi
+	$(PY) scripts/ms_sn_evidence.py --validate-runtime evidence/ms_sn_v1_0_0/runtime_manifest.json
 
 
 ms-sn-claim-boundary:
 	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_claim_boundary.py tests/test_nctp_role_boundary_doc.py -q
+
+.PHONY: ms-sn-audit
+
+ms-sn-audit:
+	$(MAKE) ms-sn-prereg-lock
+	$(MAKE) ms-sn-runtime-absent-contract
+	$(MAKE) ms-sn-runtime-red
+	$(MAKE) ms-sn-reproducibility
+	$(MAKE) ms-sn-scaffold-seal
+	$(MAKE) ms-sn-claim-boundary
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_*.py -q
+	PYTHONPATH=src $(PYTEST) tests/test_nctp_role_*.py -q

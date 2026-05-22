@@ -1,6 +1,6 @@
 {
   "generated_at_utc": "2026-05-20",
-  "files_scanned": 373,
+  "files_scanned": 1552,
   "rules": [
     {
       "name": "todo_markers",
@@ -9,7 +9,7 @@
     },
     {
       "name": "ai_disclaimer",
-      "pattern": "(?i)(as an ai|language model|i cannot|i can't)",
+      "pattern": "(?i)(as an ai|language model|i can(?:not|\\x27t))",
       "rationale": "LLM disclaimer traces"
     },
     {
@@ -33,6 +33,24 @@
         "scripts": 0,
         "other": 6
       },
+      "files": [
+        [
+          "evidence/noise_hygiene/snapshot_2026-05-20.json",
+          5
+        ],
+        [
+          "tests/test_security_policy.py",
+          4
+        ],
+        [
+          "src/ctios/code_quality_audit.py",
+          3
+        ],
+        [
+          ".auditignore.json",
+          1
+        ]
+      ],
       "top_files": [
         [
           "evidence/noise_hygiene/snapshot_2026-05-20.json",
@@ -61,6 +79,20 @@
         "scripts": 0,
         "other": 4
       },
+      "files": [
+        [
+          "evidence/noise_hygiene/snapshot_2026-05-20.json",
+          4
+        ],
+        [
+          "docs/DEPENDENCY_TRUST_CONTRACT.md",
+          1
+        ],
+        [
+          "docs/INDI_EXECUTIVE_SUMMARY.md",
+          1
+        ]
+      ],
       "top_files": [
         [
           "evidence/noise_hygiene/snapshot_2026-05-20.json",
@@ -85,6 +117,12 @@
         "scripts": 0,
         "other": 4
       },
+      "files": [
+        [
+          "evidence/noise_hygiene/snapshot_2026-05-20.json",
+          4
+        ]
+      ],
       "top_files": [
         [
           "evidence/noise_hygiene/snapshot_2026-05-20.json",
@@ -93,26 +131,62 @@
       ]
     },
     "pseudo_markers": {
-      "total": 36,
+      "total": 92,
       "by_zone": {
-        "src": 6,
-        "tests": 3,
-        "docs": 7,
+        "src": 14,
+        "tests": 7,
+        "docs": 13,
         "scripts": 4,
-        "other": 16
+        "other": 54
       },
-      "top_files": [
+      "files": [
+        [
+          ".mypy_cache/3.12/logging/__init__.data.json",
+          15
+        ],
+        [
+          ".mypy_cache/3.12/bdb.data.json",
+          7
+        ],
         [
           "evidence/noise_hygiene/snapshot_2026-05-20.json",
           7
+        ],
+        [
+          ".mypy_cache/3.12/multiprocessing/managers.data.json",
+          4
         ],
         [
           "scripts/platform_demo.sh",
           4
         ],
         [
+          "src/ctios/nctp_packet.py",
+          4
+        ],
+        [
+          "src/ctios/nctp_runtime.py",
+          4
+        ],
+        [
+          "tests/test_nctp_packet.py",
+          4
+        ],
+        [
+          ".mypy_cache/3.12/numpy/_core/_internal.data.json",
+          3
+        ],
+        [
+          ".mypy_cache/3.12/pdb.data.json",
+          3
+        ],
+        [
           "src/ctios/artifact_assertions.py",
           3
+        ],
+        [
+          "docs/EXTERNAL_REPRODUCTION_GUIDE.md",
+          2
         ],
         [
           "docs/FRONTIER_READINESS_REPORT.md",
@@ -120,6 +194,10 @@
         ],
         [
           "docs/REPRODUCIBILITY_CONTRACT.md",
+          2
+        ],
+        [
+          "docs/governance/CI_TELEMETRY_DETERMINISM_PROTOCOL.md",
           2
         ],
         [
@@ -135,6 +213,18 @@
           2
         ],
         [
+          "tools/audit/picl_v1_nctp_verifier.py",
+          2
+        ],
+        [
+          ".github/ISSUE_TEMPLATE/bug_report.yml",
+          1
+        ],
+        [
+          ".github/ISSUE_TEMPLATE/governance_change.yml",
+          1
+        ],
+        [
           "SECURITY.md",
           1
         ],
@@ -143,7 +233,15 @@
           1
         ],
         [
+          "docs/CRITICAL_RND_FRAMEWORK_TIME_RUPTURE_INFERENCE.md",
+          1
+        ],
+        [
           "docs/EXTERNAL_VALIDATION_PROTOCOL.md",
+          1
+        ],
+        [
+          "docs/NCTP_RUNTIME_STATUS.md",
           1
         ],
         [
@@ -159,6 +257,10 @@
           1
         ],
         [
+          "evidence/ms_sn_v1_0_0/manifest.json",
+          1
+        ],
+        [
           "pyproject.toml",
           1
         ],
@@ -168,6 +270,10 @@
         ],
         [
           "src/ctios/platform_demo.py",
+          1
+        ],
+        [
+          "templates/EXTERNAL_VALIDATION_BUNDLE.example.json",
           1
         ],
         [
@@ -182,12 +288,96 @@
           "tests/test_verifier_capture_resistance.py",
           1
         ]
+      ],
+      "top_files": [
+        [
+          ".mypy_cache/3.12/logging/__init__.data.json",
+          15
+        ],
+        [
+          ".mypy_cache/3.12/bdb.data.json",
+          7
+        ],
+        [
+          "evidence/noise_hygiene/snapshot_2026-05-20.json",
+          7
+        ],
+        [
+          ".mypy_cache/3.12/multiprocessing/managers.data.json",
+          4
+        ],
+        [
+          "scripts/platform_demo.sh",
+          4
+        ],
+        [
+          "src/ctios/nctp_packet.py",
+          4
+        ],
+        [
+          "src/ctios/nctp_runtime.py",
+          4
+        ],
+        [
+          "tests/test_nctp_packet.py",
+          4
+        ],
+        [
+          ".mypy_cache/3.12/numpy/_core/_internal.data.json",
+          3
+        ],
+        [
+          ".mypy_cache/3.12/pdb.data.json",
+          3
+        ],
+        [
+          "src/ctios/artifact_assertions.py",
+          3
+        ],
+        [
+          "docs/EXTERNAL_REPRODUCTION_GUIDE.md",
+          2
+        ],
+        [
+          "docs/FRONTIER_READINESS_REPORT.md",
+          2
+        ],
+        [
+          "docs/REPRODUCIBILITY_CONTRACT.md",
+          2
+        ],
+        [
+          "docs/governance/CI_TELEMETRY_DETERMINISM_PROTOCOL.md",
+          2
+        ],
+        [
+          "examples/external_reviewer_packet_template.yaml",
+          2
+        ],
+        [
+          "examples/indi_redacted_temporal_hypothesis.yaml",
+          2
+        ],
+        [
+          "src/ctios/readiness_score.py",
+          2
+        ],
+        [
+          "tools/audit/picl_v1_nctp_verifier.py",
+          2
+        ],
+        [
+          ".github/ISSUE_TEMPLATE/bug_report.yml",
+          1
+        ]
       ]
     }
   },
   "policy": {
-    "status": "GREEN",
-    "violations": [],
-    "allowlist_entries": 1
+    "status": "RED",
+    "violations": [
+      "unsanctioned todo_markers in src files: ['src/ctios/code_quality_audit.py']"
+    ],
+    "allowlist_entries": 0
   }
 }

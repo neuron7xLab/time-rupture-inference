@@ -106,7 +106,7 @@ PYTHON ?= python
 PYTEST ?= pytest
 SEED ?= 1729
 
-.PHONY: ms-sn-prereg-lock ms-sn-runtime-absent-contract ms-sn-runtime-red ms-sn-reproducibility ms-sn-scaffold-seal ms-sn-runtime-seal
+.PHONY: ms-sn-prereg-lock ms-sn-runtime-absent-contract ms-sn-runtime-red ms-sn-reproducibility ms-sn-scaffold-seal ms-sn-runtime-seal ms-sn-claim-boundary
 
 ms-sn-prereg-lock:
 	$(PYTHON) scripts/ms_sn_evidence.py --config configs/ms_sn_v1_0_0.yaml --expected-config-hash configs/ms_sn_v1_0_0.sha256
@@ -129,4 +129,9 @@ ms-sn-scaffold-seal:
 
 
 ms-sn-runtime-seal:
-	$(PYTHON) scripts/ms_sn_evidence.py --validate-runtime evidence/ms_sn_v1_0_0/manifest.json
+	@test -f evidence/ms_sn_v1_0_0/runtime_manifest.json
+	$(PYTHON) scripts/ms_sn_evidence.py --validate-runtime evidence/ms_sn_v1_0_0/runtime_manifest.json
+
+
+ms-sn-claim-boundary:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_claim_boundary.py tests/test_nctp_role_boundary_doc.py -q

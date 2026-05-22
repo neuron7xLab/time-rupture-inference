@@ -1,0 +1,10 @@
+{
+  "protocol": "MS-SN-v1.0.0",
+  "runs": [
+    {
+      "seed": 1729,
+      "verdict": "INVALID_RUN",
+      "note": "bootstrap placeholder until runtime module is implemented"
+    }
+  ]
+}

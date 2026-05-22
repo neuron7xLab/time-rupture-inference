@@ -25,9 +25,13 @@ def test_ms_sn_core_files_are_represented_in_provenance_manifest() -> None:
     manifest = json.loads(Path("provenance_manifest.json").read_text(encoding="utf-8"))
     paths = {entry["path"] for entry in manifest["files"]}
     missing = sorted(REQUIRED_PROVENANCE_PATHS - paths)
-    assert not missing, "MS-SN core files missing from provenance_manifest.json:\n" + "\n".join(missing)
+    assert not missing, (
+        "MS-SN core files missing from provenance_manifest.json:\n" + "\n".join(missing)
+    )
 
 
 def test_ms_sn_load_bearing_docs_and_evidence_exist() -> None:
     missing = sorted(path for path in REQUIRED_LOAD_BEARING_PATHS if not Path(path).exists())
-    assert not missing, "MS-SN load-bearing files missing from repository:\n" + "\n".join(missing)
+    assert not missing, (
+        "MS-SN load-bearing files missing from repository:\n" + "\n".join(missing)
+    )

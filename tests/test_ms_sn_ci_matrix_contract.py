@@ -4,7 +4,6 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-
 REQUIRED_TARGETS = {
     "ms-sn-prereg-lock",
     "ms-sn-runtime-absent-contract",

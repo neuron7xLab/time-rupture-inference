@@ -43,3 +43,16 @@ def test_bootstrap_manifest_writes_canonical_placeholder(tmp_path: Path) -> None
     assert payload["protocol"] == "MS-SN-v1.0.0"
     assert payload["runs"][0]["seed"] == 1733
     assert payload["runs"][0]["verdict"] == "INVALID_RUN"
+
+
+def test_assert_config_hash_matches_and_mismatch(tmp_path: Path) -> None:
+    mod = _load_ms_sn_evidence_module()
+    config_path = tmp_path / "cfg.yaml"
+    config_path.write_text("a: 1\n", encoding="utf-8")
+    digest_path = tmp_path / "cfg.sha256"
+    digest_path.write_text(mod.sha256_file(config_path) + "\n", encoding="utf-8")
+    mod.assert_config_hash(config_path, digest_path)
+
+    digest_path.write_text("0" * 64 + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="config hash mismatch"):
+        mod.assert_config_hash(config_path, digest_path)

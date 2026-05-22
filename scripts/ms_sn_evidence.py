@@ -29,6 +29,19 @@ def sha256_file(path: Path) -> str:
     return sha256_bytes(path.read_bytes())
 
 
+
+
+def assert_config_hash(config_path: Path, expected_hash_path: Path) -> None:
+    expected = expected_hash_path.read_text(encoding="utf-8").strip()
+    actual = sha256_file(config_path)
+    if actual != expected:
+        raise ValueError(
+            "config hash mismatch: "
+            f"expected {expected} but computed {actual} for {config_path}"
+        )
+    print(actual)
+
+
 def validate_evidence_schema(payload: dict[str, Any]) -> None:
     required = ["protocol", "pr", "seed", "hashes", "tests", "claim_boundary", "verdict"]
     missing = [k for k in required if k not in payload]
@@ -81,9 +94,13 @@ def main() -> None:
     parser.add_argument("--emit-config-hash", action="store_true")
     parser.add_argument("--validate", type=Path)
     parser.add_argument("--bootstrap-manifest", type=Path)
+    parser.add_argument("--expected-config-hash", type=Path)
     args = parser.parse_args()
     if args.config and args.emit_config_hash:
         print(sha256_file(args.config))
+        return
+    if args.config and args.expected_config_hash:
+        assert_config_hash(args.config, args.expected_config_hash)
         return
     if args.bootstrap_manifest:
         bootstrap_manifest(args.bootstrap_manifest)

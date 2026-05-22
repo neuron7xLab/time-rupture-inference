@@ -100,3 +100,57 @@ noise-audit:
 		--output $(OUTPUT_DIR)/latest.json \
 		--snapshot-tag $(NOISE_AUDIT_DATE) \
 		--policy-file .auditignore.json
+
+
+PYTEST ?= pytest
+SEED ?= 1729
+
+.PHONY: ms-sn-prereg-lock ms-sn-runtime-absent-contract ms-sn-runtime-red ms-sn-reproducibility ms-sn-scaffold-seal ms-sn-runtime-seal ms-sn-claim-boundary ms-sn-scope-guard ms-sn-audit
+
+ms-sn-prereg-lock:
+	$(PY) scripts/ms_sn_evidence.py --config configs/ms_sn_v1_0_0.yaml --expected-config-hash configs/ms_sn_v1_0_0.sha256
+
+ms-sn-runtime-red:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_red.py -q
+
+ms-sn-runtime-absent-contract:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_runtime_absent_contract.py -q
+
+ms-sn-reproducibility:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_reproducibility.py -q
+
+
+ms-sn-scaffold-seal:
+	@test -f evidence/ms_sn_v1_0_0/manifest.json
+	$(PY) scripts/ms_sn_evidence.py --validate-scaffold evidence/ms_sn_v1_0_0/manifest.json
+
+
+ms-sn-runtime-seal:
+	@if [ ! -f evidence/ms_sn_v1_0_0/runtime_manifest.json ]; then \
+		echo "FAILURE: runtime_manifest.json absent; runtime validation is out of scope for PR #74 and must fail closed."; \
+		exit 1; \
+	fi
+	$(PY) scripts/ms_sn_evidence.py --validate-runtime evidence/ms_sn_v1_0_0/runtime_manifest.json
+
+
+ms-sn-claim-boundary:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_claim_boundary.py tests/test_nctp_role_boundary_doc.py -q
+
+ms-sn-scope-guard:
+	@if git diff --name-only $(git merge-base HEAD $(git rev-list --max-parents=0 HEAD))...HEAD | grep -E "^(evidence/noise_hygiene/latest.json|evidence/v5_causal_ledger.jsonl)$$"; then \
+		echo "FAILURE: PR #74 modifies unrelated evidence outputs."; \
+		exit 1; \
+	fi
+
+.PHONY: ms-sn-audit
+
+ms-sn-audit:
+	$(MAKE) ms-sn-prereg-lock
+	$(MAKE) ms-sn-runtime-absent-contract
+	$(MAKE) ms-sn-runtime-red
+	$(MAKE) ms-sn-reproducibility
+	$(MAKE) ms-sn-scaffold-seal
+	$(MAKE) ms-sn-claim-boundary
+	$(MAKE) ms-sn-scope-guard
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_*.py -q
+	PYTHONPATH=src $(PYTEST) tests/test_nctp_role_*.py -q

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "3226da0863ecb86301f297888d4f8506b095c2357324159606cd0f10542626c3",
+      "sha256": "bf461bb4aa3692ab72ffb7c5cdff6d9eeb6c296e2ae621e00bb952c79adcb592",
       "spdx_header": "n/a"
     },
     {
@@ -42,6 +42,12 @@
       "license": "MIT",
       "path": "configs/metrics.yaml",
       "sha256": "fa8849df6c2396ad1d70735c6375f7ca96f3cd6afdb6f03cac202b7f8a6548bc",
+      "spdx_header": "n/a"
+    },
+    {
+      "license": "MIT",
+      "path": "configs/ms_sn_v1_0_0.yaml",
+      "sha256": "e3a31fb3d70c0df6b8dc3c84e12aa4b98d6eb72ec06b9f74a376272fa4a47018",
       "spdx_header": "n/a"
     },
     {
@@ -240,6 +246,12 @@
       "license": "MIT",
       "path": "scripts/internal_adversarial_redteam.py",
       "sha256": "35dd3f7061c45fd0bf41f8c9976d95b87db3eaee19f4bc3ee554954f4b277e8c",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "scripts/ms_sn_evidence.py",
+      "sha256": "a0526988e4deca348088a18864148d375848020b40b9f2fc5051f4e727392331",
       "spdx_header": true
     },
     {

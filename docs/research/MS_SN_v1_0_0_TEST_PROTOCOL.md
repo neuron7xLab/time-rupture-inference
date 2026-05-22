@@ -10,4 +10,4 @@ No high-level intelligence or biological-proof claim is validated by this protoc
 - INVALID_RUN
 
 ## Canonical gate
-`make ms-sn-prereg-lock && make ms-sn-runtime-red && make ms-sn-runtime-green && make ms-sn-reproducibility && make ms-sn-evidence-seal`
+`make ms-sn-prereg-lock && make ms-sn-runtime-red && make ms-sn-runtime-absent-contract && make ms-sn-reproducibility && make ms-sn-evidence-seal`

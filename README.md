@@ -15,7 +15,7 @@
 <p>
   <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/version-0.1.1-0A66FF?style=flat-square&labelColor=0A0A0A"></a>
   <a href="evidence/release_gate.md"><img alt="gate" src="https://img.shields.io/badge/gate-19/19_GREEN-00FF66?style=flat-square&labelColor=0A0A0A"></a>
-  <a href="tests/"><img alt="tests" src="https://img.shields.io/badge/tests-493_PASSING-00FF66?style=flat-square&labelColor=0A0A0A"></a>
+  <a href="tests/"><img alt="tests" src="https://img.shields.io/badge/tests-CI_VERIFIED-00FF66?style=flat-square&labelColor=0A0A0A"></a>
   <a href="pyproject.toml"><img alt="mypy" src="https://img.shields.io/badge/mypy-strict-0A66FF?style=flat-square&labelColor=0A0A0A"></a>
   <a href="docs/reports/LINEAGE_STATE.md"><img alt="lineage" src="https://img.shields.io/badge/lineage-RED_preserved-FF0033?style=flat-square&labelColor=0A0A0A"></a>
 </p>

@@ -11,7 +11,7 @@
     {
       "license": "MIT",
       "path": "README.md",
-      "sha256": "9325d3f27b10df02800b5193766dfa93903ac6cf8a7691a7524d83a6fa0c5130",
+      "sha256": "8a550be2543081d3ba675d47cc02ee89b874a1e31966cdc174933d3fbc80ac40",
       "spdx_header": "n/a"
     },
     {
@@ -251,7 +251,7 @@
     {
       "license": "MIT",
       "path": "scripts/ms_sn_evidence.py",
-      "sha256": "9e61399d820ce9e4a7bcaae72eb9f1aa40292edccbfb27cdc1bcbbbbbe4f4096",
+      "sha256": "aecb03d0dbd7a685c96fbc188ec53a00480c5fe93763ab606582d4ce38bb1904",
       "spdx_header": true
     },
     {

@@ -2,14 +2,18 @@ name: MS-SN v1.0.0 Deterministic Gate
 on:
   pull_request:
     paths:
-      - "docs/research/MS_SN_v1_0_0_NOTE.md"
-      - "docs/research/MS_SN_v1_0_0_TEST_PROTOCOL.md"
+      - ".github/workflows/ms-sn-v1.yml"
+      - "Makefile"
+      - "README_PACKAGE.md"
+      - "configs/ms_sn_v1_0_0.*"
+      - "scripts/ms_sn_evidence.py"
       - "src/ctios/ms_sn_runtime.py"
       - "tests/test_ms_sn_*.py"
-      - "configs/ms_sn_v1_0_0.yaml"
-      - "scripts/ms_sn_evidence.py"
-      - "Makefile"
-      - ".github/workflows/ms-sn-v1.yml"
+      - "tests/test_ms_sn_runtime_absent_contract.py"
+      - "docs/research/MS_SN_v1_0_0_*.md"
+      - "docs/research/PR*_CONTEXT.md"
+      - "evidence/ms_sn_v1_0_0/**"
+      - "provenance_manifest.json"
 permissions:
   contents: read
 
@@ -19,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gate: [ms-sn-prereg-lock, ms-sn-runtime-red, ms-sn-runtime-green, ms-sn-reproducibility, ms-sn-evidence-seal]
+        gate: [ms-sn-prereg-lock, ms-sn-runtime-absent-contract, ms-sn-runtime-red, ms-sn-reproducibility, ms-sn-scaffold-seal]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5

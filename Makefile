@@ -106,7 +106,7 @@ PYTHON ?= python
 PYTEST ?= pytest
 SEED ?= 1729
 
-.PHONY: ms-sn-prereg-lock ms-sn-runtime-red ms-sn-runtime-green ms-sn-reproducibility ms-sn-sensitivity-grid ms-sn-evidence-seal
+.PHONY: ms-sn-prereg-lock ms-sn-runtime-absent-contract ms-sn-runtime-red ms-sn-reproducibility ms-sn-scaffold-seal ms-sn-runtime-seal
 
 ms-sn-prereg-lock:
 	$(PYTHON) scripts/ms_sn_evidence.py --config configs/ms_sn_v1_0_0.yaml --expected-config-hash configs/ms_sn_v1_0_0.sha256
@@ -114,8 +114,8 @@ ms-sn-prereg-lock:
 ms-sn-runtime-red:
 	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_red.py -q
 
-ms-sn-runtime-green:
-	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_green.py -q
+ms-sn-runtime-absent-contract:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_runtime_absent_contract.py -q
 
 ms-sn-reproducibility:
 	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_reproducibility.py -q
@@ -123,6 +123,10 @@ ms-sn-reproducibility:
 ms-sn-sensitivity-grid:
 	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_reproducibility.py -q
 
-ms-sn-evidence-seal:
+ms-sn-scaffold-seal:
 	@test -f evidence/ms_sn_v1_0_0/manifest.json
-	$(PYTHON) scripts/ms_sn_evidence.py --validate evidence/ms_sn_v1_0_0/manifest.json
+	$(PYTHON) scripts/ms_sn_evidence.py --validate-scaffold evidence/ms_sn_v1_0_0/manifest.json
+
+
+ms-sn-runtime-seal:
+	$(PYTHON) scripts/ms_sn_evidence.py --validate-runtime evidence/ms_sn_v1_0_0/manifest.json

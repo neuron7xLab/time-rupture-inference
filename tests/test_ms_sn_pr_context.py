@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 FORBIDDEN = ("PR #72", "PR72", "PR: `#72`")
 
 

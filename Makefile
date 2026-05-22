@@ -125,3 +125,27 @@ cyber-hygiene-governance:
 	$(PY) tools/check_cyber_hygiene_governance.py
 
 cyber-hygiene-full: cyber-hygiene-audit cyber-hygiene-governance
+
+PYTHON ?= python
+PYTEST ?= pytest
+SEED ?= 1729
+
+.PHONY: ms-sn-prereg-lock ms-sn-runtime-red ms-sn-runtime-green ms-sn-reproducibility ms-sn-sensitivity-grid ms-sn-evidence-seal
+
+ms-sn-prereg-lock:
+	$(PYTHON) scripts/ms_sn_evidence.py --config configs/ms_sn_v1_0_0.yaml --emit-config-hash
+
+ms-sn-runtime-red:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_red.py -q
+
+ms-sn-runtime-green:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_green.py -q
+
+ms-sn-reproducibility:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_reproducibility.py -q
+
+ms-sn-sensitivity-grid:
+	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_reproducibility.py -q
+
+ms-sn-evidence-seal:
+	$(PYTHON) scripts/ms_sn_evidence.py --validate evidence/ms_sn_v1_0_0/manifest.json

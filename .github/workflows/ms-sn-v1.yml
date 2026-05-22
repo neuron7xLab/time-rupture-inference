@@ -1,0 +1,30 @@
+name: MS-SN v1.0.0 Deterministic Gate
+on:
+  pull_request:
+    paths:
+      - "docs/research/MS_SN_v1_0_0_NOTE.md"
+      - "docs/research/MS_SN_v1_0_0_TEST_PROTOCOL.md"
+      - "src/ctios/ms_sn_runtime.py"
+      - "tests/test_ms_sn_*.py"
+      - "configs/ms_sn_v1_0_0.yaml"
+      - "scripts/ms_sn_evidence.py"
+      - ".github/workflows/ms-sn-v1.yml"
+jobs:
+  ms-sn-gate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        gate: [ms-sn-prereg-lock, ms-sn-runtime-red, ms-sn-runtime-green, ms-sn-reproducibility, ms-sn-evidence-seal]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: make ${{ matrix.gate }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-${{ matrix.gate }}
+          path: evidence/ms_sn_v1_0_0/

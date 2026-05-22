@@ -3,7 +3,7 @@
 Required jobs:
 - prereg-lock
 - red-tests
-- green-tests
+- runtime-absent-contract
 - reproducibility
 - evidence-seal
 

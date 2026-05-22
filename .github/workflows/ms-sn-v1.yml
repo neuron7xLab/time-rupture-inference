@@ -8,6 +8,7 @@ on:
       - "tests/test_ms_sn_*.py"
       - "configs/ms_sn_v1_0_0.yaml"
       - "scripts/ms_sn_evidence.py"
+      - "Makefile"
       - ".github/workflows/ms-sn-v1.yml"
 permissions:
   contents: read

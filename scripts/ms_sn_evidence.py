@@ -42,6 +42,21 @@ def write_evidence(payload: dict[str, Any], path: Path) -> str:
     return sealed
 
 
+def bootstrap_manifest(path: Path, seed: int = 1729) -> None:
+    payload = {
+        "protocol": "MS-SN-v1.0.0",
+        "runs": [
+            {
+                "seed": seed,
+                "verdict": "INVALID_RUN",
+                "note": "bootstrap placeholder until runtime module is implemented",
+            }
+        ],
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
 def validate_manifest(path: Path) -> None:
     if not path.exists():
         raise FileNotFoundError(f"manifest not found: {path}")
@@ -59,9 +74,13 @@ def main() -> None:
     parser.add_argument("--config", type=Path)
     parser.add_argument("--emit-config-hash", action="store_true")
     parser.add_argument("--validate", type=Path)
+    parser.add_argument("--bootstrap-manifest", type=Path)
     args = parser.parse_args()
     if args.config and args.emit_config_hash:
         print(sha256_file(args.config))
+        return
+    if args.bootstrap_manifest:
+        bootstrap_manifest(args.bootstrap_manifest)
         return
     if args.validate:
         validate_manifest(args.validate)

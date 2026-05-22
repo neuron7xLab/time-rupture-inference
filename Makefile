@@ -124,4 +124,5 @@ ms-sn-sensitivity-grid:
 	PYTHONPATH=src $(PYTEST) tests/test_ms_sn_reproducibility.py -q
 
 ms-sn-evidence-seal:
+	@test -f evidence/ms_sn_v1_0_0/manifest.json || $(PYTHON) scripts/ms_sn_evidence.py --bootstrap-manifest evidence/ms_sn_v1_0_0/manifest.json
 	$(PYTHON) scripts/ms_sn_evidence.py --validate evidence/ms_sn_v1_0_0/manifest.json

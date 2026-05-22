@@ -9,7 +9,7 @@ It does not validate:
 - production readiness;
 - biological claims;
 - intelligence claims;
-- consciousness claims;
+- subjective-experience claims;
 - empirical MS-SN claims.
 
 ## Allowed verdicts

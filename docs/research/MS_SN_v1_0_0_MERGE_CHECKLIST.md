@@ -7,7 +7,7 @@ Merge is allowed only if all conditions are true:
 - [ ] `configs/ms_sn_v1_0_0.sha256` matches `configs/ms_sn_v1_0_0.yaml`.
 - [ ] `evidence/ms_sn_v1_0_0/manifest.json` validates as `SCAFFOLD_ONLY`.
 - [ ] No runtime-green terminology exists.
-- [ ] No production, biological, intelligence, consciousness, or empirical validation claim exists.
+- [ ] No production, biological, intelligence, subjective-experience, or empirical validation claim exists.
 - [ ] README contains no hardcoded numeric test-count badge or prose count.
 - [ ] NCTP StrEnum change is documented as API normalization only.
 - [ ] CI matrix and Makefile targets are synchronized.

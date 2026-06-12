@@ -17,7 +17,7 @@
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "cc8f131844100e8393305b177e24e403e937c97b8d74879e9a45451d8e9bff8f",
+      "sha256": "954754d8fbf4841be7090837da3a0f54ce126d587f07d7e7f8e6e04045375b38",
       "spdx_header": "n/a"
     },
     {
@@ -371,7 +371,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/architect_cli.py",
-      "sha256": "15865e5c0831e04395f5cb9043d191303bca48fa59388b74b3e76ac78b306644",
+      "sha256": "5c6ce5bb8a1e0aaf008af3c8912dc46748c2d30924a7075227320c8933e7d71c",
       "spdx_header": true
     },
     {
@@ -472,6 +472,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/definition_lock.py",
+      "sha256": "d6561e43f78105823b98fda8c1d84d49d6a02074802d7053ee2b6b49962d2e82",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/design_lineage.py",
       "sha256": "226afda26bc4bba9652052d8aad8dcc4cfa6cf4ee193a355cdb371f88f46426a",
       "spdx_header": true
@@ -516,6 +522,12 @@
       "license": "MIT",
       "path": "src/ctios/falsify_cli.py",
       "sha256": "6f69ccce6d6734174c828977a61757c281ef1c4a650e07fd128bf0b7a622c49a",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/fractal_invariants.py",
+      "sha256": "395cf9a86e4309add87d5efc0558504c8d4b54331ad1e7bdc9b1d1d00cd5cd0b",
       "spdx_header": true
     },
     {

@@ -473,7 +473,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/definition_lock.py",
-      "sha256": "d6561e43f78105823b98fda8c1d84d49d6a02074802d7053ee2b6b49962d2e82",
+      "sha256": "665a1a2d0c6f3eb09fdd96a4d51a77717c06e5dc77b1c77c07e032c224a6b041",
       "spdx_header": true
     },
     {
@@ -486,6 +486,12 @@
       "license": "MIT",
       "path": "src/ctios/drift.py",
       "sha256": "52cb812dd9cbd2644e90f085c5f81bdd7c26087ec89161ae59fe07d6914deec6",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/entropy_compression.py",
+      "sha256": "45a4d4739fbeaae5c623c7dcd8c196b134363791243b1942c4abe113fe456a79",
       "spdx_header": true
     },
     {

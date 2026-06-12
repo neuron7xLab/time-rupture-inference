@@ -17,7 +17,7 @@
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "a83f83f8e29eb0f9514dec210206024569c56fa6d03aebb3c740d334821d5b4a",
+      "sha256": "cc8f131844100e8393305b177e24e403e937c97b8d74879e9a45451d8e9bff8f",
       "spdx_header": "n/a"
     },
     {
@@ -167,7 +167,7 @@
     {
       "license": "MIT",
       "path": "pyproject.toml",
-      "sha256": "d0c575d95c1a158116caed91db2f7e600a6fe94397860d820af3ae4354fc6e12",
+      "sha256": "8d3875d59eb733395107cb7e7059bf5e617372d306554e2d3dca04d6ec841f31",
       "spdx_header": "n/a"
     },
     {
@@ -366,6 +366,18 @@
       "license": "MIT",
       "path": "src/ctios/agents.py",
       "sha256": "3a3ecec97674e7cba4ff3e2f8adb5d09c93fb002be6b48aede5a7e3228c06feb",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/architect_cli.py",
+      "sha256": "15865e5c0831e04395f5cb9043d191303bca48fa59388b74b3e76ac78b306644",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
+      "path": "src/ctios/architecture_scorecard.py",
+      "sha256": "21cee93ec82d56c777a8f9f20033e77b240380195a16b2c1b01608bbf961013d",
       "spdx_header": true
     },
     {

@@ -77,6 +77,11 @@ exempt:
   # enumerated non-claim text, same rationale as claims_lint.py.
   - "src/ctios/design_lineage.py"
   - scripts/claims_lint.py
+  # The architecture-scorecard harness holds the anti-pseudo firewall
+  # lexicon (incl. "neural", "cognitive") as enforcement *data* — same
+  # rationale as claims_lint.py. It is the mechanism that detects the
+  # very vocabulary it stores; it makes no system claim.
+  - "src/ctios/architecture_scorecard.py"
   # Hold the forbidden-phrase lexicon as data (enforcement mechanism,
   # not outward positioning) — same rationale as claims_lint.py.
   - scripts/check_doc_trust.py

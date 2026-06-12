@@ -17,7 +17,7 @@
     {
       "license": "MIT",
       "path": "claims.yaml",
-      "sha256": "954754d8fbf4841be7090837da3a0f54ce126d587f07d7e7f8e6e04045375b38",
+      "sha256": "c618618415f4e9033f918deb8109c66a16c80fc47c6ac4309947bfb04a646f40",
       "spdx_header": "n/a"
     },
     {
@@ -371,7 +371,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/architect_cli.py",
-      "sha256": "5c6ce5bb8a1e0aaf008af3c8912dc46748c2d30924a7075227320c8933e7d71c",
+      "sha256": "c1107fdcea313379ee99cd9adb16af21703a208a433b1c506e4621a64fe1b0f6",
       "spdx_header": true
     },
     {
@@ -460,6 +460,12 @@
     },
     {
       "license": "MIT",
+      "path": "src/ctios/cognitive_council.py",
+      "sha256": "5ef13d8bb1b6ae3f7bb95a338a6b611c33ddfc819a9b62ec5cb4a9f59fa3e58a",
+      "spdx_header": true
+    },
+    {
+      "license": "MIT",
       "path": "src/ctios/contract.py",
       "sha256": "eeb0de7cb039fb470f0e61001bbe34ece1588a7fd0def8c7951f57fca4c74227",
       "spdx_header": true
@@ -473,7 +479,7 @@
     {
       "license": "MIT",
       "path": "src/ctios/definition_lock.py",
-      "sha256": "665a1a2d0c6f3eb09fdd96a4d51a77717c06e5dc77b1c77c07e032c224a6b041",
+      "sha256": "29a25b6bfe8536f6145a331f598f9eb41517a6039e5f6c318c09fc8b0b73f54c",
       "spdx_header": true
     },
     {

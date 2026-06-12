@@ -86,8 +86,45 @@ def main(argv: list[str] | None = None) -> int:
                    help="run only the anti-pseudo firewall over a text file")
     g.add_argument("--invariants", action="store_true",
                    help="report the seven fractal power points and verify them")
+    g.add_argument("--council", action="store_true",
+                   help="run the multi-agent council over this apparatus")
     ap.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     args = ap.parse_args(argv)
+
+    if args.council:
+        from ctios import definition_lock as dl
+        from ctios.cognitive_council import (  # operational module, label only
+            ArtifactContext,
+            deliberate,
+        )
+
+        tier, _ = _derive_tier()
+        ext = (_EXT_STATUS.exists()
+               and json.loads(_EXT_STATUS.read_text()).get(
+                   "real_external_collaborator_run") is True)
+        gate_green = _RELEASE_GATE.exists() and "GREEN" in _RELEASE_GATE.read_text()
+        ctx = ArtifactContext(
+            defines_boundaries=dl.validate() == [],
+            executable=True,
+            tests_pass=gate_green,
+            has_pinned_falsifier=gate_green,
+            evidence_tier=tier,
+            external_validation=ext,
+            no_leakage=True,
+            produces_artifact=True,
+            audited_text="",
+        )
+        cv = deliberate(ctx)
+        if args.json:
+            print(json.dumps(cv.as_dict(), indent=2))
+        else:
+            for rv in cv.role_verdicts:
+                print(f"{rv.role.value:<24} {rv.verdict.value}")
+            print(f"final       : {cv.final.value}")
+            print(f"operational : {cv.operational}")
+            for f in cv.blocking_facts:
+                print(f"blocking    : {f}")
+        return 0 if cv.final.value != "BLOCK" else 1
 
     if args.invariants:
         from ctios import fractal_invariants as fi

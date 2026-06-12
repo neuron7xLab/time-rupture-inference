@@ -180,6 +180,17 @@ LOCK: tuple[Definition, ...] = (
         failure_condition="Unbacked rhetoric passes without a recorded hit.",
         test="tests/test_architecture_scorecard.py",
     ),
+    Definition(
+        term="representational_compression",
+        definition="Mapping a high-entropy series to a fixed K_OUT-scalar state "
+        "that keeps the rupture and discards the noise, deterministically.",
+        not_this="Lossless coding, or a state that hides what it discarded.",
+        observable_signal="bits_out < bits_in while the rupture stays "
+        "detectable from the state alone.",
+        failure_condition="A rupture-free series scores as high as a ruptured "
+        "one (hallucinated structure).",
+        test="tests/test_entropy_compression.py",
+    ),
     # --- bounded non-claims: defined precisely so they can never inflate ---
     Definition(
         term="cognition",

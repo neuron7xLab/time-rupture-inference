@@ -15,6 +15,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Any, cast
 
 from ctios.architecture_scorecard import (
     ConfidenceInputs,
@@ -83,8 +84,25 @@ def main(argv: list[str] | None = None) -> int:
                    help="score this apparatus from observable repo signals")
     g.add_argument("--firewall", metavar="FILE",
                    help="run only the anti-pseudo firewall over a text file")
+    g.add_argument("--invariants", action="store_true",
+                   help="report the seven fractal power points and verify them")
     ap.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     args = ap.parse_args(argv)
+
+    if args.invariants:
+        from ctios import fractal_invariants as fi
+
+        rep = fi.report()
+        if args.json:
+            print(json.dumps(rep, indent=2))
+        else:
+            points = cast("list[dict[str, Any]]", rep["power_points"])
+            for pp in points:
+                mark = "fractal" if pp["fractal"] else "NOT-FRACTAL"
+                print(f"{pp['id']} {pp['name']:<32} [{mark}] "
+                      f"scales={','.join(pp['live_scales'])}")
+            print(f"all_fractal : {rep['all_fractal']}")
+        return 0 if rep["all_fractal"] else 1
 
     if args.firewall:
         text = Path(args.firewall).read_text()

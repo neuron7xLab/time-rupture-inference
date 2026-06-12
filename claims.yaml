@@ -82,6 +82,13 @@ exempt:
   # rationale as claims_lint.py. It is the mechanism that detects the
   # very vocabulary it stores; it makes no system claim.
   - "src/ctios/architecture_scorecard.py"
+  # The definition lock holds bounded non-claims ("cognition", "neural",
+  # "backprop") as locked *definitions whose not_this is the system* — it
+  # is the artifact that bounds the vocabulary, same rationale as above.
+  - "src/ctios/definition_lock.py"
+  # The fractal-invariants registry names the cross-scale principles
+  # (incl. the bounded-non-claim principle) as enforcement data.
+  - "src/ctios/fractal_invariants.py"
   # Hold the forbidden-phrase lexicon as data (enforcement mechanism,
   # not outward positioning) — same rationale as claims_lint.py.
   - scripts/check_doc_trust.py

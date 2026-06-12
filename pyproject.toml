@@ -24,6 +24,7 @@ tri-gate = "ctios.runner:main"
 tri-automate = "ctios.automation:main"
 tri-agent = "ctios.agent_cli:main"
 tri-falsify = "ctios.falsify_cli:main"
+tri-architect = "ctios.architect_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

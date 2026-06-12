@@ -89,6 +89,9 @@ exempt:
   # The fractal-invariants registry names the cross-scale principles
   # (incl. the bounded-non-claim principle) as enforcement data.
   - "src/ctios/fractal_invariants.py"
+  # The council (STAGE 6) names the role agents and runs the firewall; it
+  # is the enforcement mechanism, not outward positioning.
+  - "src/ctios/cognitive_council.py"
   # Hold the forbidden-phrase lexicon as data (enforcement mechanism,
   # not outward positioning) — same rationale as claims_lint.py.
   - scripts/check_doc_trust.py

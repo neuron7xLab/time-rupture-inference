@@ -191,6 +191,15 @@ LOCK: tuple[Definition, ...] = (
         "one (hallucinated structure).",
         test="tests/test_entropy_compression.py",
     ),
+    Definition(
+        term="sovereign_role",
+        definition="A council role (verification, safety, red-team) whose "
+        "BLOCK can never be overridden by any other role or by a score.",
+        not_this="An advisory reviewer whose objection can be outvoted.",
+        observable_signal="A sovereign BLOCK forces the council to BLOCK.",
+        failure_condition="A PASS is issued while a sovereign role objected.",
+        test="tests/test_cognitive_council.py",
+    ),
     # --- bounded non-claims: defined precisely so they can never inflate ---
     Definition(
         term="cognition",

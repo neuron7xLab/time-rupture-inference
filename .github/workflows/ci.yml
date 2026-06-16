@@ -54,7 +54,7 @@ jobs:
         run: PYTHONPATH=src pytest tests -q
       - name: fail-closed gate (30 seeds × 3 shifts)
         run: PYTHONPATH=src python -m ctios.runner --mode full
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
           name: evidence-py${{ matrix.python-version }}
@@ -74,7 +74,7 @@ jobs:
       - run: pip install -q -r requirements-ci.lock   # offline-capable, pinned
       - name: external adversarial portability demo (required)
         run: bash scripts/external_adversarial_demo.sh
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
           name: adversarial-portability-report
